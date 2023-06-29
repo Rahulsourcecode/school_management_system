@@ -1,0 +1,110 @@
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 10px;
+  
+    .topbar-search {
+      input {
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+  
+      button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ddd;
+      }
+    }
+  
+    .topbar-user {
+      display: flex;
+      align-items: center;
+  
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+  
+      .user-dropdown {
+        position: relative;
+  
+        .dropdown-button {
+          padding: 5px 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #ddd;
+          cursor: pointer;
+        }
+  
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          top: 30px;
+          right: 0;
+          background-color: #fff;
+          padding: 10px;
+          border-radius: 5px;
+  
+          button {
+            display: block;
+            width: 100%;
+            padding: 5px 10px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+          }
+        }
+  
+        &:hover {
+          .dropdown-content {
+            display: block;
+          }
+        }
+      }
+    }
+  
+    .topbar-notifications {
+      position: relative;
+  
+      .notification-button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ddd;
+        cursor: pointer;
+      }
+  
+      .notification-dropdown {
+        display: none;
+        position: absolute;
+        top: 30px;
+        right: 0;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        width: 200px;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+        .notification-item {
+          padding: 5px 0;
+          cursor: pointer;
+        }
+      }
+  
+      &:hover {
+        .notification-dropdown {
+          display: block;
+        }
+      }
+    }
+  }
+  
