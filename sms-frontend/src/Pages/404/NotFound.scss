@@ -1,0 +1,41 @@
+
+
+.common {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.img_not_found {
+    text-align: center;
+}
+.img_not_found img{
+    margin-top: 10vh;
+    text-align: center;
+    height: 80vh;
+}
+
+.body_not_found {
+    text-align: left;
+}
+.body_not_found img {
+    padding-right: 60px;
+    margin-bottom: 3vh;
+}
+
+.btnBack {
+    color:whitesmoke;
+    margin-top: 3vh;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #4762b1;
+}
+
+.btnBack .fa-solid{
+    margin-right: 6px;
+}
+
+.btnBack:hover {
+    background: var(--primary-color);
+    color: #000000
+}

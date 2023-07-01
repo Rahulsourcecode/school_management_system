@@ -1,4 +1,6 @@
-  import React, { useState } from "react";
+import React, { useState } from "react";
+import "../GlobalFiles/Sidebar.scss"
+import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BiNotepad } from "react-icons/bi";
 import { SlUserFollow } from "react-icons/sl";
@@ -26,7 +28,7 @@ const Sidebar = () => {
   const {
     data: { user },
   } = useSelector((state) => state.auth);
-
+console.log(user)
   function toggle() {
     setIsOpen(!isOpen);
   }
@@ -37,7 +39,7 @@ const Sidebar = () => {
         <div style={{ width: isOpen ? "200px" : "70px" }} className={`sidebar`}>
           <div className="top_section">
             <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
-              SMS
+            SCHOOL
             </h1>
             <div
               style={{ marginLeft: isOpen ? "50px" : "0px" }}
@@ -47,6 +49,46 @@ const Sidebar = () => {
             </div>
           </div>
           <div className="bottomSection">
+
+          {user?.userType === "admin" ? (
+            <div className="user_profile">
+              <div className="user_avatar">
+                {user?.image ? (
+                   <FaUserCircle className="avatar_icon" />
+                ) : (
+                  <FaUserCircle className="avatar_icon" />
+                )}
+              </div>
+              <div className="user_name">{user?.adminName}</div>
+            </div>
+          ) : null}
+
+            {user?.userType === "student" ? (
+            <div className="user_profile">
+              <div className="user_avatar">
+                {user?.image ? (
+                   <FaUserCircle className="avatar_icon" />
+                   ) : (
+                  <FaUserCircle className="avatar_icon" />
+                )}
+              </div>
+              <div className="user_name">{user?.studentName}</div>
+            </div>
+          ) : null}
+
+            {user?.userType === "teacher" ? (
+            <div className="user_profile">
+              <div className="user_avatar">
+                {user?.image ? (
+                   <FaUserCircle className="avatar_icon" />
+                   ) : (
+                  <FaUserCircle className="avatar_icon" />
+                )}
+              </div>
+              <div className="user_name">{user?.teacherName}</div>
+            </div>
+          ) : null}
+
             <Link className="link" activeclassname="active" to={"/dashboard"}>
               <div className="icon">
                 <MdDashboardCustomize className="mainIcon" />
@@ -58,6 +100,7 @@ const Sidebar = () => {
                 DashBoard
               </div>
             </Link>
+
 
             {user?.userType === "student" ? (
               <Link
@@ -86,6 +129,24 @@ const Sidebar = () => {
                   className="link_text"
                 >
                   Ask Doubt
+                </div>
+              </Link>
+            ) : null}
+
+{user?.userType === "admin" ? (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/adminprofile"}
+              >
+                <div className="icon">
+                  <FaChalkboardTeacher className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  view teachers
                 </div>
               </Link>
             ) : null}
@@ -143,23 +204,24 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null}
-              {user?.userType === "admin" ? (
+                        {user?.userType === "admin" ? (
               <Link
                 className="link"
                 activeclassname="active"
-                to={"/createreport"}
+                to={"/viewstudent"}
               >
                 <div className="icon">
-                  <BiDetail className="mainIcon" />
+                  <AiOutlineUserAdd className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
                   className="link_text"
                 >
-                  acadamics
+                  view Student
                 </div>
               </Link>
             ) : null}
+          
              {user?.userType === "admin" ? (
               <Link
                 className="link"
@@ -258,7 +320,7 @@ const Sidebar = () => {
               </Link>
             ) : null}
 
-            {user?.userType === "teacher" || user?.userType === "student" ? (
+            { user?.userType === "student" ? (
               <a
                 href="https://sms-quiz.netlify.app/"
                 target="_blank"
@@ -277,7 +339,7 @@ const Sidebar = () => {
               </a>
             ) : null}
 
-            {user?.userType === "teacher" || user?.userType === "student" ? (
+            {user?.userType === "null" || user?.userType === "null" ? (
               <a
                 href="https://sunny-duckanoo-9006ed.netlify.app/"
                 target="_blank"
@@ -331,7 +393,8 @@ const Sidebar = () => {
                 Logout
               </div>
             </Link>
-          </div>
+
+            </div>
         </div>
       </div>
     </>

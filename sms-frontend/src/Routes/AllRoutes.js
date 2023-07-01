@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import DLogin from "../Pages/Dashboard/Dashboard-Login/DLogin";
+import DLogin from "../Pages/Dashboard/Login/DLogin";
+import Error from "../Pages/404/Error";
 import AddNotice from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddNotice";
 import AddAdmin from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddAdmin";
 import AddTeacher from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddTeacher";
@@ -14,16 +16,28 @@ import StudentProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/S
 import FrontPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/FrontPage";
 import TeachersList from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/TeacherLists";
 import AddClass from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddClass";
+import ForgetPassword from "../Pages/Dashboard/Login/ForgotPassword";
+import Verifyotp from "../Pages/Dashboard/Login/Verifyotp";
+import Resetpassword from "../Pages/Dashboard/Login/ResetPassword";
+import StudentLists from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/StudentLists";
+import AdminProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AdminProfile";
 const AllRoutes = () => {
+  const { data } = useSelector((store) => store.auth);
+
   return (
     <>
       <Routes>
         <Route path="/" element={<DLogin />} />
-        <Route path="*" element={<FrontPage />} />
-        <Route path="/dashboard" element={<FrontPage />} />
+        <Route path="*" element={<Error/>} />
+        <Route path="/adminprofile" element={<AdminProfile/>} />
+        <Route path="/fogotpassword" element={<ForgetPassword/>} />
+        <Route path="/verifyotp" element={<Verifyotp/>}/>
+        <Route path="/resetpassword" element={<Resetpassword/>}/>
+        <Route path="/dashboard" element={data.user?<FrontPage />:<Error/>}/>
         <Route path="/addteacher" element={<AddTeacher />} />
         <Route path="/viewteacher" element={<TeachersList />} />
         <Route path="/addstudent" element={<AddStudent />} />
+        <Route path="/viewstudent" element={<StudentLists/>}/>
         <Route path="/doubts" element={<AllDoubts />} />
         <Route path="/admin" element={<AddAdmin />} />
         <Route path="/addnotice" element={<AddNotice />} />

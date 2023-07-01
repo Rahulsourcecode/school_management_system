@@ -165,6 +165,18 @@ export const UpdateTeacher = (data, id) => async (dispatch) => {
   }
 };
 
+//update admin
+export const UpdateAdmin =(data,id)=>async (dispatch) => {
+  try {
+    dispatch({type:types.EDIT_ADMIN_REQUEST});
+    const res = await axios.patch(`${baseURL}/admin/${id}`,data);
+    dispatch({type:types.EDIT_ADMIN_SUCCESS, payload:res.data.user})
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+
 //send password
 
 export const SendPassword = (data) => async (dispatch) => {
@@ -177,15 +189,35 @@ export const SendPassword = (data) => async (dispatch) => {
   }
 };
 
-
+//forgot password
 export const forgetPassword = (data) => async () => {
   try {
-    const res = await axios.post(`${baseURL}/admin/forgot`,data);
+    const res = await axios.post(`${baseURL}/general/forgotpassword`,data);
     return res.data;
   } catch (error) {
     console.log(error);
   }
 };
+
+//verify otp
+export const VerifyOtp = (data) => async()=>{
+  try{
+    const res = await axioss.post("/general/Verifyotp",data);
+    return res.data;
+  }catch (error){
+    console.log(error)
+  }
+}
+
+//set password
+export const setpassword =(data) =>async()=>{
+ try {
+  const res = await axioss.post("/general/resetpassword",data);
+  return res.data;
+ } catch (error) {
+  console.log(error)
+ }
+}
 
 export const NewClass = (data) => async () => {
   console.log(data)

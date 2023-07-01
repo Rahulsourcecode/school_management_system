@@ -91,6 +91,15 @@ export default function authReducer(state = initialState, { type, payload }) {
           user: payload,
         },
       };
+      case types.EDIT_ADMIN_SUCCESS:
+        console.log("THIS IS");
+        console.log(payload);
+      return {
+        ...state,
+        data: {
+          user: payload,
+        },
+      };
  
     case "AUTH_LOGIN_RESET":
       return {

@@ -13,12 +13,16 @@
 
 .leftside {
   width: 50%;
+  margin-bottom: 20px;
+  margin-bottom: 250px;
   text-align: center;
 }
 
 .leftside h1 {
   margin: 1rem 0;
-  font-size: 2.5rem; /* Adjust the font size to your desired value */
+  margin-left: 140px;
+  color: rgb(42, 37, 37);
+  font-size: 3.2rem; /* Adjust the font size to your desired value */
   opacity: 0;
   animation: fade-in 1s forwards;
 }
@@ -45,7 +49,7 @@
   text-align: center;
   width: 35%;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.499);
+  background-color: rgba(255, 255, 255, 0.549);
 }
 
 .Profileimg {

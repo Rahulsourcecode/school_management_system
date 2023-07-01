@@ -68,6 +68,25 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//edit admin
+router.patch("/:adminId", async (req, res) => {
+  const id = req.params.adminId;
+  const payload = req.body;
+  try {
+    await AdminModel.findByIdAndUpdate({ _id: id }, payload);
+    const admin = await AdminModel.findById(id);
+    if (!admin) {
+      return res
+        .status(404)
+        .send({ message: `admin with id ${id} not found` });
+    }
+    res.status(200).send({ message: `Admin Updated`, user: admin });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ error: "Something went wrong, unable to Update." });
+  }
+});
+
 //get all teachers  
 router.get("/teachers/all", async (req, res) => {
   try {
@@ -136,6 +155,7 @@ router.get("/getclasses", async (req, res) => {
 
 router.post("/studentregister", async (req, res) => {
   const { classname, email } = req.body;
+  console.log("name of class"+classname)
   try {
     const admin = await AdminModel.findOne({ email });
     const teacher = await TeacherModel.findOne({ email })
@@ -145,7 +165,9 @@ router.post("/studentregister", async (req, res) => {
         message: "Student already exists",
       });
     }
-    const classDivision = await Myclass({ _id: classname })
+    const classDivision = await Myclass.findOne({ _id: classname });
+    console.log("full data"+classDivision)
+    console.log(classDivision.division)
     const studentData = { ...req.body, division: classDivision.division }
     let value = new StudentModel(studentData);
     await value.save();
@@ -161,6 +183,15 @@ router.post("/studentregister", async (req, res) => {
   }
 });
 
+//get all students
+router.get("/allstudents" , async(req,res)=>{
+  try {
+    const student = await StudentModel.find().populate('classname')
+    res.status(200).send(student)
+  } catch (error) {
+    res.status(200).json({message:"error occured !"})
+  }
+})
 
 router.patch("/:adminId", async (req, res) => {
   const id = req.params.adminId;

@@ -145,7 +145,7 @@ const Discharge_and_Create_Slip = () => {
                 </div>
               </div>
               <div>
-                <label>Patient Gender</label>
+                <label> Gender</label>
                 <div className="inputdiv">
                   <select
                     name="gender"

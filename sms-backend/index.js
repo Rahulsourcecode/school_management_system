@@ -7,7 +7,7 @@ const cors = require("cors");
 const adminRouter = require('./routes/admin.route')
 const teacherRouter = require('./routes/teacher.route')
 const studentRouter = require('./routes/student.route');
-
+const generalRouter = require('./routes/general.route');
 
 const app = express()
 
@@ -21,7 +21,7 @@ app.get("/",(req,res)=>{
 app.use("/admin", adminRouter);
 app.use('/teachers', teacherRouter);
 app.use('/students', studentRouter);
-
+app.use("/general",generalRouter)
 
     app.listen(process.env.PORT, async ()=>{
         try {

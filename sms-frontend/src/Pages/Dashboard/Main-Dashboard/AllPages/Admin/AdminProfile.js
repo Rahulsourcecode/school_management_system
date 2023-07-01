@@ -1,9 +1,9 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "../Teacher/CSS/TeacherProfile.scss";
 import { BiTime } from "react-icons/bi";
 import { GiMeditation } from "react-icons/gi";
 import { AiFillCalendar, AiFillEdit } from "react-icons/ai";
-import { MdBloodtype } from "react-icons/md";
+import { MdMeetingRoom } from "react-icons/md";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { BsHouseFill, BsGenderAmbiguous } from "react-icons/bs";
 import { MdOutlineCastForEducation } from "react-icons/md";
@@ -11,16 +11,26 @@ import { FaRegHospital, FaMapMarkedAlt, FaBirthdayCake } from "react-icons/fa";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, message, Modal } from "antd";
-import { UpdateTeacher } from "../../../../../Redux/auth/action";
+import { UpdateAdmin} from "../../../../../Redux/auth/action";
+import "./CSS/AdminProfile.scss";
 import { Navigate } from "react-router-dom";
-import "./CSS/TeacherProfile.scss";
 
-const Doctor_Profile = () => {
-  const { data } = useSelector((store) => store.auth);
+const AdminProfile = () => {
+  const {
+    data: { user },
+  } = useSelector((state) => state.auth);
+console.log(user)
+  const dispatch = useDispatch();
 
-  const disptach = useDispatch();
+  const [formData, setFormData] = useState({
+    adminName: user.adminName,
+    age: user.age,
+    gender: user.gender,
+    address: user.address,
+    mobile: user.mobile,
+    DOB: user.DOB,
+  });
 
- 
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -46,32 +56,19 @@ const Doctor_Profile = () => {
     setOpen(false);
   };
 
-  const [formData, setFormData] = useState({
-    teacherName: data.user.teacherName,
-    age: data.user.age,
-    gender: data.user.gender,
-    subject: data.user.subject,
-    education: data.user.education,
-    mobile: data.user.mobile,
-    DOB: data.user.DOB,
-  });
-
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFormSubmit = () => {
-    disptach(UpdateTeacher(formData, data.user._id));
+    dispatch(UpdateAdmin(formData, user._id));
     success("user updated");
     handleOk();
   };
+  const { data } = useSelector((store) => store.auth);
 
   if (data?.isAuthenticated === false) {
     return <Navigate to={"/"} />;
-  }
-
-  if (data?.user.userType !== "teacher") {
-    return <Navigate to={"/dashboard"} />;
   }
 
   return (
@@ -81,26 +78,26 @@ const Doctor_Profile = () => {
         <Sidebar />
         <div className="AfterSideBar">
           <div className="maindoctorProfile">
-            <div className="firstBox">
+            <div className="firstBox doctorfirstdiv">
               <div>
-                <img src={data?.user?.image} alt="docimg" />
+                <img src={user?.image} alt="img" />
               </div>
               <hr />
               <div className="singleitemdiv">
                 <GiMeditation className="singledivicons" />
-                <p>{data?.user?.teacherName}</p>
+                <p>{user?.adminName}</p>
               </div>
               <div className="singleitemdiv">
-                <MdBloodtype className="singledivicons" />
-                <p>{data?.user?.subject}</p>
+                <MdMeetingRoom className="singledivicons" />
+                <p>{user?.userType}</p>
               </div>
               <div className="singleitemdiv">
                 <FaBirthdayCake className="singledivicons" />
-                <p>{data?.user?.DOB}</p>
+                <p>{user?.DOB}</p>
               </div>
               <div className="singleitemdiv">
                 <BsFillTelephoneFill className="singledivicons" />
-                <p>{data?.user?.mobile}</p>
+                <p>{user?.mobile}</p>
               </div>
               <div className="singleitemdiv">
                 <button onClick={showModal}>
@@ -127,8 +124,8 @@ const Doctor_Profile = () => {
               >
                 <form className="inputForm">
                   <input
-                    name="teacherName"
-                    value={formData.teacherName}
+                    name="adminName"
+                    value={formData.adminName}
                     onChange={handleFormChange}
                     type="text"
                     placeholder="Full name"
@@ -147,19 +144,13 @@ const Doctor_Profile = () => {
                     <option value="other">Others</option>
                   </select>
                   <input
-                    name="subject"
-                    value={formData.subject}
+                    name="address"
+                    value={formData.address}
                     onChange={handleFormChange}
                     type="text"
-                    placeholder="subject"
+                    placeholder="Address"
                   />
-                  <input
-                    name="education"
-                    value={formData.education}
-                    onChange={handleFormChange}
-                    type="text"
-                    placeholder="education"
-                  />
+
                   <input
                     name="mobile"
                     value={formData.mobile}
@@ -185,24 +176,24 @@ const Doctor_Profile = () => {
                 </h2>
                 <div className="singleitemdiv">
                   <BsGenderAmbiguous className="singledivicons" />
-                  <p>{data?.user?.gender}</p>
+                  <p>{user?.gender}</p>
                 </div>
                 <div className="singleitemdiv">
                   <AiFillCalendar className="singledivicons" />
-                  <p>{data?.user?.age}</p>
+                  <p>{user?.age}</p>
                 </div>
 
                 <div className="singleitemdiv">
                   <MdOutlineCastForEducation className="singledivicons" />
-                  <p>{data?.user?.education}</p>
+                  <p>{user?.email}</p>
                 </div>
                 <div className="singleitemdiv">
                   <BsHouseFill className="singledivicons" />
-                  <p>{data?.user?.address}</p>
+                  <p>{user?.address}</p>
                 </div>
               </div>
               {/* ***********  Third Div ******************** */}
-              <div className="subSecondBox">
+              {/* <div className="subSecondBox">
                 <h2 style={{ textAlign: "center", marginTop: "10px" }}>
                   School Details
                 </h2>
@@ -221,7 +212,7 @@ const Doctor_Profile = () => {
                     Delhi.
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -230,4 +221,4 @@ const Doctor_Profile = () => {
   );
 };
 
-export default Doctor_Profile;
+export default AdminProfile;

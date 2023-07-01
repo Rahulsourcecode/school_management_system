@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Radio } from "antd";
-import school from "../../../img/school.jpg";
 import admin from "../../../img/admin.jpg";
 import "./DLogin.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -120,37 +119,6 @@ const DLogin = () => {
     SetPlacement(e.target.value);
   };
 
-  const [ForgetPassword, setForgetPassword] = useState({
-    type: "",
-    email: "",
-  });
-
-  const HandleForgetPassword = (e) => {
-    setForgetPassword({ ...ForgetPassword, [e.target.name]: e.target.value });
-  };
-
-  const [forgetLoading, setforgetLoading] = useState(false);
-
-  const HandleChangePassword = () => {
-    if (ForgetPassword.type === "") {
-      return notify("Please Fill all Details");
-    }
-    console.log(ForgetPassword);
-    setforgetLoading(true);
-    dispatch(forgetPassword(ForgetPassword)).then((res) => {
-      if (res.message === "User not found") {
-        setforgetLoading(false);
-        return notify("User Not Found");
-      }
-      setForgetPassword({
-        type: "",
-        email: "",
-      });
-      onClose();
-      setforgetLoading(false);
-      return notify("Account Details Send");
-    });
-  };
 
   if (data?.isAuthenticated === true) {
     return <Navigate to={"/dashboard"} />;
@@ -161,9 +129,7 @@ const DLogin = () => {
       <ToastContainer />
       <div className="mainLoginPage">
         <div className="leftside">
-        <h1 className="animate-text">Manage</h1>
-      <h1 className="animate-text">Your</h1>
-      <h1 className="animate-text">School</h1>
+        <h1 className="animate-text">Manage Your School</h1>
         </div>
         <div className="rightside">
           <h1>Login</h1>
@@ -207,79 +173,15 @@ const DLogin = () => {
               />
               <button type="submit">{Loading ? "Loading..." : "Submit"}</button>
               <p style={{ marginTop: "10px" }}>
-                Forget Password?{" "}
+                Forget Password?
                 <span
-                  style={{ color: "blue", cursor: "pointer" }}
-                  onClick={showDrawer}
-                >
-                  Get it on Email !
-                </span>
+          style={{ color: "blue", cursor: "pointer" }}
+          onClick={() => navigate("fogotpassword")}
+        >
+          click here
+        </span>
               </p>
 
-              {/* ********************************************************* */}
-              <Drawer
-                title="Forget Password"
-                placement="left"
-                onClose={onClose}
-                open={open}
-              >
-                <div>
-                  <label style={{ fontSize: "18px" }}>Choose Type</label>
-
-                  <select
-                    name="type"
-                    value={ForgetPassword.type}
-                    onChange={HandleForgetPassword}
-                    required
-                  >
-                    <option value="">User Type</option>
-                    <option value="student">Student</option>
-                    <option value="teacher">Teacher</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-                <div>
-                  <label style={{ display: "block", fontSize: "18px" }}>
-                    Enter Email
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="example@mail.com"
-                    name="email"
-                    value={ForgetPassword.email}
-                    onChange={HandleForgetPassword}
-                    required
-                    style={{
-                      width: "100%",
-                      height: "3rem",
-                      borderRadius: "5px",
-                      border: "none",
-                      backgroundColor: "#bce0fb",
-                      fontSize: "18px",
-                      marginTop: "10px",
-                      paddingLeft: "10px",
-                    }}
-                  />
-                </div>
-
-                <button
-                  style={{
-                    width: "50%",
-                    margin: " 20px auto",
-                    display: "flex",
-                    padding: "10px",
-                    fontSize: "18px",
-                    backgroundColor: "rgba(187, 226, 255, 0.874)",
-                    border: "none",
-                    borderRadius: "7px",
-                    cursor: "pointer",
-                    justifyContent: "center",
-                  }}
-                  onClick={HandleChangePassword}
-                >
-                  {forgetLoading ? "Loading..." : " Send Mail"}
-                </button>
-              </Drawer>
             </form>
           </div>
         </div>

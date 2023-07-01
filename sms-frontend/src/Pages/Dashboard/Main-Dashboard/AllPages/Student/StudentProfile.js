@@ -81,7 +81,7 @@ const Nurse_Profile = () => {
           <div className="maindoctorProfile">
             <div className="firstBox doctorfirstdiv">
               <div>
-                <img src={user?.image} alt="docimg" />
+                <img src={user?.image} alt="img" />
               </div>
               <hr />
               <div className="singleitemdiv">
@@ -200,7 +200,7 @@ const Nurse_Profile = () => {
                 </div>
               </div>
               {/* ***********  Third Div ******************** */}
-              <div className="subSecondBox">
+              {/* <div className="subSecondBox">
                 <h2 style={{ textAlign: "center", marginTop: "10px" }}>
                   School Details
                 </h2>
@@ -219,7 +219,7 @@ const Nurse_Profile = () => {
                     Delhi.
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

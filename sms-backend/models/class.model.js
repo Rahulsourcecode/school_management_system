@@ -12,7 +12,7 @@ const classSchema = mongoose.Schema({
   },
   strength:{
     type:Number,
-    max:10,
+    default:0,
   },
   student:[{
     type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +22,7 @@ const classSchema = mongoose.Schema({
 })
 
 classSchema.methods.inc = async function() { 
-    if(this.strength >= 2){
+    if(this.strength%10 ===0){
     this.division=String.fromCharCode(this.division.charCodeAt(0)+1)
     console.log("inc"+this.division)
     await this.save()
