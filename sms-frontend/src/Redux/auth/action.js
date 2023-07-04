@@ -79,9 +79,9 @@ export const AdminLogin = (data) => async (dispatch) => {
 };
 
 // register Teacher
-export const TeacherRegister = (data) => async () => {
+export const TeacherRegister =(doc) => async () => {
   try {
-    const res = await axios.post(`${baseURL}/teachers/register`, data);
+    const res = await axios.post(`${baseURL}/teachers/register`,doc);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -123,14 +123,14 @@ export const AddNotice = (data) => async () => {
 
 
 
-// REGISTER bus
-export const BusRegister = (data) => async (dispatch) => {
-  try {
-    await axios.post(`${baseURL}/bus/add`, data);
-  } catch (error) {
-    console.log(error);
-  }
-};
+// // REGISTER bus
+// export const BusRegister = (data) => async (dispatch) => {
+//   try {
+//     await axios.post(`${baseURL}/bus/add`, data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // logout user
 export const authLogout = () => async (dispatch) => {

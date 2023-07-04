@@ -4,7 +4,7 @@ const { AdminModel } = require("../models/admin.model");
 const bcrypt = require('bcrypt');
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-
+const {uploads} = require("../middlewares/multer")
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -18,14 +18,16 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post("/register", async (req, res) => {
+router.post("/register",uploads.single('image'), async (req, res) => {
   try {
+    console.log(req.body)
     const { email, password, ...otherFields } = req.body;
-    
+    console.log(email)
+    // Check if the teacher or admin with the given email already exists
     const admin = await AdminModel.findOne({ email });
-    const teacher = await TeacherModel.findOne({ email });
-    
-    if (teacher || admin) {
+    const teacherd = await TeacherModel.findOne({ email });
+
+    if (teacherd || admin) {
       return res.send({
         message: "Teacher already exists",
       });
@@ -34,14 +36,28 @@ router.post("/register", async (req, res) => {
     // Hash the password using bcrypt
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    let value = new TeacherModel({ email, password: hashedPassword, ...otherFields });
-    await value.save();
+    // Create a new Teacher object
+    const teacher = new TeacherModel({
+      email,
+      password: hashedPassword,
+        teacherID:Date.now(),
+        image: req.file.filename,
+      ...otherFields,
+    });
+    // Save the teacher to the database
+    await teacher.save();
+
+    // Retrieve the saved teacher data
     const data = await TeacherModel.findOne({ email });
+
+    // Return a success response
     return res.send({ data, message: "Registered" });
   } catch (error) {
-    res.send({ message: "Error" });
+    console.error(error);
+    return res.send({ message: "Error" });
   }
 });
+
 
 router.post("/login", async (req, res) => {
   const { docID, password } = req.body;
@@ -64,6 +80,24 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     console.log({ message: "Error" });
     console.log(error);
+  }
+});
+
+//fetch ProfileImage
+router.post("/fetchimage", async (req, res) => {
+  try {
+    const teacher = await TeacherModel.findOne({ _id: req.body.id });
+    if (!teacher) {
+      // Handle case when teacher is not found
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+    const imagePath = teacher.image;
+    console.log(imagePath);
+    res.json({ imagePath });
+  } catch (error) {
+    // Handle any errors that occurred during the process
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

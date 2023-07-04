@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Teacher/CSS/TeacherProfile.scss";
 import { BiTime } from "react-icons/bi";
 import { GiMeditation } from "react-icons/gi";
@@ -11,16 +11,33 @@ import { FaBirthdayCake } from "react-icons/fa";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, message, Modal } from "antd";
-import { UpdateTeacher } from "../../../../../Redux/auth/action";
+import { UpdateTeacher, axioss } from "../../../../../Redux/auth/action";
 import { Navigate } from "react-router-dom";
 import "./CSS/TeacherProfile.scss";
 
 const Teacher_Profile = () => {
   const { data } = useSelector((store) => store.auth);
+  
+  const dispatch = useDispatch();
+  
+  const [imagePath, setImagePath] = useState("");
+  console.log(imagePath)
+  useEffect(() => {
+    const id = data.user._id;
+    console.log(id);
+    const fetchImage = async () => {
+      try {
+        const response = await axioss.post("/teachers/fetchimage", { id });
+        const imagePath = response.data.imagePath;
+        console.log(imagePath);
+        setImagePath(imagePath);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchImage();
+  }, []);
 
-  const disptach = useDispatch();
-
- 
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -61,7 +78,7 @@ const Teacher_Profile = () => {
   };
 
   const handleFormSubmit = () => {
-    disptach(UpdateTeacher(formData, data.user._id));
+    dispatch(UpdateTeacher(formData, data.user._id));
     success("user updated");
     handleOk();
   };
@@ -74,6 +91,7 @@ const Teacher_Profile = () => {
     return <Navigate to={"/dashboard"} />;
   }
 
+
   return (
     <>
       {contextHolder}
@@ -83,7 +101,7 @@ const Teacher_Profile = () => {
           <div className="maindoctorProfile">
             <div className="firstBox">
               <div>
-                <img src={data?.user?.image} alt="docimg" />
+              <img src={`http://localhost:3001/uploads/${imagePath}`} alt="docimg" />
               </div>
               <hr />
               <div className="singleitemdiv">
@@ -201,27 +219,6 @@ const Teacher_Profile = () => {
                   <p>{data?.user?.address}</p>
                 </div>
               </div>
-              {/* ***********  Third Div ******************** */}
-              {/* <div className="subSecondBox">
-                <h2 style={{ textAlign: "center", marginTop: "10px" }}>
-                  School Details
-                </h2>
-                <div className="singleitemdiv">
-                  <BiTime className="singledivicons" />
-                  <p>09:00 AM - 20:00 PM (TIMING)</p>
-                </div>
-                <div className="singleitemdiv">
-                  <FaRegHospital className="singledivicons" />
-                  <p>Delhi Public School, CBSE</p>
-                </div>
-                <div className="singleitemdiv">
-                  <FaMapMarkedAlt className="singledivicons" />
-                  <p>
-                    Sri Aurobindo Marg, Ansari Nagar, Ansari Nagar East, New
-                    Delhi.
-                  </p>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

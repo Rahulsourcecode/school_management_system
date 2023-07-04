@@ -21,6 +21,7 @@ import Verifyotp from "../Pages/Dashboard/Login/Verifyotp";
 import Resetpassword from "../Pages/Dashboard/Login/ResetPassword";
 import StudentLists from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/StudentLists";
 import AdminProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AdminProfile";
+import MarkAttendance from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/MarkAttendance";
 const AllRoutes = () => {
   const { data } = useSelector((store) => store.auth);
 
@@ -29,24 +30,25 @@ const AllRoutes = () => {
       <Routes>
         <Route path="/" element={<DLogin />} />
         <Route path="*" element={<Error/>} />
-        <Route path="/adminprofile" element={<AdminProfile/>} />
+        <Route path="/adminprofile" element={data.isAuthenticated?<AdminProfile/>:<DLogin/>} />
         <Route path="/fogotpassword" element={<ForgetPassword/>} />
         <Route path="/verifyotp" element={<Verifyotp/>}/>
         <Route path="/resetpassword" element={<Resetpassword/>}/>
-        <Route path="/dashboard" element={data.user?<FrontPage />:<Error/>}/>
-        <Route path="/addteacher" element={<AddTeacher />} />
-        <Route path="/viewteacher" element={<TeachersList />} />
-        <Route path="/addstudent" element={<AddStudent />} />
-        <Route path="/viewstudent" element={<StudentLists/>}/>
-        <Route path="/doubts" element={<AllDoubts />} />
-        <Route path="/admin" element={<AddAdmin />} />
-        <Route path="/addnotice" element={<AddNotice />} />
-        <Route path="/checkreports" element={<CheckReports />} />
-        <Route path="/createreport" element={<CreateReport />} />
-        <Route path="/teacherprofile" element={<TeacherProfile />} />
-        <Route path="/adddoubt" element={<AddDoubt />} />
-        <Route path="/studentprofile" element={<StudentProfile />} />
-        <Route path="/addclass" element={<AddClass />} />
+        <Route path="/dashboard" element={data.isAuthenticated?<FrontPage />:<DLogin/>}/>
+        <Route path="/markattendace" element={data.isAuthenticated?<MarkAttendance/>:<DLogin/>}/>
+        <Route path="/addteacher" element={data.isAuthenticated?<AddTeacher/>:<DLogin/>} />
+        <Route path="/viewteacher" element={data.isAuthenticated?<TeachersList/>:<DLogin/>} />
+        <Route path="/addstudent" element={data.isAuthenticated?<AddStudent/>:<DLogin/>} />
+        <Route path="/viewstudent" element={data.isAuthenticated?<StudentLists/>:<DLogin/>}/>
+        <Route path="/doubts" element={data.isAuthenticated?<AllDoubts/>:<DLogin/>} />
+        <Route path="/admin" element={data.isAuthenticated?<AddAdmin/>:<DLogin/>} />
+        <Route path="/addnotice" element={data.isAuthenticated?<AddNotice/>:<DLogin/>} />
+        <Route path="/checkreports" element={data.isAuthenticated?<CheckReports/>:<DLogin/>} />
+        <Route path="/createreport" element={data.isAuthenticated?<CreateReport/>:<DLogin/>} />
+        <Route path="/teacherprofile" element={data.isAuthenticated?<TeacherProfile/>:<DLogin/>} />
+        <Route path="/adddoubt" element={data.isAuthenticated?<AddDoubt/>:<DLogin/>} />
+        <Route path="/studentprofile" element={data.isAuthenticated?<StudentProfile/>:<DLogin/>} />
+        <Route path="/addclass" element={data.isAuthenticated?<AddClass/>:<DLogin/>} />
       </Routes>
     </>
   );

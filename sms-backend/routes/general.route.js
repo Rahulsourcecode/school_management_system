@@ -125,5 +125,28 @@ router.post('/resetpassword', async (req, res) => {
     }
   });
   
+  //login
+  router.post("/login",async (req,res)=>{
+    try {
+      const id = req.body.ID;
+       const   logindataAdmin = await AdminModel.findOne({adminID:id});
+       const  logindataStudent = await StudentModel.findOne({studentID:id});
+       const  logindataTeacher = await TeacherModel.findOne({teacherID:id});
+       if(logindataAdmin){
+        return res.status(200).json({message:"Admin"})
+       }
+       else if(logindataStudent){
+        return res.status(200).json({message:"Student"})
+       }
+       else if(logindataTeacher){
+        return res.status(200).json({message:"Teacher"})
+       }else{
+        return res.status(200).json({message:"invalid"})
+       }
+
+    } catch (error) {
+      
+    }
+  })
 
 module.exports = router;

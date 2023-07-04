@@ -33,23 +33,32 @@ const AddDoctor = () => {
     teacherID: Date.now(),
     password: "",
     details: "",
+    image:""
   };
   const [TeacherValue, setTeacherValue] = useState(initData);
 
   const HandleDoctorChange = (e) => {
     setTeacherValue({ ...TeacherValue, [e.target.name]: e.target.value });
+    console.log(TeacherValue);
   };
-
+ 
+  const handleFileChange = (e) => {
+    console.log(e.target.files);
+    setTeacherValue({ ...TeacherValue, image: e.target.files[0] });
+  };  
   const HandleDoctorSubmit = (e) => {
     e.preventDefault();
+    const form =  document.getElementById("form")    
+      const doc = new FormData(form);
+      doc.append('file', TeacherValue.file);
     setLoading(true);
-    dispatch(TeacherRegister(TeacherValue)).then((res) => {
+    dispatch(TeacherRegister(doc)).then((res) => {  
       console.log(res);
-      if (res.message === "Teacher already exists") {
+      if (res.message === "Teacher already exists") { 
         setLoading(false);
         return notify("Teacher Already Exist");
       }
-      if (res.message === "error") {
+      if (res.message === "Error") {
         setLoading(false);
         return notify("Something went wrong, Please try Again");
       }
@@ -81,7 +90,7 @@ const AddDoctor = () => {
         <div className="AfterSideBar">
           <div className="Main_Add_Doctor_div">
             <h1>Add Teacher</h1>
-            <form onSubmit={HandleDoctorSubmit}>
+            <form encType="multipart/form-data" id="form" onSubmit={HandleDoctorSubmit}>
               <div>
                 <label>Name</label>
                 <div className="inputdiv">
@@ -137,19 +146,19 @@ const AddDoctor = () => {
               <div>
                 <label>Gender</label>
                 <div className="inputdiv">
-                  <select
-                    name="gender"
-                    value={TeacherValue.gender}
-                    onChange={HandleDoctorChange}
-                    required
-                  >
-                    <option value="Choose Gender">Choose Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Others">Others</option>
-                  </select>
+                <select
+                  name="gender"
+                  value={TeacherValue.gender}
+                  onChange={HandleDoctorChange}
+                  required
+                >
+                  <option value="">Choose Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
+                </select>
                 </div>
-              </div>
+              </  div>
               <div>
                 <label>Subject</label>
                 <div className="inputdiv">
@@ -235,6 +244,47 @@ const AddDoctor = () => {
                   />
                 </div>
               </div>
+              <div>
+                <label>Class</label>
+                <div className="inputdiv">
+                  <select
+                    name=""
+                    value={TeacherValue}
+                    onChange={HandleDoctorChange}
+                    required
+                  >
+                    <option value="Choose Gender">Choose Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label>Division</label>
+                <div className="inputdiv">
+                  <select
+                    name=""
+                    value={TeacherValue}
+                    onChange={HandleDoctorChange}
+                    required
+                  >
+                    <option value="Choose Gender">Choose Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+                <label>upload picture</label>
+                <div >
+                  <input
+                    type="file"
+                    name="image"
+                    onChange={handleFileChange}
+                    required
+                  />
+                </div>
               <button type="submit" className="formsubmitbutton">
                 {loading ? "Loading..." : "Submit"}
               </button>

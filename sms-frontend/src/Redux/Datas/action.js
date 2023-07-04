@@ -5,7 +5,7 @@ import { baseURL } from "../auth/action";
 export const CreateReport = (data) => async (dispatch) => {
   try {
     const res = await axios.post(
-      "https://ill-blue-wildebeest-kilt.cyclic.app/reports/create",
+      "",
       data
     );
     console.log(res);
@@ -19,7 +19,7 @@ export const CreateReport = (data) => async (dispatch) => {
 export const AddDoubts = (data) => async () => {
   try {
     const res = await axios.post(
-      "https://ill-blue-wildebeest-kilt.cyclic.app/doubts/create",
+      "",
       data
     );
     return res.data;
@@ -33,7 +33,7 @@ export const GetDoubts = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_DOUBT_REQUEST });
     const res = await axios.post(
-      "https://ill-blue-wildebeest-kilt.cyclic.app/doubts",
+      "",
       data
     );
     dispatch({
@@ -68,7 +68,7 @@ export const deleteDoubt = (id) => async (dispatch) => {
   try {
     dispatch({ type: types.DELETE_DOUBT_REQUEST });
     await axios.delete(
-      `https://ill-blue-wildebeest-kilt.cyclic.app/doubts/${id}`
+      ``
     );
     dispatch({
       type: types.DELETE_DOUBT_SUCCESS,
@@ -101,7 +101,7 @@ export const GetAllData = () => async (dispatch) => {
 export const GetAllReport = (data) => async (dispatch) => {
   try {
     const res = await axios.post(
-      `https://ill-blue-wildebeest-kilt.cyclic.app/reports`,
+      ``,
       data
     );
     dispatch({
@@ -117,7 +117,7 @@ export const GetAllReport = (data) => async (dispatch) => {
 export const DeleteReports = (id) => async (dispatch) => {
   try {
     const res = await axios.delete(
-      `https://ill-blue-wildebeest-kilt.cyclic.app/reports/${id}`
+      ``
     );
     console.log(res.data);
     dispatch({

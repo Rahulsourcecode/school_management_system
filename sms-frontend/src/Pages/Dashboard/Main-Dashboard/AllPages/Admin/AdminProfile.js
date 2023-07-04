@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Teacher/CSS/TeacherProfile.scss";
 import { BiTime } from "react-icons/bi";
 import { GiMeditation } from "react-icons/gi";
@@ -11,15 +11,18 @@ import { FaRegHospital, FaMapMarkedAlt, FaBirthdayCake } from "react-icons/fa";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, message, Modal } from "antd";
-import { UpdateAdmin} from "../../../../../Redux/auth/action";
+import { UpdateAdmin, axioss} from "../../../../../Redux/auth/action";
 import "./CSS/AdminProfile.scss";
 import { Navigate } from "react-router-dom";
 
 const AdminProfile = () => {
+  
   const {
     data: { user },
   } = useSelector((state) => state.auth);
-console.log(user)
+  
+  console.log(user)
+
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -70,6 +73,7 @@ console.log(user)
   if (data?.isAuthenticated === false) {
     return <Navigate to={"/"} />;
   }
+
 
   return (
     <>

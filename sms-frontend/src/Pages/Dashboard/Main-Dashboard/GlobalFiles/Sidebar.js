@@ -28,7 +28,6 @@ const Sidebar = () => {
   const {
     data: { user },
   } = useSelector((state) => state.auth);
-console.log(user)
   function toggle() {
     setIsOpen(!isOpen);
   }
@@ -146,7 +145,7 @@ console.log(user)
                   style={{ display: isOpen ? "block" : "none" }}
                   className="link_text"
                 >
-                  view teachers
+                  profile
                 </div>
               </Link>
             ) : null}
@@ -285,6 +284,23 @@ console.log(user)
                   className="link_text"
                 >
                   Profile
+                </div>
+              </Link>
+            ) : null}
+                {user?.userType === "teacher" ? (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/markattendace"}
+              >
+                <div className="icon">
+                  <SlUserFollow className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Attendance
                 </div>
               </Link>
             ) : null}
