@@ -58,7 +58,7 @@ const AddClass = () => {
 
           <div className="table-container" >
             <h3>List of classes</h3>
-            <Table striped bordered hover className="table">
+            <Table style={{backgroundColor:"white"}} striped bordered hover className="table">
               <thead>
                 <tr>
                   <th>sl no</th>

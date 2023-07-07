@@ -11,7 +11,6 @@ import {
 } from "react-icons/bs";
 import { BiDetail } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { ImMenu } from "react-icons/im";
@@ -19,6 +18,12 @@ import { FiLogOut } from "react-icons/fi";
 import { RiAdminLine } from "react-icons/ri";
 import { MdDashboardCustomize, MdQuiz } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import HelpIcon from '@mui/icons-material/Help';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import ExitToAppTwoToneIcon from '@mui/icons-material/ExitToAppTwoTone';
 import "./CommonCSS.scss";
 
 const Sidebar = () => {
@@ -31,7 +36,6 @@ const Sidebar = () => {
   function toggle() {
     setIsOpen(!isOpen);
   }
-
   return (
     <>
       <div>
@@ -53,7 +57,7 @@ const Sidebar = () => {
             <div className="user_profile">
               <div className="user_avatar">
                 {user?.image ? (
-                   <FaUserCircle className="avatar_icon" />
+                  <img src={`http://localhost:3001/uploads/${user.image}`} alt="profile" />
                 ) : (
                   <FaUserCircle className="avatar_icon" />
                 )}
@@ -90,7 +94,7 @@ const Sidebar = () => {
 
             <Link className="link" activeclassname="active" to={"/dashboard"}>
               <div className="icon">
-                <MdDashboardCustomize className="mainIcon" />
+                <DashboardIcon fontSize="large" className="mainIcon" />
               </div>
               <div
                 style={{ display: isOpen ? "block" : "none" }}
@@ -108,7 +112,7 @@ const Sidebar = () => {
                 to={"/studentprofile"}
               >
                 <div className="icon">
-                  <CgProfile className="mainIcon" />
+                  <CgProfile  className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -203,7 +207,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null}
-                        {user?.userType === "admin" ? (
+              {user?.userType === "admin" ? (
               <Link
                 className="link"
                 activeclassname="active"
@@ -277,7 +281,7 @@ const Sidebar = () => {
                 to={"/teacherprofile"}
               >
                 <div className="icon">
-                  <SlUserFollow className="mainIcon" />
+                  <AccountCircleIcon fontSize="large" className="mainIcon"/>
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -291,10 +295,10 @@ const Sidebar = () => {
               <Link
                 className="link"
                 activeclassname="active"
-                to={"/markattendace"}
+                to={"/attendance"}
               >
                 <div className="icon">
-                  <SlUserFollow className="mainIcon" />
+                  <HowToRegIcon fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -307,7 +311,7 @@ const Sidebar = () => {
             {user?.userType === "teacher" || user?.userType === "student" ? (
               <Link className="link" activeclassname="active" to={"/doubts"}>
                 <div className="icon">
-                  <AiOutlineQuestionCircle className="mainIcon" />
+                  <HelpIcon fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -325,7 +329,7 @@ const Sidebar = () => {
                 to={"/checkreports"}
               >
                 <div className="icon">
-                  <BsFillBookmarkCheckFill className="mainIcon" />
+                  <AssessmentIcon fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -344,7 +348,7 @@ const Sidebar = () => {
                 activeclassname="active"
               >
                 <div className="icon">
-                  <MdQuiz className="mainIcon" />
+                  <MdQuiz fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -400,7 +404,7 @@ const Sidebar = () => {
               to={"/"}
             >
               <div className="icon">
-                <FiLogOut />
+                <ExitToAppTwoToneIcon fontSize="large" />
               </div>
               <div
                 style={{ display: isOpen ? "block" : "none" }}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import "../Teacher/CSS/TeacherProfile.scss";
 import { BiTime } from "react-icons/bi";
 import { GiMeditation } from "react-icons/gi";
@@ -11,7 +11,7 @@ import { FaRegHospital, FaMapMarkedAlt, FaBirthdayCake } from "react-icons/fa";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, message, Modal } from "antd";
-import { UpdateStudent } from "../../../../../Redux/auth/action";
+import { UpdateStudent, axioss } from "../../../../../Redux/auth/action";
 import "./CSS/Profiles.scss";
 import { Navigate } from "react-router-dom";
 
@@ -19,6 +19,23 @@ const Nurse_Profile = () => {
   const {
     data: { user },
   } = useSelector((state) => state.auth);
+
+  const [imagePath, setImagePath] = useState("");
+  useEffect(() => {
+    const id = data.user._id;
+    console.log(id);
+    const fetchImage = async () => {
+      try {
+        const response = await axioss.post("/students/fetchimage", { id });
+        const imagePath = response.data.imagePath;
+        console.log(imagePath);
+        setImagePath(imagePath);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchImage();
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -81,7 +98,7 @@ const Nurse_Profile = () => {
           <div className="maindoctorProfile">
             <div className="firstBox doctorfirstdiv">
               <div>
-                <img src={user?.image} alt="img" />
+                <img style={{height:240}} src={`http://localhost:3001/uploads/${imagePath}`} alt="img" />
               </div>
               <hr />
               <div className="singleitemdiv">
@@ -90,7 +107,7 @@ const Nurse_Profile = () => {
               </div>
               <div className="singleitemdiv">
                 <MdMeetingRoom className="singledivicons" />
-                <p>{user?.class}</p>
+                <p>{user?.userType}</p>
               </div>
               <div className="singleitemdiv">
                 <FaBirthdayCake className="singledivicons" />

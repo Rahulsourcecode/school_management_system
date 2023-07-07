@@ -1,55 +1,63 @@
-import React, { useState, useEffect } from "react";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { ToastContainer } from "react-toastify";
-import { Table } from "react-bootstrap";
-import { axioss, baseURL } from "../../../../../Redux/auth/action";
-import "./SCSS/TeachersList.scss"; // Import the SCSS file
+import { axioss } from "../../../../../Redux/auth/action";
+import { DataGrid } from '@mui/x-data-grid';
 
-function StudentLists() {
-  const [Students, setStudents] = useState([]);
+
+
+import {useEffect,useState} from 'react';
+
+const columns = [
+  {field: 'firstName', headerName: 'First name', width:100},
+  {field: 'className', headerName: 'Class',width:100},
+  {field: 'divisionName', headerName:'Division' ,width:100},
+  {field: 'email', headerName:'email ID' ,width:100}
+];
+
+
+
+export default function StudentLists() {
+
+    const [Students, setStudents] = useState([]);
 
   useEffect(() => {
     // fetch teachers data from API or database
    axioss.get("/admin/allstudents")
    .then((res)=>setStudents(res.data))
   },[]);
+  console.log(Students);
 
-
+  const rows = Students.map((student, index) => ({
+    id: index + 1,
+    firstName: student.studentName,
+    className:student.classname,
+    divisionName: student.division,
+    email:student.email
+  }));
   return (
-    <>
+    <div>
       <ToastContainer />
       <div className="container">
         <Sidebar />
         <div className="AfterSideBar">
           <h2>Student List</h2>
-          <div className="table-container">
-            <Table striped bordered hover className="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Class</th>
-                  <th>Division</th>
-                  <th>Email</th>
-                  <th>mobile</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Students.map((student) => (
-                  <tr key={student._id}>
-                    <td>{student.studentName}</td>
-                    <td>{student.classname.name}</td>
-                    <td>{student.division}</td>
-                    <td>{student.email}</td>
-                    <td>{student.mobile}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+
+          <div style={{ height: 550, width: '100%' }}>
+            <DataGrid
+            style={{backgroundColor:"white",borderRadius:20}}
+              rows={rows}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              pageSizeOptions={[5, 10]}
+              checkboxSelection
+            />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
-
-export default StudentLists;

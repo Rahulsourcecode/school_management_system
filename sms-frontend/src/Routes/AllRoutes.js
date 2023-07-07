@@ -22,6 +22,7 @@ import Resetpassword from "../Pages/Dashboard/Login/ResetPassword";
 import StudentLists from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/StudentLists";
 import AdminProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AdminProfile";
 import MarkAttendance from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/MarkAttendance";
+import ChooseAttendance from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/ChooseAttendance";
 const AllRoutes = () => {
   const { data } = useSelector((store) => store.auth);
 
@@ -35,7 +36,9 @@ const AllRoutes = () => {
         <Route path="/verifyotp" element={<Verifyotp/>}/>
         <Route path="/resetpassword" element={<Resetpassword/>}/>
         <Route path="/dashboard" element={data.isAuthenticated?<FrontPage />:<DLogin/>}/>
-        <Route path="/markattendace" element={data.isAuthenticated?<MarkAttendance/>:<DLogin/>}/>
+        <Route path="/attendance" element={data.isAuthenticated?<ChooseAttendance/>:<DLogin/>}/>
+        <Route path="/markattendance" element={data.isAuthenticated?<MarkAttendance/>:<DLogin/>}/>
+
         <Route path="/addteacher" element={data.isAuthenticated?<AddTeacher/>:<DLogin/>} />
         <Route path="/viewteacher" element={data.isAuthenticated?<TeachersList/>:<DLogin/>} />
         <Route path="/addstudent" element={data.isAuthenticated?<AddStudent/>:<DLogin/>} />

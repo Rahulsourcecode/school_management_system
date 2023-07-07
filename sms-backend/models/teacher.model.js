@@ -61,6 +61,15 @@ const teacherSchema = mongoose.Schema({
   details: {
     type: String,
   },
+  classname: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'class',
+    required: true
+  },
+  division:{
+    type:String,
+    required:true
+  }
 });
 
 const TeacherModel = mongoose.model("teacher", teacherSchema);

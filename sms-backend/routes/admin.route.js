@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const { StudentModel } = require("../models/student.model");
 const { TeacherModel } = require("../models/teacher.model");
+const { uploads } = require("../middlewares/multer");
 
 
 const router = express.Router();
@@ -153,7 +154,8 @@ router.get("/getclasses", async (req, res) => {
 
 //register student
 
-router.post("/studentregister", async (req, res) => {
+router.post("/studentregister",uploads.single('image'), async (req, res) => {
+  console.log(req.file.filename)
   const { classname, email } = req.body;
   console.log("name of class"+classname)
   try {
@@ -168,7 +170,8 @@ router.post("/studentregister", async (req, res) => {
     const classDivision = await Myclass.findOne({ _id: classname });
     console.log("full data"+classDivision)
     console.log(classDivision.division)
-    const studentData = { ...req.body, division: classDivision.division }
+    const hashedPassword = bcrypt(req.body.password ,10)
+    const studentData = { ...req.body,password:hashedPassword, division: classDivision.division,image:req.file.filename,studentID:Date.now()}
     let value = new StudentModel(studentData);
     await value.save();
     const data = await StudentModel.findOne({ email });

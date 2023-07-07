@@ -84,4 +84,21 @@ router.delete("/:studentId", async (req, res) => {
   }
 });
 
+//fetch ProfileImage
+router.post("/fetchimage", async (req, res) => {
+  try {
+    const student = await StudentModel.findOne({ _id: req.body.id });
+    if (!student) {
+      // Handle case when teacher is not found
+      return res.status(404).json({ error: "Student not found" });
+    }
+    const imagePath = student.image;
+    res.json({ imagePath });
+  } catch (error) {
+    // Handle any errors that occurred during the process
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;

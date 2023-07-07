@@ -21,7 +21,6 @@ const Teacher_Profile = () => {
   const dispatch = useDispatch();
   
   const [imagePath, setImagePath] = useState("");
-  console.log(imagePath)
   useEffect(() => {
     const id = data.user._id;
     console.log(id);
@@ -101,7 +100,7 @@ const Teacher_Profile = () => {
           <div className="maindoctorProfile">
             <div className="firstBox">
               <div>
-              <img src={`http://localhost:3001/uploads/${imagePath}`} alt="docimg" />
+              <img style={{height:240}} src={`http://localhost:3001/uploads/${imagePath}`} alt="docimg" />
               </div>
               <hr />
               <div className="singleitemdiv">
@@ -110,7 +109,7 @@ const Teacher_Profile = () => {
               </div>
               <div className="singleitemdiv">
                 <MdBloodtype className="singledivicons" />
-                <p>{data?.user?.subject}</p>
+                <p>{data?.user?.userType}</p>
               </div>
               <div className="singleitemdiv">
                 <FaBirthdayCake className="singledivicons" />

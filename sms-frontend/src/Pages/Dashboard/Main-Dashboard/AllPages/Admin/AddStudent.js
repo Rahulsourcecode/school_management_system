@@ -32,6 +32,7 @@ const AddStudent = () => {
     studentID: Date.now(),
     password: "",
     details: "",
+    file:""
   };
   const [StudentValue, setStudentValue] = useState(InitData);
   
@@ -39,6 +40,10 @@ const AddStudent = () => {
     setStudentValue({ ...StudentValue, [e.target.name]: e.target.value });
   };
   
+  const handleFileChange =(e)=>{
+    console.log(e.target.files)
+    setStudentValue({...StudentValue,image:e.target.files[0]})
+  }
   useEffect(() => {
     console.log("hello")
      axioss.get("/admin/getclasses").then((res) => {
@@ -47,9 +52,12 @@ const AddStudent = () => {
   },[]);
   const HandlestudentSubmit = (e) => {
     e.preventDefault();
+    const form = document.getElementById('form')
+    const doc =new FormData(form);
+    doc.append('file',StudentValue.file);
     setLoading(true);
     console.log(StudentValue);
-    dispatch(StudentRegister(StudentValue)).then((res) => {
+    dispatch(StudentRegister(doc)).then((res) => {
       console.log(res);
       if (res.message === "Student already exists") {
         setLoading(false);
@@ -89,7 +97,7 @@ const AddStudent = () => {
         <div className="AfterSideBar">
           <div className="Main_Add_Doctor_div">
             <h1>Add student</h1>
-            <form onSubmit={HandlestudentSubmit}>
+            <form id="form" onSubmit={HandlestudentSubmit}>
               <div>
                 <label> Name</label>
                 <div className="inputdiv">
@@ -225,6 +233,18 @@ const AddStudent = () => {
                     name="details"
                     value={StudentValue.details}
                     onChange={HandlestudentChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label>upload image</label>
+                <div className="inputdiv">
+                  <input
+                    type="file"
+                    name="image"
+                    onChange={handleFileChange}
                     required
                   />
                 </div>

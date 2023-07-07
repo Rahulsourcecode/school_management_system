@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./CSS/AddTeacher.scss";
 import "./CSS/AddBed.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
   SendPassword,
   TeacherRegister,
+  axioss,
 } from "../../../../../Redux/auth/action";
 import Sidebar from "../../GlobalFiles/Sidebar";
 
@@ -33,10 +34,13 @@ const AddDoctor = () => {
     teacherID: Date.now(),
     password: "",
     details: "",
-    image:""
+    image:"",
+    classname:"",
+    division:"",
   };
   const [TeacherValue, setTeacherValue] = useState(initData);
-
+  const [classList ,setclassList] =useState([])
+  const [divisionList,setdivisionList] =useState([])
   const HandleDoctorChange = (e) => {
     setTeacherValue({ ...TeacherValue, [e.target.name]: e.target.value });
     console.log(TeacherValue);
@@ -44,8 +48,24 @@ const AddDoctor = () => {
  
   const handleFileChange = (e) => {
     console.log(e.target.files);
-    setTeacherValue({ ...TeacherValue, image: e.target.files[0] });
-  };  
+    setTeacherValue({ ...TeacherValue, image: e.target.files[0]});
+  };
+  useEffect(() => {
+    console.log("hello")
+     axioss.get("/admin/getclasses").then((res) => {
+       setclassList(res.data);
+    })
+
+    axioss.get("/admin/allstudents").then((res) => {
+      setdivisionList(res.data)
+    })
+  },[]);
+
+  const uniqueDivisions = new Set();
+       divisionList.forEach((division)=>{
+        uniqueDivisions.add(division.division)
+       })
+       console.log(uniqueDivisions)
   const HandleDoctorSubmit = (e) => {
     e.preventDefault();
     const form =  document.getElementById("form")    
@@ -70,7 +90,6 @@ const AddDoctor = () => {
       console.log(data);
       dispatch(SendPassword(data)).then(() => notify("Account Details Sent"));
       setLoading(false);
-      // setTeacherValue(initData);
     });
   };
 
@@ -245,18 +264,18 @@ const AddDoctor = () => {
                 </div>
               </div>
               <div>
-                <label>Class</label>
+                <label>Assign to</label>
                 <div className="inputdiv">
                   <select
-                    name=""
-                    value={TeacherValue}
+                    name="classname"
+                    value={TeacherValue.classname}
                     onChange={HandleDoctorChange}
                     required
                   >
-                    <option value="Choose Gender">Choose Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Others">Others</option>
+                    <option value="">choose class</option>
+                    {classList.map((data)=>{
+                      return (<option value={data._id} key={data._id}>{data.name}</option>)
+                    })}
                   </select>
                 </div>
               </div>
@@ -264,15 +283,17 @@ const AddDoctor = () => {
                 <label>Division</label>
                 <div className="inputdiv">
                   <select
-                    name=""
-                    value={TeacherValue}
+                    name="division"
+                    value={TeacherValue.division}
                     onChange={HandleDoctorChange}
                     required
-                  >
-                    <option value="Choose Gender">Choose Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Others">Others</option>
+                  > 
+                  <option value="">Choose division</option>
+                    {[...uniqueDivisions].map((division) => (
+                      <option value={division} key={division}>
+                        {division}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
