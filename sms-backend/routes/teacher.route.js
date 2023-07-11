@@ -1,11 +1,11 @@
 const express = require("express");
 const { TeacherModel } = require("../models/teacher.model");
 const { AdminModel } = require("../models/admin.model");
-const {StudentModel} = require("../models/student.model")
+const { StudentModel } = require("../models/student.model")
 const bcrypt = require('bcrypt');
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const {uploads} = require("../middlewares/multer");
+const { uploads } = require("../middlewares/multer");
 const { studentAttendance } = require("../models/Student.attendance.model");
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post("/register",uploads.single('image'), async (req, res) => {
+router.post("/register", uploads.single('image'), async (req, res) => {
   try {
     console.log(req.body)
     const { email, password, ...otherFields } = req.body;
@@ -42,8 +42,8 @@ router.post("/register",uploads.single('image'), async (req, res) => {
     const teacher = new TeacherModel({
       email,
       password: hashedPassword,
-        teacherID:Date.now(),
-        image: req.file.filename,
+      teacherID: Date.now(),
+      image: req.file.filename,
       ...otherFields,
     });
     // Save the teacher to the database
@@ -136,46 +136,75 @@ router.delete("/:teacherId", async (req, res) => {
 });
 
 //show class students
-router.post("/classStudnets",async(req,res)=>{
+router.post("/classStudnets", async (req, res) => {
   try {
-    const {classname , division} =req.body
-    const student = await StudentModel.find({$and:[{classname:classname},{division:division}]})
-    if(student){
+    const { classname, division } = req.body
+    const student = await StudentModel.find({ $and: [{ classname: classname }, { division: division }] })
+    if (student) {
       res.status(200).send(student)
-    }else{
-      res.status(200).json({message:"no student"})
+    } else {
+      res.status(200).json({ message: "no student" })
     }
   } catch (error) {
     console.log(error);
   }
 })
 //show attendance data
-router.post("/attendancedata",async(req,res)=>{
+router.post("/attendancedata", async (req, res) => {
   try {
-    const {classname , division} =req.body
-    const attendance = await studentAttendance.find({$and:[{classname:classname},{division:division}]})
-    if(attendance){
+    const { classname, division } = req.body
+    const attendance = await studentAttendance.find({ $and: [{ classname: classname }, { division: division }] })
+    if (attendance) {
       res.status(200).send(attendance)
-    }else{
-      res.status(200).json({message:"no student"})
+    } else {
+      res.status(200).json({ message: "no student" })
     }
   } catch (error) {
     console.log(error);
   }
 })
 //mark attendance
-router.post('/markattendance',async(req,res)=>{
+router.post('/markattendance', async (req, res) => {
   try {
-    console.log("attendance",req.body)
-    const attendanceDate = await studentAttendance.updateOne({student:req.body.studentID,date:req.body.formattedDate},{$set:{state:req.body.attendance,date:req.body.formattedDate,student:req.body.studentId,class:req.body.classname,division:req.body.division}},{upsert:true})
-    if(attendanceDate){
-      res.status(200).json({message:"added"})
-    }else{
-      res.status(200).json({message:"not added"})
+    console.log("attendance", req.body)
+    const attendanceDate = await studentAttendance.updateOne({
+      student: req.body.studentID, date: {
+        $gte: req.body.formattedDate + 'T00:00:00.000+00:00',
+        $lte: req.body.formattedDate + 'T23:59:59.999+00:00',
+      }
+    }, { $set: { state: req.body.attendance, student: req.body.studentId, date: req.body.formattedDate, class: req.body.classname, division: req.body.division } }, { upsert: true })
+    if (attendanceDate) {
+      res.status(200).json({ message: "added" })
+    } else {
+      res.status(200).json({ message: "not added" })
     }
   } catch (error) {
     console.log(error)
   }
-}) 
+})
 
+router.get("/datelist", async (req, res) => {
+  try {
+    const data = await studentAttendance.aggregate([
+      {
+        $group: {
+          _id: "$date"
+        }
+      }, {
+        $project: {
+          _id: 1,
+        }
+      }, {
+        $limit: 5
+      }
+    ])
+    if(data){
+      res.status(200).send(data)
+    }else{
+      res.status(200).json({message:"no records found!"})
+    }
+  } catch (error) {
+    console.log(error);
+  }
+})
 module.exports = router;
