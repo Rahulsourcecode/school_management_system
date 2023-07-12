@@ -11,6 +11,7 @@ const notify = (text) => toast(text);
 export default function EditAttendance() {
     const { data } = useSelector((store) => store.auth);
     const { date } = useParams();
+    console.log(date)
     const [Students, setStudents] = useState([]);
     const [AttendanceData, setAttendanceData] = useState([]);
     const formattedDate = date.slice(0, 10)
