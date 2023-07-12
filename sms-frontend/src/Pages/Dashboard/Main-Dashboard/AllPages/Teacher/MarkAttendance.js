@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { toast, ToastContainer } from "react-toastify";
+import { useParams } from 'react-router-dom';
 const notify = (text) => toast(text);
 
 export default function MarkAttendance() {
@@ -13,9 +14,9 @@ export default function MarkAttendance() {
   const [AttendanceData, setAttendanceData] = useState([]);
   const formattedDate = `${new Date().getFullYear()}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${(new Date().getDate()).toString().padStart(2, '0')}`;
   const currentdate = new Date().toLocaleDateString();
-  const [change,setChange] = useState(false)
+  const [change, setChange] = useState(false)
   const handleAttendanceChange = (id, attendance) => {
-    setChange((s)=>!s)
+    setChange((s) => !s)
     setStudents((prevStudents) =>
       prevStudents.map((student) => {
         if (student.studentID === id) {

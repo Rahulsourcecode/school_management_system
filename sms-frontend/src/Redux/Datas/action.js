@@ -129,3 +129,11 @@ export const DeleteReports = (id) => async (dispatch) => {
   }
 };
 
+//get dateData
+export const getDate =(payload)=>{
+  return{
+    type:types.GET_DATE,
+    payload,
+  }
+}
+

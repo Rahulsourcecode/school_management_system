@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import Stack from '@mui/material/Stack';
 import { useState, useEffect } from 'react'
 import { axioss } from "../../../../../../Redux/auth/action";
 
@@ -34,13 +33,13 @@ export default function ViewAttendanceOption() {
           <br />
         </Typography>
         <div style={{ marginTop: 100 }}>
-          <div style={{ backgroundColor: "lightslategray", borderRadius: 10 }}>
-            {dateList.map((data) =>
-              <div style={{ textAlign: 'center' }}>
-                {data._id.slice(0, 10)}
-              </div>
-            )}
-          </div>
+          {dateList.map((data) =>
+            <div key={data._id} style={{ textAlign: 'center', marginBottom: 10 }}>
+
+              <Link to={`/editAttendance/${data._id}`}><Button sx={{ color: 'white', width: 300, backgroundColor: 'grey' }} variant="contained">{data._id.slice(0, 10)}</Button></Link>
+
+            </div>
+          )}
         </div>
       </CardContent>
       <CardActions>
