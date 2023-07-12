@@ -28,7 +28,7 @@ export default function ViewAttendanceOption() {
     const selection = new Date(date?.$d).toLocaleDateString('en-CA').split('/').reverse().join('/')
     let state = false
     dateList.map(data => {
-      if (data._id.slice(0, 10) === selection) {
+      if (data._id.slice(0, 10) === selection){
         setSelectedDate(selection)
         state = true
         return true
