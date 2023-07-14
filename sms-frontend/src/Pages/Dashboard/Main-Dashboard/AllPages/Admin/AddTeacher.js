@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./CSS/AddTeacher.scss";
 import "./CSS/AddBed.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,47 +34,53 @@ const AddDoctor = () => {
     teacherID: Date.now(),
     password: "",
     details: "",
-    image:"",
-    classname:"",
-    division:"",
+    image: "",
+    classname: "",
+    division: "",
   };
   const [TeacherValue, setTeacherValue] = useState(initData);
-  const [classList ,setclassList] =useState([])
-  const [divisionList,setdivisionList] =useState([])
+  const [classList, setclassList] = useState([])
+  const [divisionList, setdivisionList] = useState([]);
+  const [subjectData, setSubjectData] = useState([]);
+  console.log(subjectData)
   const HandleDoctorChange = (e) => {
     setTeacherValue({ ...TeacherValue, [e.target.name]: e.target.value });
     console.log(TeacherValue);
   };
- 
+
   const handleFileChange = (e) => {
     console.log(e.target.files);
-    setTeacherValue({ ...TeacherValue, image: e.target.files[0]});
+    setTeacherValue({ ...TeacherValue, image: e.target.files[0] });
   };
   useEffect(() => {
     console.log("hello")
-     axioss.get("/admin/getclasses").then((res) => {
-       setclassList(res.data);
+    axioss.get("/admin/getclasses").then((res) => {
+      setclassList(res.data);
     })
 
     axioss.get("/admin/allstudents").then((res) => {
       setdivisionList(res.data)
     })
-  },[]);
+
+    axioss.get("/admin/getsubjects").then((res) => {
+      setSubjectData(res.data)
+    })
+  }, []);
 
   const uniqueDivisions = new Set();
-       divisionList.forEach((division)=>{
-        uniqueDivisions.add(division.division)
-       })
-       console.log(uniqueDivisions)
+  divisionList.forEach((division) => {
+    uniqueDivisions.add(division.division)
+  })
+  console.log(uniqueDivisions)
   const HandleDoctorSubmit = (e) => {
     e.preventDefault();
-    const form =  document.getElementById("form")    
-      const doc = new FormData(form);
-      doc.append('file', TeacherValue.file);
+    const form = document.getElementById("form")
+    const doc = new FormData(form);
+    doc.append('file', TeacherValue.file);
     setLoading(true);
-    dispatch(TeacherRegister(doc)).then((res) => {  
+    dispatch(TeacherRegister(doc)).then((res) => {
       console.log(res);
-      if (res.message === "Teacher already exists") { 
+      if (res.message === "Teacher already exists") {
         setLoading(false);
         return notify("Teacher Already Exist");
       }
@@ -165,17 +171,17 @@ const AddDoctor = () => {
               <div>
                 <label>Gender</label>
                 <div className="inputdiv">
-                <select
-                  name="gender"
-                  value={TeacherValue.gender}
-                  onChange={HandleDoctorChange}
-                  required
-                >
-                  <option value="">Choose Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Others">Others</option>
-                </select>
+                  <select
+                    name="gender"
+                    value={TeacherValue.gender}
+                    onChange={HandleDoctorChange}
+                    required
+                  >
+                    <option value="">Choose Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
                 </div>
               </  div>
               <div>
@@ -264,7 +270,7 @@ const AddDoctor = () => {
                 </div>
               </div>
               <div>
-                <label>Assign to</label>
+                <label>class charge</label>
                 <div className="inputdiv">
                   <select
                     name="classname"
@@ -273,7 +279,7 @@ const AddDoctor = () => {
                     required
                   >
                     <option value="">choose class</option>
-                    {classList.map((data)=>{
+                    {classList.map((data) => {
                       return (<option value={data._id} key={data._id}>{data.name}</option>)
                     })}
                   </select>
@@ -287,8 +293,8 @@ const AddDoctor = () => {
                     value={TeacherValue.division}
                     onChange={HandleDoctorChange}
                     required
-                  > 
-                  <option value="">Choose division</option>
+                  >
+                    <option value="">Choose division</option>
                     {[...uniqueDivisions].map((division) => (
                       <option value={division} key={division}>
                         {division}
@@ -297,15 +303,15 @@ const AddDoctor = () => {
                   </select>
                 </div>
               </div>
-                <label>upload picture</label>
-                <div >
-                  <input
-                    type="file"
-                    name="image"
-                    onChange={handleFileChange}
-                    required
-                  />
-                </div>
+              <label>upload picture</label>
+              <div >
+                <input
+                  type="file"
+                  name="image"
+                  onChange={handleFileChange}
+                  required
+                />
+              </div>
               <button type="submit" className="formsubmitbutton">
                 {loading ? "Loading..." : "Submit"}
               </button>
