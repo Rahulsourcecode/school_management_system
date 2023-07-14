@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
 const notify = (text) => toast(text);
 
-const AddBeds = () => {
+const AddNotices = () => {
   const { data } = useSelector((store) => store.auth);
 
   const InitData = {
@@ -104,4 +104,4 @@ const AddBeds = () => {
   );
 };
 
-export default AddBeds;
+export default AddNotices;

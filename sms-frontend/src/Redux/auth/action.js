@@ -79,9 +79,9 @@ export const AdminLogin = (data) => async (dispatch) => {
 };
 
 // register Teacher
-export const TeacherRegister =(doc) => async () => {
+export const TeacherRegister = (doc) => async () => {
   try {
-    const res = await axios.post(`${baseURL}/teachers/register`,doc);
+    const res = await axios.post(`${baseURL}/teachers/register`, doc);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -112,12 +112,13 @@ export const AdminRegister = (data) => async () => {
 export const AddNotice = (data) => async () => {
   console.log("hello");
   try {
-    const res = await axios.post(`${baseURL}/admin/createnotice`,data);
+    const res = await axios.post(`${baseURL}/admin/createnotice`, data);
     return res.data;
   } catch (error) {
     console.log("Axios error:", error);
   }
 };
+//
 
 
 
@@ -166,11 +167,11 @@ export const UpdateTeacher = (data, id) => async (dispatch) => {
 };
 
 //update admin
-export const UpdateAdmin =(data,id)=>async (dispatch) => {
+export const UpdateAdmin = (data, id) => async (dispatch) => {
   try {
-    dispatch({type:types.EDIT_ADMIN_REQUEST});
-    const res = await axios.patch(`${baseURL}/admin/${id}`,data);
-    dispatch({type:types.EDIT_ADMIN_SUCCESS, payload:res.data.user})
+    dispatch({ type: types.EDIT_ADMIN_REQUEST });
+    const res = await axios.patch(`${baseURL}/admin/${id}`, data);
+    dispatch({ type: types.EDIT_ADMIN_SUCCESS, payload: res.data.user })
   } catch (error) {
     console.log(error)
   }
@@ -192,7 +193,7 @@ export const SendPassword = (data) => async (dispatch) => {
 //forgot password
 export const forgetPassword = (data) => async () => {
   try {
-    const res = await axios.post(`${baseURL}/general/forgotpassword`,data);
+    const res = await axios.post(`${baseURL}/general/forgotpassword`, data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -200,33 +201,33 @@ export const forgetPassword = (data) => async () => {
 };
 
 //verify otp
-export const VerifyOtp = (data) => async()=>{
-  try{
-    const res = await axioss.post("/general/Verifyotp",data);
+export const VerifyOtp = (data) => async () => {
+  try {
+    const res = await axioss.post("/general/Verifyotp", data);
     return res.data;
-  }catch (error){
+  } catch (error) {
     console.log(error)
   }
 }
 
 //set password
-export const setpassword =(data) =>async()=>{
- try {
-  const res = await axioss.post("/general/resetpassword",data);
-  return res.data;
- } catch (error) {
-  console.log(error)
- }
+export const setpassword = (data) => async () => {
+  try {
+    const res = await axioss.post("/general/resetpassword", data);
+    return res.data;
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const NewClass = (data) => async () => {
   console.log(data)
   try {
-    const res=await axios.post(`${baseURL}/admin/createclass`,data);
+    const res = await axios.post(`${baseURL}/admin/createclass`, data);
     return res
   } catch (error) {
     console.log("Axios error:", error);
-    return 
+    return
   }
 };
 

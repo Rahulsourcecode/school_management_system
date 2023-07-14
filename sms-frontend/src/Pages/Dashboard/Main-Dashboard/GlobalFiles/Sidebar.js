@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../GlobalFiles/Sidebar.scss"
+import "../GlobalFiles/Sidebar.scss";
 import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BiNotepad } from "react-icons/bi";
@@ -12,18 +12,20 @@ import {
 import { BiDetail } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { FaChalkboardTeacher } from "react-icons/fa";
+import SubjectIcon from "@mui/icons-material/Subject";
 import { Link } from "react-router-dom";
 import { ImMenu } from "react-icons/im";
 import { FiLogOut } from "react-icons/fi";
 import { RiAdminLine } from "react-icons/ri";
 import { MdDashboardCustomize, MdQuiz } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
-import HelpIcon from '@mui/icons-material/Help';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import ExitToAppTwoToneIcon from '@mui/icons-material/ExitToAppTwoTone';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import HelpIcon from "@mui/icons-material/Help";
+import AssessmentIcon from "@mui/icons-material/Assessment";
+import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
+import RuleIcon from '@mui/icons-material/Rule';
 import "./CommonCSS.scss";
 
 const Sidebar = () => {
@@ -33,16 +35,18 @@ const Sidebar = () => {
   const {
     data: { user },
   } = useSelector((state) => state.auth);
+
   function toggle() {
     setIsOpen(!isOpen);
   }
+
   return (
     <>
       <div>
         <div style={{ width: isOpen ? "200px" : "70px" }} className={`sidebar`}>
           <div className="top_section">
             <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
-            SCHOOL
+              SCHOOL
             </h1>
             <div
               style={{ marginLeft: isOpen ? "50px" : "0px" }}
@@ -51,46 +55,51 @@ const Sidebar = () => {
               <ImMenu onClick={toggle} style={{ cursor: "pointer" }} />
             </div>
           </div>
-          <div className="bottomSection">
-
-          {user?.userType === "admin" ? (
-            <div className="user_profile">
-              <div className="user_avatar">
-                {user?.image ? (
-                  <img src={`http://localhost:3001/uploads/${user.image}`} alt="profile" />
-                ) : (
-                  <FaUserCircle className="avatar_icon" />
-                )}
+          <div
+            className="bottomSection"
+            style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}
+          >
+            {user?.userType === "admin" && (
+              <div className="user_profile">
+                <div className="user_avatar">
+                  {user?.image ? (
+                    <img
+                      src={`http://localhost:3001/uploads/${user.image}`}
+                      alt="profile"
+                    />
+                  ) : (
+                    <FaUserCircle className="avatar_icon" />
+                  )}
+                </div>
+                <div className="user_name">{user?.adminName}</div>
               </div>
-              <div className="user_name">{user?.adminName}</div>
-            </div>
-          ) : null}
+            )}
 
-            {user?.userType === "student" ? (
-            <div className="user_profile">
-              <div className="user_avatar">
-                {user?.image ? (
-                   <FaUserCircle className="avatar_icon" />
-                   ) : (
-                  <FaUserCircle className="avatar_icon" />
-                )}
+            {user?.userType === "student" && (
+              <div className="user_profile">
+                <div className="user_avatar">
+                  {user?.image ? (
+                    <FaUserCircle className="avatar_icon" />
+                  ) : (
+                    <FaUserCircle className="avatar_icon" />
+                  )}
+                </div>
+                <div className="user_name">{user?.studentName}</div>
               </div>
-              <div className="user_name">{user?.studentName}</div>
-            </div>
-          ) : null}
+            )}
 
-            {user?.userType === "teacher" ? (
-            <div className="user_profile">
-              <div className="user_avatar">
-                {user?.image ? (
-                   <FaUserCircle className="avatar_icon" />
-                   ) : (
-                  <FaUserCircle className="avatar_icon" />
-                )}
+            {user?.userType === "teacher" && (
+              <div className="user_profile">
+                <div className="user_avatar">
+                  {user?.image ? (
+                    <FaUserCircle className="avatar_icon" />
+                  ) : (
+                    <FaUserCircle className="avatar_icon" />
+                  )}
+                </div>
+                <div className="user_name">{user?.teacherName}</div>
               </div>
-              <div className="user_name">{user?.teacherName}</div>
-            </div>
-          ) : null}
+            )}
 
             <Link className="link" activeclassname="active" to={"/dashboard"}>
               <div className="icon">
@@ -104,15 +113,14 @@ const Sidebar = () => {
               </div>
             </Link>
 
-
-            {user?.userType === "student" ? (
+            {user?.userType === "student" && (
               <Link
                 className="link"
                 activeclassname="active"
                 to={"/studentprofile"}
               >
                 <div className="icon">
-                  <CgProfile  className="mainIcon" />
+                  <CgProfile className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -121,8 +129,9 @@ const Sidebar = () => {
                   Profile
                 </div>
               </Link>
-            ) : null}
-            {user?.userType === "student" ? (
+            )}
+
+            {user?.userType === "student" && (
               <Link className="link" activeclassname="active" to={"/adddoubt"}>
                 <div className="icon">
                   <BsPatchQuestionFill className="mainIcon" />
@@ -134,16 +143,16 @@ const Sidebar = () => {
                   Ask Doubt
                 </div>
               </Link>
-            ) : null}
+            )}
 
-{user?.userType === "admin" ? (
+            {user?.userType === "admin" && (
               <Link
                 className="link"
                 activeclassname="active"
                 to={"/adminprofile"}
               >
                 <div className="icon">
-                  <FaChalkboardTeacher className="mainIcon" />
+                  <AccountCircleIcon fontSize="large" className="mainIcon" />{" "}
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -152,9 +161,9 @@ const Sidebar = () => {
                   profile
                 </div>
               </Link>
-            ) : null}
+            )}
 
-            {user?.userType === "admin" ? (
+            {user?.userType === "admin" && (
               <Link
                 className="link"
                 activeclassname="active"
@@ -170,9 +179,9 @@ const Sidebar = () => {
                   Add Teacher
                 </div>
               </Link>
-            ) : null}
+            )}
 
-              {user?.userType === "admin" ? (
+            {user?.userType === "admin" && (
               <Link
                 className="link"
                 activeclassname="active"
@@ -188,9 +197,9 @@ const Sidebar = () => {
                   view teachers
                 </div>
               </Link>
-            ) : null}
+            )}
 
-            {user?.userType === "admin" ? (
+            {user?.userType === "admin" && (
               <Link
                 className="link"
                 activeclassname="active"
@@ -206,8 +215,9 @@ const Sidebar = () => {
                   Add Student
                 </div>
               </Link>
-            ) : null}
-              {user?.userType === "admin" ? (
+            )}
+
+            {user?.userType === "admin" && (
               <Link
                 className="link"
                 activeclassname="active"
@@ -223,14 +233,10 @@ const Sidebar = () => {
                   view Student
                 </div>
               </Link>
-            ) : null}
-          
-             {user?.userType === "admin" ? (
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/addclass"}
-              >
+            )}
+
+            {user?.userType === "admin" && (
+              <Link className="link" activeclassname="active" to={"/addclass"}>
                 <div className="icon">
                   <BiDetail className="mainIcon" />
                 </div>
@@ -241,9 +247,27 @@ const Sidebar = () => {
                   add class
                 </div>
               </Link>
-            ) : null}
-            
-            {user?.userType === "admin" ? (
+            )}
+
+            {user?.userType === "admin" && (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/addsubjects"}
+              >
+                <div className="icon">
+                  <SubjectIcon fontSize="large" className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  add subjects
+                </div>
+              </Link>
+            )}
+
+            {user?.userType === "admin" && (
               <Link className="link" activeclassname="active" to={"/admin"}>
                 <div className="icon">
                   <RiAdminLine
@@ -258,9 +282,9 @@ const Sidebar = () => {
                   Add Admin
                 </div>
               </Link>
-            ) : null}
+            )}
 
-            {user?.userType === "admin" ? (
+            {user?.userType === "admin" && (
               <Link className="link" activeclassname="active" to={"/addnotice"}>
                 <div className="icon">
                   <BiNotepad className="mainIcon" />
@@ -272,16 +296,16 @@ const Sidebar = () => {
                   Add Notice
                 </div>
               </Link>
-            ) : null}
+            )}
 
-            {user?.userType === "teacher" ? (
+            {user?.userType === "teacher" && (
               <Link
                 className="link"
                 activeclassname="active"
                 to={"/teacherprofile"}
               >
                 <div className="icon">
-                  <AccountCircleIcon fontSize="large" className="mainIcon"/>
+                  <AccountCircleIcon fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -290,8 +314,9 @@ const Sidebar = () => {
                   Profile
                 </div>
               </Link>
-            ) : null}
-                {user?.userType === "teacher" ? (
+            )}
+
+            {user?.userType === "teacher" && (
               <Link
                 className="link"
                 activeclassname="active"
@@ -307,8 +332,28 @@ const Sidebar = () => {
                   Attendance
                 </div>
               </Link>
-            ) : null}
-            {user?.userType === "teacher" || user?.userType === "student" ? (
+            )}
+
+
+          {user?.userType === "teacher" && (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/uploadmark"}
+              >
+                <div className="icon">
+                  <RuleIcon fontSize="large" className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Upload Marks
+                </div>
+              </Link>
+            )}
+
+            {(user?.userType === "teacher" || user?.userType === "student") && (
               <Link className="link" activeclassname="active" to={"/doubts"}>
                 <div className="icon">
                   <HelpIcon fontSize="large" className="mainIcon" />
@@ -320,9 +365,9 @@ const Sidebar = () => {
                   Doubts
                 </div>
               </Link>
-            ) : null}
+            )}
 
-            {user?.userType === "teacher" || user?.userType === "student" ? (
+            {(user?.userType === "teacher" || user?.userType === "student") && (
               <Link
                 className="link"
                 activeclassname="active"
@@ -338,9 +383,9 @@ const Sidebar = () => {
                   Reports
                 </div>
               </Link>
-            ) : null}
+            )}
 
-            { user?.userType === "student" ? (
+            {user?.userType === "student" && (
               <a
                 href="https://sms-quiz.netlify.app/"
                 target="_blank"
@@ -357,9 +402,9 @@ const Sidebar = () => {
                   Quiz
                 </div>
               </a>
-            ) : null}
+            )}
 
-            {user?.userType === "null" || user?.userType === "null" ? (
+            {(user?.userType === "null" || user?.userType === "null") && (
               <a
                 href="https://sunny-duckanoo-9006ed.netlify.app/"
                 target="_blank"
@@ -376,9 +421,9 @@ const Sidebar = () => {
                   Video Call
                 </div>
               </a>
-            ) : null}
+            )}
 
-            {user?.userType === "teacher" ? (
+            {user?.userType === "teacher" && (
               <Link
                 className="link"
                 activeclassname="active"
@@ -394,7 +439,7 @@ const Sidebar = () => {
                   Create Report
                 </div>
               </Link>
-            ) : null}
+            )}
 
             <Link
               className="LogOutPath link"
@@ -413,8 +458,7 @@ const Sidebar = () => {
                 Logout
               </div>
             </Link>
-
-            </div>
+          </div>
         </div>
       </div>
     </>

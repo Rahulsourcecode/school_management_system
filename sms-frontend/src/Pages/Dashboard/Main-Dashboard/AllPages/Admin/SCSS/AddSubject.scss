@@ -1,0 +1,19 @@
+.inputdiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .inputdiv label {
+    margin-right: 10px;
+  }
+  
+  .inputdiv input {
+    margin-bottom: 10px;
+  }
+  
+  .inputdiv button {
+    margin-top: 10px;
+    align-self: flex-start;
+  }
+  

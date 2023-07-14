@@ -1,7 +1,7 @@
 const express = require("express");
 const { AdminModel } = require("../models/admin.model")
-const {NoticeModel} = require("../models/notice.model");
-const {Myclass} =require("../models/class.model");
+const { NoticeModel } = require("../models/notice.model");
+const { Myclass } = require("../models/class.model");
 require("dotenv").config();
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 const { StudentModel } = require("../models/student.model");
 const { TeacherModel } = require("../models/teacher.model");
 const { uploads } = require("../middlewares/multer");
+const { SubjectModel } = require("../models/subjects.model");
 
 
 const router = express.Router();
@@ -101,7 +102,7 @@ router.get("/teachers/all", async (req, res) => {
 
 //create notices
 router.post("/createnotice", async (req, res) => {
-  const { title, details, date} = req.body;
+  const { title, details, date } = req.body;
   try {
     const notice = new NoticeModel({ title, details, date });
     await notice.save();
@@ -126,7 +127,7 @@ router.get("/getnotices", async (req, res) => {
 //create class
 
 router.post("/createclass", async (req, res) => {
- 
+
   const { name } = req.body;
   console.log(req.body)
   try {
@@ -154,10 +155,10 @@ router.get("/getclasses", async (req, res) => {
 
 //register student
 
-router.post("/studentregister",uploads.single('image'), async (req, res) => {
+router.post("/studentregister", uploads.single('image'), async (req, res) => {
   console.log(req.file.filename)
   const { classname, email } = req.body;
-  console.log("name of class"+classname)
+  console.log("name of class" + classname)
   try {
     const admin = await AdminModel.findOne({ email });
     const teacher = await TeacherModel.findOne({ email })
@@ -168,10 +169,10 @@ router.post("/studentregister",uploads.single('image'), async (req, res) => {
       });
     }
     const classDivision = await Myclass.findOne({ _id: classname });
-    console.log("full data"+classDivision)
+    console.log("full data" + classDivision)
     console.log(classDivision.division)
-    const hashedPassword = bcrypt(req.body.password ,10)
-    const studentData = { ...req.body,password:hashedPassword, division: classDivision.division,image:req.file.filename,studentID:Date.now()}
+    const hashedPassword = bcrypt(req.body.password, 10)
+    const studentData = { ...req.body, password: hashedPassword, division: classDivision.division, image: req.file.filename, studentID: Date.now() }
     let value = new StudentModel(studentData);
     await value.save();
     const data = await StudentModel.findOne({ email });
@@ -187,12 +188,41 @@ router.post("/studentregister",uploads.single('image'), async (req, res) => {
 });
 
 //get all students
-router.get("/allstudents" , async(req,res)=>{
+router.get("/allstudents", async (req, res) => {
   try {
     const student = await StudentModel.find().populate('classname')
     res.status(200).send(student)
   } catch (error) {
-    res.status(200).json({message:"error occured !"})
+    res.status(200).json({ message: "error occured !" })
+  }
+})
+//create subjects
+router.post('/createSubjects', async (req, res) => {
+  console.log(req.body)
+  try {
+    const subject = new SubjectModel({
+      class: req.body.class,
+      subject: req.body.subject
+    })
+    await subject.save()
+    if (subject) {
+      res.status(200).json({ message: "succesfully added" })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(200).json({ message: "duplicate addition to classes" })
+  }
+})
+
+//get subjects
+router.get('/getsubjects', async (req, res) => {
+  try {
+    const subjects = await SubjectModel.find()
+    if (subjects) {
+      res.status(200).send(subjects)
+    }
+  } catch (error) {
+    console.log(error)
   }
 })
 
@@ -251,59 +281,59 @@ router.post("/password", (req, res) => {
   });
 });
 
-    router.post("/forgot", async (req, res) => {
-      const { email, type } = req.body;
-      console.log(req.body)
-      let user;
-      let userId;
-      let password;
+router.post("/forgot", async (req, res) => {
+  const { email, type } = req.body;
+  console.log(req.body)
+  let user;
+  let userId;
+  let password;
 
-      if (type == "student") {
-        user = await StudentModel.find({ email });
-        userId = user[0]?.studentID;
-        password = user[0]?.password;
-      }
-      
+  if (type == "student") {
+    user = await StudentModel.find({ email });
+    userId = user[0]?.studentID;
+    password = user[0]?.password;
+  }
 
-      if (type == "admin") {
-        user = await AdminModel.find({ email });
-        console.log(user)
-        userId = user[0]?.adminID;
-        password = user[0]?.password;
-      }
 
-      if (type == "teacher") {
-        user = await TeacherModel.find({ email });
-        userId = user[0]?.teacherID;
-        password = user[0]?.password;
-      }
+  if (type == "admin") {
+    user = await AdminModel.find({ email });
+    console.log(user)
+    userId = user[0]?.adminID;
+    password = user[0]?.password;
+  }
 
-      if (!user) {
-        return res.send({ message: "User not found" });
-      }
+  if (type == "teacher") {
+    user = await TeacherModel.find({ email });
+    userId = user[0]?.teacherID;
+    password = user[0]?.password;
+  }
 
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.MID,
-          pass: process.env.MPD
-        },
-      });
+  if (!user) {
+    return res.send({ message: "User not found" });
+  }
 
-      const mailOptions = {
-        from: process.env.MID,
-        to: email,
-        subject: "Account ID and Password",
-        text: `This is your User Id : ${userId} and  Password : ${password} .`,
-      };
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.MID,
+      pass: process.env.MPD
+    },
+  });
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return res.send(error);
-        }
-        return res.send("Password reset email sent");
-      });
-    });
+  const mailOptions = {
+    from: process.env.MID,
+    to: email,
+    subject: "Account ID and Password",
+    text: `This is your User Id : ${userId} and  Password : ${password} .`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return res.send(error);
+    }
+    return res.send("Password reset email sent");
+  });
+});
 
 module.exports = router;
 

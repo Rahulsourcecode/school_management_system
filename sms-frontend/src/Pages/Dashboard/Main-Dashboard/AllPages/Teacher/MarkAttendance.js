@@ -13,7 +13,8 @@ export default function MarkAttendance() {
   const [Students, setStudents] = useState([]);
   const [AttendanceData, setAttendanceData] = useState([]);
   const formattedDate = `${new Date().getFullYear()}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${(new Date().getDate()).toString().padStart(2, '0')}`;
-  const currentdate = new Date().toLocaleDateString();
+  const currentdate = new Date().toLocaleDateString('en-CA').split('/').reverse().join('/')
+
   const [change, setChange] = useState(false)
   const handleAttendanceChange = (id, attendance) => {
     setChange((s) => !s)
