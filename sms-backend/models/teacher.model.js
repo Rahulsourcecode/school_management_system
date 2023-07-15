@@ -51,6 +51,9 @@ const teacherSchema = mongoose.Schema({
   education: {
     type: String,
   },
+  assignClass: {
+    type: Array,
+  },
 
   image: {
     type: String,
@@ -66,9 +69,9 @@ const teacherSchema = mongoose.Schema({
     ref: 'class',
     required: true
   },
-  division:{
-    type:String,
-    required:true
+  division: {
+    type: String,
+    required: true
   }
 });
 

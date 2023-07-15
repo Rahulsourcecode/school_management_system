@@ -15,6 +15,9 @@ import { Navigate } from "react-router-dom";
 const notify = (text) => toast(text);
 
 const AddDoctor = () => {
+
+  const [classes, setClasses] = useState([])
+
   const { data } = useSelector((store) => store.auth);
 
   const dispatch = useDispatch();
@@ -23,6 +26,7 @@ const AddDoctor = () => {
 
   const initData = {
     teacherName: "",
+    assignClass: [],
     age: "",
     mobile: "",
     email: "",
@@ -42,7 +46,8 @@ const AddDoctor = () => {
   const [classList, setclassList] = useState([])
   const [divisionList, setdivisionList] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
-  console.log(subjectData)
+  // console.log(subjectData)
+  console.log(classes)
   const HandleDoctorChange = (e) => {
     setTeacherValue({ ...TeacherValue, [e.target.name]: e.target.value });
     console.log(TeacherValue);
@@ -64,14 +69,31 @@ const AddDoctor = () => {
 
     axioss.get("/admin/getsubjects").then((res) => {
       setSubjectData(res.data)
+      divisionCombos()
     })
   }, []);
+
+  function divisionCombos() {
+    let array = []
+    classList.map((data) => {
+      const division = []
+      for (let i = 65; i <= data.division.charCodeAt(0); i++) {
+        division.push(String.fromCharCode(i));
+      }
+      division.map((x, i) => division[i] = data.name + x)
+
+      array = [...array, ...division]
+      return true
+    })
+    setClasses(array)
+
+  }
 
   const uniqueDivisions = new Set();
   divisionList.forEach((division) => {
     uniqueDivisions.add(division.division)
   })
-  console.log(uniqueDivisions)
+  // console.log(uniqueDivisions)
   const HandleDoctorSubmit = (e) => {
     e.preventDefault();
     const form = document.getElementById("form")
@@ -91,14 +113,20 @@ const AddDoctor = () => {
       let data = {
         email: res.data.email,
         password: res.data.password,
-        userId: res.data.teacherID,
+        userId: res.data.user,
       };
       console.log(data);
       dispatch(SendPassword(data)).then(() => notify("Account Details Sent"));
       setLoading(false);
     });
   };
-
+  const addClasses = (e) => {
+    const state = TeacherValue.assignClass.filter(x => x === e.target.value)
+    if (state.length === 0) {
+      const classes = [...TeacherValue.assignClass, e.target.value]
+      setTeacherValue({ ...TeacherValue, assignClass: classes })
+    }
+  }
   if (data?.isAuthenticated === false) {
     return <Navigate to={"/"} />;
   }
@@ -268,6 +296,31 @@ const AddDoctor = () => {
                     required
                   />
                 </div>
+              </div>
+              <div>
+                <label>Assign to</label>
+                <div className="inputdiv">
+                  <select
+                    name="assignClass"
+                    value={TeacherValue.assignClass}
+                    onChange={addClasses}
+                    multiple
+
+                  >
+
+                    {classes.map((data) => {
+
+                      return (<option value={data} key={data}>{data}</option>)
+                    })}
+                  </select>
+                </div>
+              </div>
+              <div style={{ maxWidth: 200, display: 'flex', flexDirection: 'end' }}>
+                {TeacherValue.assignClass && TeacherValue.assignClass.map(x => (
+                  <>
+                    <span>{x}</span><button type="button" onClick={() => setTeacherValue({ ...TeacherValue, assignClass: TeacherValue.assignClass.filter(c => c !== x) })}>x</button>
+                  </>
+                ))}
               </div>
               <div>
                 <label>class charge</label>

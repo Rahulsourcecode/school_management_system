@@ -43,16 +43,26 @@ division:{
   DOB: {
     type: String,
   },
-
+  marks:{
+      term1:{
+       type:Object
+      },
+      term2:{
+        type:Object
+      },
+      term3:{
+        type:Object
+      }
+  },
   address: {
     type: String,
   },
   classname: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, 
     ref: 'class',
     required: true
   },
-  image: {
+  image: { 
     type: String,
     default:
       "https://res.cloudinary.com/diverse/image/upload/v1674562453/diverse/oipm1ecb1yudf9eln7az.jpg",

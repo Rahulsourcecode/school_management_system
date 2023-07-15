@@ -7,6 +7,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { uploads } = require("../middlewares/multer");
 const { studentAttendance } = require("../models/Student.attendance.model");
+const { Myclass } = require('../models/class.model')
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -50,26 +51,34 @@ router.post("/register", uploads.single('image'), async (req, res) => {
     await teacher.save();
 
     // Retrieve the saved teacher data
-    const data = await TeacherModel.findOne({ email });
-
-    // Return a success response
-    return res.send({ data, message: "Registered" });
+    const user = await TeacherModel.findOne({ email });
+    if (user) {
+      // Return a success response
+      const data = {
+        email:req.body.email,
+        user: user.teacherID,
+        password: req.body.password
+      }
+      return res.send({ data, message: "Registered" });
+    }
   } catch (error) {
     console.error(error);
-    return res.send({ message: "Error" });
+    return res.send({ message: "Error" }); 
   }
 });
 
 
 router.post("/login", async (req, res) => {
-  const { docID, password } = req.body;
+  const { ID, password } = req.body;
+  console.log(ID, password)
   try {
-    const teacher = await TeacherModel.findOne({ docID });
-
+    const teacher = await TeacherModel.findOne({ teacherID: ID });
+    console.log(teacher)
     if (teacher) {
       // Compare the entered password with the hashed password
-      const match = await bcrypt.compare(password, teacher.password);
 
+      const match = await bcrypt.compare(password, teacher.password);
+      console.log(match)
       if (match) {
         const token = jwt.sign({ foo: "bar" }, process.env.key, {
           expiresIn: "24h",
@@ -135,6 +144,38 @@ router.delete("/:teacherId", async (req, res) => {
   }
 });
 
+router.post("/findStudents", async (req, res) => {
+  try {
+    const classdata = req.body.value
+    const classId = await Myclass.findOne({ name: classdata[0] })
+    const student = await StudentModel.find({ $and: [{ classname: classId._id }, { division: classdata[1] }] })
+    console.log(student);
+    if (student) {
+      res.status(200).send(student)
+    } else {
+      res.status(200).json({ message: "no student" })
+    }
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+router.post("/setMarks", async (req, res) => {
+  try {
+    const { id, subject, mark, term } = req.body
+    console.log(req.body);
+    const student = await StudentModel.updateOne({ _id: id }, { $set: { [`marks.${term}.${subject}`]: mark } }, { upsert: true })
+    console.log(student);
+    if (student) {
+      res.status(200).send(student)
+    } else {
+      res.status(200).json({ message: "no student" })
+    }
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 //show class students
 router.post("/classStudnets", async (req, res) => {
   try {
@@ -183,6 +224,8 @@ router.post('/markattendance', async (req, res) => {
   }
 })
 
+//find Students
+
 router.get("/datelist", async (req, res) => {
   try {
     const data = await studentAttendance.aggregate([
@@ -198,10 +241,10 @@ router.get("/datelist", async (req, res) => {
         $limit: 5
       }
     ])
-    if(data){
+    if (data) {
       res.status(200).send(data)
-    }else{
-      res.status(200).json({message:"no records found!"})
+    } else {
+      res.status(200).json({ message: "no records found!" })
     }
   } catch (error) {
     console.log(error);
