@@ -39,7 +39,7 @@ const FrontPage = () => {
     <div className="container">
       <Sidebar />
       <div className="AfterSideBar">
-        <h1 style={{ color: "rgb(184 191 234)" }}>Overview</h1>
+        <h1 style={{ color: "black" }}>Overview</h1>
         <div className="maindiv">
           <div className="one commondiv">
             <div>
@@ -56,7 +56,7 @@ const FrontPage = () => {
             </div>
             <FaUserAlt className="overviewIcon" />
           </div>
-        
+
           <div className="six commondiv">
             {" "}
             <div>
@@ -109,7 +109,7 @@ const FrontPage = () => {
         </div>
         {/* ************************************* */}
         <div className="patientDetails">
-          <h1>School notices</h1>
+          <h1 style={{ color: 'black' }}>School notices</h1>
           <div className="patientBox">
             {notices ? <Table columns={columns} dataSource={notices} /> : null}
           </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { CreateReport } from "../../../../../Redux/Datas/action";
@@ -13,27 +13,26 @@ const UploadMarks = () => {
   const { data } = useSelector((store) => store.auth);
   const subject = data.user.subject
   const [currClass, setCurrClass] = useState(data.user.assignClass[0])
-  const [loading, setLoading] = useState(false);
   const [student, setStudent] = useState([])
-  const dispatch = useDispatch();
-  const [students, setStudents] = useState([])
-  const [marks, setmarks] = useState([]);
-  const [term , setTerm] = useState('term1')
+  const [term, setTerm] = useState('term1')
+  lazy(() => axioss.post('/teachers/findStudents', { currClass }).then(x => setStudent(x.data)).catch(err => console.log(err.message)))
   useEffect(() => {
-    // fetch teachers data from API or database
-    axioss.post("/teachers/classStudnets", data.user)
-      .then((res) => setStudents(res.data));
-
+    handleClassChange('', currClass)
   }, []);
 
-  const HandlemarkChange = (e,index) => {
-    console.log(term);
-    const mark = e.target.value
-    student[index].marks[term] = {...student.marks,[subject]:mark}
+  const HandlemarkChange = (e, index) => {
 
-    console.log(student)
-    setStudent(student)
-    axioss.post('/teachers/setMarks',{id:student[index]._id,mark,subject,term}).then(res=>notify(res.data))
+    const mark = e.target.value
+    const curr = student[index]
+    curr.marks = {
+      ...curr.marks,
+      [term]: { ...curr.marks?.[term], [subject]: mark }
+    };
+    student[index] = curr
+    console.log([...student])
+    setStudent([...student])
+
+    axioss.post('/teachers/setMarks', { id: student[index]._id, mark, subject, term }).then(res => notify(res.data))
 
   };
 
@@ -41,14 +40,14 @@ const UploadMarks = () => {
     console.log(value);
     setCurrClass(value)
     axioss.post('/teachers/findStudents', { value }).then(x => setStudent(x.data)).catch(err => console.log(err.message))
-    console.log(student);
+
   }
   if (data?.isAuthenticated === false) {
     return <Navigate to={"/"} />;
   }
 
   if (data?.user.userType !== "teacher") {
-    return <Navigate to={"/dashboard"} />; 
+    return <Navigate to={"/dashboard"} />;
   }
 
   return (
@@ -63,7 +62,7 @@ const UploadMarks = () => {
               <div>
                 <label>Choose Term</label>
                 <div className="inputdiv">
-                  <select value={term} onChange={e=>setTerm(e.target.value)}>
+                  <select value={term} onChange={e => setTerm(e.target.value)}>
                     <option value='term1'>First Term</option>
                     <option value='term2'>Mid Term</option>
                     <option value='term3'>Finals</option>
@@ -85,7 +84,7 @@ const UploadMarks = () => {
                   {data.user.assignClass.map((list) => <Tab key={list} label={`Class ${list}`} value={list} />)}
                 </Tabs>)}
               </Box>
-
+              {/* {student} */}
               {student.length && (
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -97,9 +96,9 @@ const UploadMarks = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {student.map((row,index) => (
+                      {student.map((row, index) => (
                         <TableRow
-                          key={index}
+                          key={row._id}
                           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                           <TableCell component="th" scope="row">
@@ -108,7 +107,10 @@ const UploadMarks = () => {
                           <TableCell component="th" scope="row">
                             {row.studentName}
                           </TableCell>
-                          <TableCell align="right"><input value={row?.marks?.[term]?.[subject]} onChange={(e)=>HandlemarkChange(e,index)}></input></TableCell>
+                          <TableCell align="right"><input
+                            value={row?.marks?.[term]?.[subject] || ''} // Initialize with an empty string if the value is undefined
+                            onChange={(e) => HandlemarkChange(e, index)}
+                          /></TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

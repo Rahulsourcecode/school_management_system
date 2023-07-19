@@ -197,26 +197,9 @@ const AdminProfile = () => {
                 </div>
               </div>
               {/* ***********  Third Div ******************** */}
-              {/* <div className="subSecondBox">
-                <h2 style={{ textAlign: "center", marginTop: "10px" }}>
-                  School Details
-                </h2>
-                <div className="singleitemdiv">
-                  <BiTime className="singledivicons" />
-                  <p>09:00 AM - 20:00 PM (TIMING)</p>
+                <div>
+                   
                 </div>
-                <div className="singleitemdiv">
-                  <FaRegHospital className="singledivicons" />
-                  <p>Delhi Public School, CBSE</p>
-                </div>
-                <div className="singleitemdiv">
-                  <FaMapMarkedAlt className="singledivicons" />
-                  <p>
-                    Sri Aurobindo Marg, Ansari Nagar, Ansari Nagar East, New
-                    Delhi.
-                  </p>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

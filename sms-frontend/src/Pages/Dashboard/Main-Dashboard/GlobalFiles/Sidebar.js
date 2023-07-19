@@ -26,6 +26,8 @@ import HelpIcon from "@mui/icons-material/Help";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import RuleIcon from '@mui/icons-material/Rule';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 import "./CommonCSS.scss";
 
 const Sidebar = () => {
@@ -49,7 +51,7 @@ const Sidebar = () => {
               SCHOOL
             </h1>
             <div
-              style={{ marginLeft: isOpen ? "50px" : "0px" }}
+              style={{ marginLeft: isOpen ? "30px" : "0px" }}
               className="bars"
             >
               <ImMenu onClick={toggle} style={{ cursor: "pointer" }} />
@@ -63,10 +65,7 @@ const Sidebar = () => {
               <div className="user_profile">
                 <div className="user_avatar">
                   {user?.image ? (
-                    <img
-                      src={`http://localhost:3001/uploads/${user.image}`}
-                      alt="profile"
-                    />
+                    <FaUserCircle className="avatar_icon" />
                   ) : (
                     <FaUserCircle className="avatar_icon" />
                   )}
@@ -79,7 +78,9 @@ const Sidebar = () => {
               <div className="user_profile">
                 <div className="user_avatar">
                   {user?.image ? (
-                    <FaUserCircle className="avatar_icon" />
+                      <Stack direction="row">
+                      <Avatar alt="Remy Sharp" src={`http://localhost:3001/uploads/${user.image}`} />
+                    </Stack>
                   ) : (
                     <FaUserCircle className="avatar_icon" />
                   )}
@@ -90,9 +91,11 @@ const Sidebar = () => {
 
             {user?.userType === "teacher" && (
               <div className="user_profile">
-                <div className="user_avatar">
+                <div style={{marginLeft:10}} className="user_avatar">
                   {user?.image ? (
-                    <FaUserCircle className="avatar_icon" />
+                    <Stack direction="row">
+                      <Avatar alt="Remy Sharp" src={`http://localhost:3001/uploads/${user.image}`} />
+                    </Stack>
                   ) : (
                     <FaUserCircle className="avatar_icon" />
                   )}
@@ -335,7 +338,7 @@ const Sidebar = () => {
             )}
 
 
-          {user?.userType === "teacher" && (
+            {user?.userType === "teacher" && (
               <Link
                 className="link"
                 activeclassname="active"

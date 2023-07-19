@@ -17,9 +17,9 @@ import "./CSS/TeacherProfile.scss";
 
 const Teacher_Profile = () => {
   const { data } = useSelector((store) => store.auth);
-  
+
   const dispatch = useDispatch();
-  
+
   const [imagePath, setImagePath] = useState("");
   useEffect(() => {
     const id = data.user._id;
@@ -100,7 +100,7 @@ const Teacher_Profile = () => {
           <div className="maindoctorProfile">
             <div className="firstBox">
               <div>
-              <img style={{height:240}} src={`http://localhost:3001/uploads/${imagePath}`} alt="docimg" />
+                <img style={{ height: 240 }} src={`http://localhost:3001/uploads/${imagePath}`} alt="docimg" />
               </div>
               <hr />
               <div className="singleitemdiv">
@@ -126,7 +126,7 @@ const Teacher_Profile = () => {
                   Edit profile
                 </button>
               </div>
-
+              {/* modal */}
               <Modal
                 title="Edit details"
                 open={open}
@@ -193,9 +193,10 @@ const Teacher_Profile = () => {
                   />
                 </form>
               </Modal>
+              {/* modal enda */}
             </div>
             {/* ***********  Second Div ******************** */}
-            <div className="SecondBox">
+            <div className="SecondBox" style={{ marginBottom: '40px' }}>
               <div className="subfirstbox">
                 <h2 style={{ textAlign: "center", marginTop: "10px" }}>
                   Other Info
@@ -219,6 +220,8 @@ const Teacher_Profile = () => {
                 </div>
               </div>
             </div>
+            {/* ***********  third Div ******************** */}
+
           </div>
         </div>
       </div>

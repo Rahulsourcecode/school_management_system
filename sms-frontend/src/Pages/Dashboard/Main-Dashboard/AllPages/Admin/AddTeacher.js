@@ -10,8 +10,12 @@ import {
 import Sidebar from "../../GlobalFiles/Sidebar";
 
 import { ToastContainer, toast } from "react-toastify";
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
+import Box from '@mui/material/Box';
+
 const notify = (text) => toast(text);
 
 const AddDoctor = () => {
@@ -126,6 +130,9 @@ const AddDoctor = () => {
       const classes = [...TeacherValue.assignClass, e.target.value]
       setTeacherValue({ ...TeacherValue, assignClass: classes })
     }
+  }
+  function handleDelete(x) {
+    setTeacherValue({ ...TeacherValue, assignClass: TeacherValue.assignClass.filter(c => c !== x) })
   }
   if (data?.isAuthenticated === false) {
     return <Navigate to={"/"} />;
@@ -318,7 +325,12 @@ const AddDoctor = () => {
               <div style={{ maxWidth: 200, display: 'flex', flexDirection: 'end' }}>
                 {TeacherValue.assignClass && TeacherValue.assignClass.map(x => (
                   <>
-                    <span>{x}</span><button type="button" onClick={() => setTeacherValue({ ...TeacherValue, assignClass: TeacherValue.assignClass.filter(c => c !== x) })}>x</button>
+
+                    <Stack sx={{ flex: 'wrap' }} direction="row" spacing={3}>
+                      <Chip label={x} onDelete={() => handleDelete(x)}>
+                      </Chip>
+                    </Stack>
+
                   </>
                 ))}
               </div>
