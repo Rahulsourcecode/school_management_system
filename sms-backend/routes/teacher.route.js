@@ -55,7 +55,7 @@ router.post("/register", uploads.single('image'), async (req, res) => {
     if (user) {
       // Return a success response
       const data = {
-        email:req.body.email,
+        email: req.body.email,
         user: user.teacherID,
         password: req.body.password
       }
@@ -63,7 +63,7 @@ router.post("/register", uploads.single('image'), async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.send({ message: "Error" }); 
+    return res.send({ message: "Error" });
   }
 });
 
@@ -207,17 +207,29 @@ router.post("/attendancedata", async (req, res) => {
 //mark attendance
 router.post('/markattendance', async (req, res) => {
   try {
+
+    const DateNow = new Date().toISOString().split('T')[0];
+    console.log(DateNow, req.body.formattedDate)
+    const currentDate = new Date(DateNow);
+    const formattedDate = new Date(req.body.formattedDate)
+    const timeDifferences = Math.abs(currentDate - formattedDate);
+    const millis = 1000 * 60 * 60 * 24;
+    const dayDiffference = Math.floor(timeDifferences / millis);
     console.log("attendance", req.body)
-    const attendanceDate = await studentAttendance.updateOne({
-      student: req.body.studentID, date: {
-        $gte: req.body.formattedDate + 'T00:00:00.000+00:00',
-        $lte: req.body.formattedDate + 'T23:59:59.999+00:00',
+    if (dayDiffference < 7) {
+      const attendanceDate = await studentAttendance.updateOne({
+        student: req.body.studentID, date: {
+          $gte: req.body.formattedDate + 'T00:00:00.000+00:00',
+          $lte: req.body.formattedDate + 'T23:59:59.999+00:00',
+        }
+      }, { $set: { state: req.body.attendance, student: req.body.studentId, date: req.body.formattedDate, class: req.body.classname, division: req.body.division } }, { upsert: true })
+      if (attendanceDate) {
+        res.status(200).json({ message: "added" })
+      } else {
+        res.status(200).json({ message: "not added" })
       }
-    }, { $set: { state: req.body.attendance, student: req.body.studentId, date: req.body.formattedDate, class: req.body.classname, division: req.body.division } }, { upsert: true })
-    if (attendanceDate) {
-      res.status(200).json({ message: "added" })
     } else {
-      res.status(200).json({ message: "not added" })
+      res.status(200).json({ message: "unable to mark time expired!" })
     }
   } catch (error) {
     console.log(error)
@@ -248,6 +260,16 @@ router.get("/datelist", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+})
+
+//apply leave
+router.post('/applyleave', async (req, res) => {
+  console.log(req.body)
+  try {
+
+  } catch (error) {
+
   }
 })
 module.exports = router;

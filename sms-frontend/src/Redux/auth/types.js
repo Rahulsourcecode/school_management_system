@@ -29,3 +29,4 @@ export const GET_NOTICE_REQUEST = "GET_NOTICE_REQUEST";
 
 export const CREATE_CLASS ="CREATE_CLASS";
 
+export const APPLY_LEAVE ="APPLY_LEAVE";

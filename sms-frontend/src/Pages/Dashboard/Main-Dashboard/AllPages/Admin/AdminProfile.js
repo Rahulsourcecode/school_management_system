@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../Teacher/CSS/TeacherProfile.scss";
+import "../SCSS/Profile.scss";
 import { BiTime } from "react-icons/bi";
 import { GiMeditation } from "react-icons/gi";
 import { AiFillCalendar, AiFillEdit } from "react-icons/ai";

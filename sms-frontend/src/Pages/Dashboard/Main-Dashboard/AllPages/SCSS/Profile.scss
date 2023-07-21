@@ -1,7 +1,7 @@
 .firstBox {
   background-color: white;
   border-radius: 2rem;
-  width: 40%;
+  width: 30%;
 }
 
 .maindoctorProfile {
@@ -16,7 +16,7 @@
   gap: 20px;
   padding: 10px;
   font-size: 1.3rem;
-  /* border: 1px solid red; */
+  border: 1px solid rgb(255, 255, 255);
   align-items: center;
   margin: 0rem 1rem;
 }
@@ -34,7 +34,7 @@
   padding: 1rem;
 }
 .firstBox div img {
-  width: 50%;
+  width: 100%;
   margin: auto;
   border-radius: 10rem;
   background-color: #efefef;
@@ -85,7 +85,7 @@
     gap: 3rem;
   }
   .firstBox div img {
-    width: 40%;
+    width: 30%;
     margin: auto;
     border-radius: 10rem;
     background-color: #efefef;

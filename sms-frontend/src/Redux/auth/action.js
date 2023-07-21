@@ -219,7 +219,7 @@ export const setpassword = (data) => async () => {
     console.log(error)
   }
 }
-
+//create new Class
 export const NewClass = (data) => async () => {
   console.log(data)
   try {
@@ -231,4 +231,13 @@ export const NewClass = (data) => async () => {
   }
 };
 
+//apply for leave
+export const applyLeave = (data) => async () => {
+  console.log(data)
+  try {
+    const res = await axioss.post('teachers/applyleave',data)
+    return res
+  } catch (error) {
 
+  }
+}
