@@ -328,7 +328,7 @@ const AddDoctor = () => {
 
                     <Stack sx={{ flex: 'wrap' }} direction="row" spacing={3}>
                       <Chip label={x} onDelete={() => handleDelete(x)}>
-                      </Chip>
+                      </Chip> 
                     </Stack>
 
                   </>

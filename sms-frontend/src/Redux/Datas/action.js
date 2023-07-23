@@ -1,10 +1,10 @@
 import * as types from "./types";
 import axios from "axios";
-import { baseURL } from "../auth/action";
+import { axioss, baseURL } from "../auth/action";
 // Create Report
 export const CreateReport = (data) => async (dispatch) => {
   try {
-    const res = await axios.post(
+    const res = await axioss.post(
       "",
       data
     );
@@ -18,7 +18,7 @@ export const CreateReport = (data) => async (dispatch) => {
 // ADD doubts
 export const AddDoubts = (data) => async () => {
   try {
-    const res = await axios.post(
+    const res = await axioss.post(
       "",
       data
     );
@@ -32,7 +32,7 @@ export const AddDoubts = (data) => async () => {
 export const GetDoubts = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_DOUBT_REQUEST });
-    const res = await axios.post(
+    const res = await axioss.post(
       "",
       data
     );
@@ -49,8 +49,8 @@ export const GetDoubts = (data) => async (dispatch) => {
 export const GetNotices = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_NOTICE_REQUEST });
-    const res = await axios.get(
-      `${baseURL}/admin/getnotices`,
+    const res = await axioss.get(
+      `/admin/getnotices`,
       data
     );
     dispatch({
@@ -67,7 +67,7 @@ export const GetNotices = (data) => async (dispatch) => {
 export const deleteDoubt = (id) => async (dispatch) => {
   try {
     dispatch({ type: types.DELETE_DOUBT_REQUEST });
-    await axios.delete(
+    await axioss.delete(
       ``
     );
     dispatch({
@@ -100,7 +100,7 @@ export const GetAllData = () => async (dispatch) => {
 // GET ALL report DETAILS
 export const GetAllReport = (data) => async (dispatch) => {
   try {
-    const res = await axios.post(
+    const res = await axioss.post(
       ``,
       data
     );
@@ -116,7 +116,7 @@ export const GetAllReport = (data) => async (dispatch) => {
 // DELETE Reports
 export const DeleteReports = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(
+    const res = await axioss.delete(
       ``
     );
     console.log(res.data);

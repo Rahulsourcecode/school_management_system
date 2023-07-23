@@ -28,6 +28,8 @@ import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import RuleIcon from '@mui/icons-material/Rule';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import "./CommonCSS.scss";
 
 const Sidebar = () => {
@@ -155,7 +157,7 @@ const Sidebar = () => {
                 to={"/adminprofile"}
               >
                 <div className="icon">
-                  <AccountCircleIcon fontSize="large" className="mainIcon" />{" "}
+                 <AccountCircleIcon fontSize="large" className="mainIcon" />{" "}
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -173,7 +175,7 @@ const Sidebar = () => {
                 to={"/addteacher"}
               >
                 <div className="icon">
-                  <FaChalkboardTeacher className="mainIcon" />
+                  <PersonAddIcon fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -191,13 +193,13 @@ const Sidebar = () => {
                 to={"/viewteacher"}
               >
                 <div className="icon">
-                  <FaChalkboardTeacher className="mainIcon" />
+                  <VisibilityIcon fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
                   className="link_text"
                 >
-                  view teachers
+                 teachers
                 </div>
               </Link>
             )}
@@ -209,7 +211,7 @@ const Sidebar = () => {
                 to={"/addstudent"}
               >
                 <div className="icon">
-                  <AiOutlineUserAdd className="mainIcon" />
+                  <PersonAddIcon fontSize="large"  className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -227,13 +229,13 @@ const Sidebar = () => {
                 to={"/viewstudent"}
               >
                 <div className="icon">
-                  <AiOutlineUserAdd className="mainIcon" />
+                  <VisibilityIcon fontSize="large"className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
                   className="link_text"
                 >
-                  view Student
+                 Students
                 </div>
               </Link>
             )}

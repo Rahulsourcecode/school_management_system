@@ -9,7 +9,7 @@ import AddStudent from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddStud
 import AllDoubts from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AllDoubts";
 import CheckReports from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/CheckReports";
 import CreateReport from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/CreateReport";
-import TeacherProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/Profile";
+import TeacherProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/TeacherProfile";
 import AddDoubt from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/AddDoubt";
 import StudentProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/StudentProfile";
 import FrontPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/FrontPage";
@@ -51,7 +51,7 @@ const AllRoutes = () => {
         <Route path="/addnotice" element={data.isAuthenticated ? <AddNotices /> : <DLogin />} />
         <Route path="/checkreports" element={data.isAuthenticated ? <CheckReports /> : <DLogin />} />
         <Route path="/createreport" element={data.isAuthenticated ? <CreateReport /> : <DLogin />} />
-        <Route path="/teacherprofile" element={data.isAuthenticated ? <TeacherProfile /> : <DLogin />} />
+        <Route path="/teacherprofile" element={<TeacherProfile />} />
         <Route path="/adddoubt" element={data.isAuthenticated ? <AddDoubt /> : <DLogin />} />
         <Route path="/studentprofile" element={data.isAuthenticated ? <StudentProfile /> : <DLogin />} />
         <Route path="/addclass" element={data.isAuthenticated ? <AddClass /> : <DLogin />} />

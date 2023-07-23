@@ -42,8 +42,8 @@ export default function LeaveComponent() {
                         <h3 style={{ textAlign: 'center' }}>Leave details</h3>
                     </div>
                     <div style={{ alignContent: 'center' }}>
-                        <Buttons onhandle={handleApplyLeaveClick} onClick={handleApplyLeaveClick}>Apply leave</Buttons>
-                        <Buttons  >view leave</Buttons>
+                        <Buttons onhandle={handleApplyLeaveClick} onClick={handleApplyLeaveClick}>Apply </Buttons>
+                        <Buttons >view </Buttons>
                         <Modal
                             title="Apply Leave"
                             visible={leaveModalVisible}
@@ -52,7 +52,7 @@ export default function LeaveComponent() {
                                 <Buttons onhandle={handleLeaveCancel} key="back" onClick={handleLeaveCancel}>
                                     Cancel
                                 </Buttons>,
-                                <Buttons onhandle={handleLeaveSubmit} key="submit" type="primary" onClick={handleLeaveSubmit}>
+                                <Buttons onhandle={handleLeaveSubmit} key="submit"  onClick={handleLeaveSubmit}>
                                     Apply
                                 </Buttons>,
                             ]}

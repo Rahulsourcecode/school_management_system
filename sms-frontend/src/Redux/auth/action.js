@@ -5,12 +5,13 @@ import axios from "axios";
 export const baseURL = "http://localhost:3001";
 export const axioss = axios.create({
   baseURL: baseURL,
-});
+  headers:{"x-access-token":localStorage.getItem('token')}
+})
 // login student
 export const StudentLogin = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.LOGIN_STUDENT_REQUEST });
-    const res = await axios.post(`${baseURL}/students/login`, data);
+    const res = await axioss.post(`/students/login`, data);
     dispatch({
       type: types.LOGIN_STUDENT_SUCCESS,
       payload: {
@@ -34,7 +35,7 @@ export const StudentLogin = (data) => async (dispatch) => {
 export const TeacherLogin = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.LOGIN_TEACHER_REQUEST });
-    const res = await axios.post(`${baseURL}/teachers/login`, data);
+    const res = await axioss.post(`/teachers/login`, data);
     dispatch({
       type: types.LOGIN_TEACHER_SUCCESS,
       payload: {
@@ -58,7 +59,7 @@ export const TeacherLogin = (data) => async (dispatch) => {
 export const AdminLogin = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.LOGIN_ADMIN_REQUEST });
-    const res = await axios.post(`${baseURL}/admin/login`, data);
+    const res = await axioss.post(`/admin/login`, data);
     dispatch({
       type: types.LOGIN_ADMIN_SUCCESS,
       payload: {
@@ -81,7 +82,7 @@ export const AdminLogin = (data) => async (dispatch) => {
 // register Teacher
 export const TeacherRegister = (doc) => async () => {
   try {
-    const res = await axios.post(`${baseURL}/teachers/register`, doc);
+    const res = await axioss.post(`/teachers/register`, doc);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -91,7 +92,7 @@ export const TeacherRegister = (doc) => async () => {
 // register student
 export const StudentRegister = (data) => async () => {
   try {
-    const res = await axios.post(`${baseURL}/admin/studentregister`, data);
+    const res = await axioss.post(`/admin/studentregister`, data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -101,7 +102,7 @@ export const StudentRegister = (data) => async () => {
 // REGISTER ADMIN
 export const AdminRegister = (data) => async () => {
   try {
-    const res = await axios.post(`${baseURL}/admin/register`, data);
+    const res = await axioss.post(`/admin/register`, data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -112,7 +113,7 @@ export const AdminRegister = (data) => async () => {
 export const AddNotice = (data) => async () => {
   console.log("hello");
   try {
-    const res = await axios.post(`${baseURL}/admin/createnotice`, data);
+    const res = await axioss.post(`/admin/createnotice`, data);
     return res.data;
   } catch (error) {
     console.log("Axios error:", error);
@@ -122,16 +123,6 @@ export const AddNotice = (data) => async () => {
 
 
 
-
-
-// // REGISTER bus
-// export const BusRegister = (data) => async (dispatch) => {
-//   try {
-//     await axios.post(`${baseURL}/bus/add`, data);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 // logout user
 export const authLogout = () => async (dispatch) => {
@@ -148,7 +139,7 @@ export const authLogout = () => async (dispatch) => {
 export const UpdateStudent = (data, id) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_STUDENT_REQUEST });
-    const res = await axios.patch(`${baseURL}/students/${id}`, data);
+    const res = await axioss.patch(`/students/${id}`, data);
     dispatch({ type: types.EDIT_STUDENT_SUCCESS, payload: res.data.user });
   } catch (error) {
     console.log(error);
@@ -159,7 +150,7 @@ export const UpdateStudent = (data, id) => async (dispatch) => {
 export const UpdateTeacher = (data, id) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_TEACHER_REQUEST });
-    const res = await axios.patch(`${baseURL}/teachers/${id}`, data);
+    const res = await axioss.patch(`/teachers/${id}`, data);
     dispatch({ type: types.EDIT_TEACHER_SUCCESS, payload: res.data.user });
   } catch (error) {
     console.log(error);
@@ -170,7 +161,7 @@ export const UpdateTeacher = (data, id) => async (dispatch) => {
 export const UpdateAdmin = (data, id) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_ADMIN_REQUEST });
-    const res = await axios.patch(`${baseURL}/admin/${id}`, data);
+    const res = await axioss.patch(`/admin/${id}`, data);
     dispatch({ type: types.EDIT_ADMIN_SUCCESS, payload: res.data.user })
   } catch (error) {
     console.log(error)
@@ -183,7 +174,7 @@ export const UpdateAdmin = (data, id) => async (dispatch) => {
 export const SendPassword = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.SEND_PASSWORD_REQUEST });
-    const res = await axios.post(`${baseURL}/admin/password`, data);
+    const res = await axioss.post(`/admin/password`, data);
     dispatch({ type: types.SEND_PASSWORD_SUCCESS, payload: res.data });
   } catch (error) {
     console.log(error);
@@ -193,7 +184,7 @@ export const SendPassword = (data) => async (dispatch) => {
 //forgot password
 export const forgetPassword = (data) => async () => {
   try {
-    const res = await axios.post(`${baseURL}/general/forgotpassword`, data);
+    const res = await axioss.post(`/general/forgotpassword`, data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -223,7 +214,7 @@ export const setpassword = (data) => async () => {
 export const NewClass = (data) => async () => {
   console.log(data)
   try {
-    const res = await axios.post(`${baseURL}/admin/createclass`, data);
+    const res = await axioss.post(`/admin/createclass`, data);
     return res
   } catch (error) {
     console.log("Axios error:", error);
