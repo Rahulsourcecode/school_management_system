@@ -2,33 +2,34 @@ const express = require("express");
 const { TeacherModel } = require("../models/teacher.model");
 require("dotenv").config();
 const { uploads } = require("../middlewares/multer");
-const { teacherLogin, teacherRegister, editTeacher, classStudents, uploadmark, findStudents, getAttendanceData, markAttendance, applyLeave, attendateMarkedDates, fetchImage } = require("../controllers/teacherController");
+const { teacherLogin, teacherRegister, editTeacher, classStudents, uploadmark, findStudents, getAttendanceData, markAttendance, applyLeave, attendateMarkedDates, fetchImage, leaveStatus } = require("../controllers/teacherController");
 const router = express.Router();
 
 
 
 //login teacher
-router.post('/login',teacherLogin)
+router.post('/login', teacherLogin)
 //register a teacher
-router.post("/register", uploads.single('image'),teacherRegister)
+router.post("/register", uploads.single('image'), teacherRegister)
 //edit profile
-router.patch("/:teacherId",editTeacher)
+router.patch("/:teacherId", editTeacher)
 //students on a class of class teacher
-router.post("/findStudents",findStudents)
+router.post("/findStudents", findStudents)
 //upload marks
-router.post("/setMarks",uploadmark)
+router.post("/setMarks", uploadmark)
 //show class students
-router.post("/classStudnets",classStudents)
+router.post("/classStudnets", classStudents)
 //show attendance data
-router.post("/attendancedata",getAttendanceData)
+router.post("/attendancedata", getAttendanceData)
 //mark attendance
-router.post('/markattendance',markAttendance)
+router.post('/markattendance', markAttendance)
 //find Students
-router.get("/datelist",attendateMarkedDates)
+router.get("/datelist", attendateMarkedDates)
 
 //apply leave
-router.post('/applyleave',applyLeave )
+router.post('/applyleave', applyLeave)
 
+router.post('/leavestatus', leaveStatus)
 //fetch profile image
 router.post("/fetchimage", fetchImage)
 

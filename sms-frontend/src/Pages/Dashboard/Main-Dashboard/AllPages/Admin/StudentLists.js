@@ -14,8 +14,6 @@ const columns = [
   {field: 'email', headerName:'email ID' ,width:100}
 ];
 
-
-
 export default function StudentLists() {
 
     const [Students, setStudents] = useState([]);

@@ -30,6 +30,7 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
 import "./CommonCSS.scss";
 
 const Sidebar = () => {
@@ -80,7 +81,7 @@ const Sidebar = () => {
               <div className="user_profile">
                 <div className="user_avatar">
                   {user?.image ? (
-                      <Stack direction="row">
+                    <Stack direction="row">
                       <Avatar alt="Remy Sharp" src={`http://localhost:3001/uploads/${user.image}`} />
                     </Stack>
                   ) : (
@@ -93,7 +94,7 @@ const Sidebar = () => {
 
             {user?.userType === "teacher" && (
               <div className="user_profile">
-                <div style={{marginLeft:10}} className="user_avatar">
+                <div style={{ marginLeft: 10 }} className="user_avatar">
                   {user?.image ? (
                     <Stack direction="row">
                       <Avatar alt="Remy Sharp" src={`http://localhost:3001/uploads/${user.image}`} />
@@ -157,7 +158,7 @@ const Sidebar = () => {
                 to={"/adminprofile"}
               >
                 <div className="icon">
-                 <AccountCircleIcon fontSize="large" className="mainIcon" />{" "}
+                  <AccountCircleIcon fontSize="large" className="mainIcon" />{" "}
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -199,7 +200,25 @@ const Sidebar = () => {
                   style={{ display: isOpen ? "block" : "none" }}
                   className="link_text"
                 >
-                 teachers
+                  teachers
+                </div>
+              </Link>
+            )}
+
+            {user?.userType === "admin" && (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/manageleave"}
+              >
+                <div className="icon">
+                  <ManageAccountsSharpIcon fontSize="large" className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                 leaves
                 </div>
               </Link>
             )}
@@ -211,7 +230,7 @@ const Sidebar = () => {
                 to={"/addstudent"}
               >
                 <div className="icon">
-                  <PersonAddIcon fontSize="large"  className="mainIcon" />
+                  <PersonAddIcon fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
@@ -229,13 +248,13 @@ const Sidebar = () => {
                 to={"/viewstudent"}
               >
                 <div className="icon">
-                  <VisibilityIcon fontSize="large"className="mainIcon" />
+                  <VisibilityIcon fontSize="large" className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
                   className="link_text"
                 >
-                 Students
+                  Students
                 </div>
               </Link>
             )}

@@ -10,6 +10,7 @@ const { StudentModel } = require("../models/student.model");
 const { TeacherModel } = require("../models/teacher.model");
 const { uploads } = require("../middlewares/multer");
 const { SubjectModel } = require("../models/subjects.model");
+const { leaveModel } = require("../models/leave.model");
 
 
 
@@ -248,6 +249,39 @@ const sendDetails = async (req, res) => {
     });
 };
 
+const LeaveList = async (req, res) => {
+    try {
+        const leaveLists = await leaveModel.find().populate('staffData');
+        if (LeaveList) {
+            res.status(200).send(leaveLists)
+        } else {
+            res.status(400).json({ error: true })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const LeaveStatus = async (req, res) => {
+    try {
+        const { option, remark, id } = req.body
+        if (option === "approve") {
+            const status = await leaveModel.update({ _id: id }, { isApproved: true, remarks: remark ,entered:1})
+            if (status) {
+                res.status(200).json({ message: "success" })
+            }
+        } else {
+            const status = await leaveModel.update({ _id: id }, { isApproved: false, remarks: remark ,entered:1})
+            if (status) {
+                res.status(200).json({ message: "success" })
+            }
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ message: "error" })
+    }
+}
+
 module.exports = {
     adminRegister,
     adminLogin,
@@ -262,7 +296,9 @@ module.exports = {
     createSubjects,
     getSubjects,
     sendDetails,
-    getNotices
+    getNotices,
+    LeaveList,
+    LeaveStatus,
 
 
 }

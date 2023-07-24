@@ -26,6 +26,7 @@ import EditAttendance from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/E
 import AddSubjects from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddSubjects";
 import AddNotices from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddNotice";
 import UploadMarks from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/UploadMarks";
+import ManageLeave from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/ManageLeave";
 const AllRoutes = () => {
   const { data } = useSelector((store) => store.auth);
 
@@ -51,14 +52,13 @@ const AllRoutes = () => {
         <Route path="/addnotice" element={data.isAuthenticated ? <AddNotices /> : <DLogin />} />
         <Route path="/checkreports" element={data.isAuthenticated ? <CheckReports /> : <DLogin />} />
         <Route path="/createreport" element={data.isAuthenticated ? <CreateReport /> : <DLogin />} />
-        <Route path="/teacherprofile" element={<TeacherProfile />} />
+        <Route path="/teacherprofile" element={data.isAuthenticated ? <TeacherProfile /> : <DLogin />} />
         <Route path="/adddoubt" element={data.isAuthenticated ? <AddDoubt /> : <DLogin />} />
         <Route path="/studentprofile" element={data.isAuthenticated ? <StudentProfile /> : <DLogin />} />
         <Route path="/addclass" element={data.isAuthenticated ? <AddClass /> : <DLogin />} />
         <Route path="/addsubjects" element={data.isAuthenticated ? <AddSubjects /> : <DLogin />} />
         <Route path="/uploadmark" element={data.isAuthenticated ? <UploadMarks /> : <DLogin />} />
-
-
+        <Route path="/manageleave" element={data.isAuthenticated ? <ManageLeave /> : <DLogin />} />
 
       </Routes>
     </>
