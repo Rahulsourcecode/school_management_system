@@ -10,9 +10,8 @@ const router = express.Router();
 //register admin
 router.post("/register", adminRegister)
 
-
+//login admin
 router.post("/login", adminLogin)
-
 
 //edit admin
 router.patch("/:adminId", editAdmin)
@@ -44,16 +43,16 @@ router.post('/createSubjects', createSubjects)
 
 //get subjects
 router.get('/getsubjects', getSubjects)
-
+//edit admin
 router.patch("/:adminId", editAdmin)
-
+//delete admin
 router.delete("/:adminId", deleteAdmin)
-
+//send password and userid to mail
 router.post("/password", sendDetails)
-
+//get all leave list
 router.get("/getleaves", LeaveList)
-
-router.post("/leaveapprovel",LeaveStatus)
+//leave approval
+router.post("/leaveapprovel", LeaveStatus)
 
 module.exports = router;
 

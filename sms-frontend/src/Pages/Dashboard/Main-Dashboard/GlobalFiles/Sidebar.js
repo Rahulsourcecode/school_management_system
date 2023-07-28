@@ -82,7 +82,7 @@ const Sidebar = () => {
                 <div className="user_avatar">
                   {user?.image ? (
                     <Stack direction="row">
-                      <Avatar alt="Remy Sharp" src={`http://localhost:3001/uploads/${user.image}`} />
+                      <Avatar sx={{marginLeft:1}} alt="Remy Sharp" src={`http://localhost:3001/uploads/${user.image}`} />
                     </Stack>
                   ) : (
                     <FaUserCircle className="avatar_icon" />

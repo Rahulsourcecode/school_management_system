@@ -10,7 +10,6 @@ import AllDoubts from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AllDoubt
 import CheckReports from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/CheckReports";
 import CreateReport from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/CreateReport";
 import TeacherProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/TeacherProfile";
-import AddDoubt from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/AddDoubt";
 import StudentProfile from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/StudentProfile";
 import FrontPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/FrontPage";
 import TeachersList from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/TeacherLists";
@@ -27,6 +26,7 @@ import AddSubjects from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddSub
 import AddNotices from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddNotice";
 import UploadMarks from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/UploadMarks";
 import ManageLeave from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/ManageLeave";
+import MainDoubtPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/Doubts/MainDoubtPage";
 const AllRoutes = () => {
   const { data } = useSelector((store) => store.auth);
 
@@ -53,7 +53,7 @@ const AllRoutes = () => {
         <Route path="/checkreports" element={data.isAuthenticated ? <CheckReports /> : <DLogin />} />
         <Route path="/createreport" element={data.isAuthenticated ? <CreateReport /> : <DLogin />} />
         <Route path="/teacherprofile" element={data.isAuthenticated ? <TeacherProfile /> : <DLogin />} />
-        <Route path="/adddoubt" element={data.isAuthenticated ? <AddDoubt /> : <DLogin />} />
+        <Route path="/adddoubt" element={data.isAuthenticated ? <MainDoubtPage /> : <DLogin />} />
         <Route path="/studentprofile" element={data.isAuthenticated ? <StudentProfile /> : <DLogin />} />
         <Route path="/addclass" element={data.isAuthenticated ? <AddClass /> : <DLogin />} />
         <Route path="/addsubjects" element={data.isAuthenticated ? <AddSubjects /> : <DLogin />} />

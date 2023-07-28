@@ -5,8 +5,11 @@ import axios from "axios";
 export const baseURL = "http://localhost:3001";
 export const axioss = axios.create({
   baseURL: baseURL,
-  headers:{"x-access-token":localStorage.getItem('token')}
+  headers: { "x-access-token": localStorage.getItem('token') },
 })
+
+
+
 // login student
 export const StudentLogin = (data) => async (dispatch) => {
   try {
@@ -226,9 +229,19 @@ export const NewClass = (data) => async () => {
 export const applyLeave = (data) => async () => {
   console.log(data)
   try {
-    const res = await axioss.post('teachers/applyleave',data)
+    const res = await axioss.post('teachers/applyleave', data)
     return res
   } catch (error) {
 
+  }
+}
+
+//ask Doubt
+export const askDoubt = (data) => async () => {
+  try {
+    const res = await axioss.post("/general/askdoubt", data)
+    return res
+  } catch (error) {
+    console.log(error)
   }
 }
