@@ -6,9 +6,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ToastContainer, toast } from "react-toastify";
 import { askDoubt } from '../../../../../Redux/auth/action'
 const notify = (text) => toast(text)
-const Header = () => {
+const Header = ({ setOpen, open }) => {
     const { data } = useSelector((store) => store.auth);
-    const [open, setOpen] = useState(false)
     const [doubtData, setDoubtData] = useState({
         id: "",
         title: "",

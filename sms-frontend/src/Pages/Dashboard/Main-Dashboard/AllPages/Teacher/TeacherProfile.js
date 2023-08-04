@@ -124,7 +124,7 @@ export default function Teacher_Profile() {
                                 <p>phone:{data?.user?.mobile}</p>
                             </div>
                             <div className="singleitemdiv">
-                                <Button style={{ backgroundColor: "#172BAB", color: 'white' }} onClick={showModal}>
+                                <Button style={{ backgroundColor: "#172BAB", color: 'white' ,padding:1}} onClick={showModal}>
                                     <AiFillEdit />
                                     Edit
                                 </Button>

@@ -175,15 +175,34 @@ router.post("/askdoubt", async (req, res) => {
 
 router.get("/showDoubts", async (req, res) => {
   try {
-    const data = await Doubts.find()
+    const data = await Doubts.find().populate('userId')
     if (data) {
       res.send(data).status(200).json({ message: "data" })
     } else {
       res.status(400)
     }
   } catch (error) {
-
+    console.log(error.message);
   }
 })
+
+router.post("/addAnswers", async (req, res) => {
+  try {
+    const { answer, userid, postid } = req.body
+    const updatedDoubt = await Doubts.findOneAndUpdate(
+      { _id: postid },
+      { $addToSet: { answers: { userId: userid, answer: answer } } },
+      { new: true, upsert: true }
+    );
+
+    if (!updatedDoubt) {
+
+      return res.send(400).send({ error: "failed" });
+    }
+    return res.status(200).send({ message: "success" })
+  } catch (error) {
+    return res.status(400).json({ error: "failed to add" });
+  }
+});
 
 module.exports = router;

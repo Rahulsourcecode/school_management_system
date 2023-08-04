@@ -22,7 +22,7 @@ const DLogin = () => {
     ID: "",
     password: "",
   });
-  const [Logdata,SetLogdata] =useState("")
+  const [Logdata, SetLogdata] = useState("")
   const dispatch = useDispatch();
   const Handlechange = (e) => {
     setFormvalue({ ...formvalue, [e.target.name]: e.target.value });
@@ -33,12 +33,12 @@ const DLogin = () => {
   const HandleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-  
+
     axioss
       .post('/general/login', formvalue)
       .then((response) => {
         SetLogdata(response.data.message);
-  
+
         if (formvalue.ID !== "" && formvalue.password !== "") {
           if (response.data.message === "Student") {
             let data = {
@@ -94,7 +94,7 @@ const DLogin = () => {
                 notify("Something went wrong. Please try again.");
               }
             });
-          } else if(response.data.message ==="invalid"){
+          } else if (response.data.message === "invalid") {
             setLoading(false);
             notify("Invalid login data");
           }
@@ -106,7 +106,7 @@ const DLogin = () => {
         notify("An error occurred. Please try again.");
       });
   };
-  
+
 
 
 
@@ -120,7 +120,7 @@ const DLogin = () => {
       <ToastContainer />
       <div className="mainLoginPage">
         <div className="leftside">
-        <h1 className="animate-text">Manage Your School</h1>
+          <h1 className="animate-text">Manage Your School</h1>
         </div>
         <div className="rightside">
           <h1>Login</h1>
@@ -149,11 +149,11 @@ const DLogin = () => {
               <p style={{ marginTop: "10px" }}>
                 Forget Password?
                 <span
-          style={{ color: "blue", cursor: "pointer" }}
-          onClick={() => navigate("fogotpassword")}
-        >
-          click here
-        </span>
+                  style={{ color: "blue", cursor: "pointer" }}
+                  onClick={() => navigate("fogotpassword")}
+                >
+                  click here
+                </span>
               </p>
 
             </form>

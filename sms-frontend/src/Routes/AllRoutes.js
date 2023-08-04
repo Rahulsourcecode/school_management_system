@@ -27,42 +27,68 @@ import AddNotices from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddNoti
 import UploadMarks from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/UploadMarks";
 import ManageLeave from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/ManageLeave";
 import MainDoubtPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/Doubts/MainDoubtPage";
-const AllRoutes = () => {
+
+const RoleBasedRoutes = () => {
   const { data } = useSelector((store) => store.auth);
+
+  // Helper function to check if the user's role matches any of the given roles
+  const isUserRole = (roles) => roles.includes(data.user.userType);
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<DLogin />} />
-        <Route path="*" element={<Error />} />
-        <Route path="/adminprofile" element={data.isAuthenticated ? <AdminProfile /> : <DLogin />} />
+        <Route path="/" element={data.isAuthenticated ? <FrontPage /> : <DLogin />} />
         <Route path="/fogotpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<Verifyotp />} />
         <Route path="/resetpassword" element={<Resetpassword />} />
-        <Route path="/dashboard" element={data.isAuthenticated ? <FrontPage /> : <DLogin />} />
-        <Route path="/attendance" element={data.isAuthenticated ? <ChooseAttendance /> : <DLogin />} />
-        <Route path="/markattendance" element={data.isAuthenticated ? <MarkAttendance /> : <DLogin />} />
-        <Route path="/editattendance/:date" element={data.isAuthenticated ? <EditAttendance /> : <DLogin />} />
-        <Route path="/addteacher" element={data.isAuthenticated ? <AddTeacher /> : <DLogin />} />
-        <Route path="/viewteacher" element={data.isAuthenticated ? <TeachersList /> : <DLogin />} />
-        <Route path="/addstudent" element={data.isAuthenticated ? <AddStudent /> : <DLogin />} />
-        <Route path="/viewstudent" element={data.isAuthenticated ? <StudentLists /> : <DLogin />} />
-        <Route path="/doubts" element={data.isAuthenticated ? <AllDoubts /> : <DLogin />} />
-        <Route path="/admin" element={data.isAuthenticated ? <AddAdmin /> : <DLogin />} />
-        <Route path="/addnotice" element={data.isAuthenticated ? <AddNotices /> : <DLogin />} />
-        <Route path="/checkreports" element={data.isAuthenticated ? <CheckReports /> : <DLogin />} />
-        <Route path="/createreport" element={data.isAuthenticated ? <CreateReport /> : <DLogin />} />
-        <Route path="/teacherprofile" element={data.isAuthenticated ? <TeacherProfile /> : <DLogin />} />
-        <Route path="/adddoubt" element={data.isAuthenticated ? <MainDoubtPage /> : <DLogin />} />
-        <Route path="/studentprofile" element={data.isAuthenticated ? <StudentProfile /> : <DLogin />} />
-        <Route path="/addclass" element={data.isAuthenticated ? <AddClass /> : <DLogin />} />
-        <Route path="/addsubjects" element={data.isAuthenticated ? <AddSubjects /> : <DLogin />} />
-        <Route path="/uploadmark" element={data.isAuthenticated ? <UploadMarks /> : <DLogin />} />
-        <Route path="/manageleave" element={data.isAuthenticated ? <ManageLeave /> : <DLogin />} />
+        {/* Public routes accessible to all */}
+        <Route path="/adddoubt" element={<MainDoubtPage />} />
 
+        {/* Admin routes */}
+        {data.isAuthenticated && isUserRole(["admin"]) && (
+          <>
+            <Route path="/dashboard" element={<FrontPage />} />
+            <Route path="/adminprofile" element={<AdminProfile />} />
+            <Route path="/addteacher" element={<AddTeacher />} />
+            <Route path="/viewteacher" element={<TeachersList />} />
+            <Route path="/addstudent" element={<AddStudent />} />
+            <Route path="/viewstudent" element={<StudentLists />} />
+            <Route path="/admin" element={<AddAdmin />} />
+            <Route path="/addnotice" element={<AddNotices />} />
+            <Route path="/addclass" element={<AddClass />} />
+            <Route path="/addsubjects" element={<AddSubjects />} />
+            <Route path="/manageleave" element={<ManageLeave />} />
+          </>
+        )}
+
+        {/* Teacher routes */}
+        {data.isAuthenticated && isUserRole(["teacher"]) && (
+          <>
+            <Route path="/dashboard" element={<FrontPage />} />
+            <Route path="/doubts" element={<AllDoubts />} />
+            <Route path="/teacherprofile" element={<TeacherProfile />} />
+            <Route path="/attendance" element={<ChooseAttendance />} />
+            <Route path="/markattendance" element={<MarkAttendance />} />
+            <Route path="/editattendance/:date" element={<EditAttendance />} />
+            <Route path="/createreport" element={<CreateReport />} />
+            <Route path="/uploadmark" element={<UploadMarks />} />
+          </>
+        )}
+
+        {data.isAuthenticated && isUserRole(["student"]) && (
+          <>
+            <Route path="/dashboard" element={<FrontPage />} />
+            <Route path="/doubts" element={<AllDoubts />} />
+            <Route path="/checkreports" element={<CheckReports />} />
+            <Route path="/studentprofile" element={<StudentProfile />} />
+          </>
+        )}
+
+        {/* Catch-all route for unknown routes */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );
 };
 
-export default AllRoutes;
+export default RoleBasedRoutes;
