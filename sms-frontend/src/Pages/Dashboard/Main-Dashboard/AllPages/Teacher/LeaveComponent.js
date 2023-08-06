@@ -6,7 +6,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Modal } from "antd";
 
 export default function LeaveComponent() {
-    const [expanded, setExpanded] = useState(false);
     const [datalist, setDatalist] = useState([])
     console.log(datalist)
 
@@ -24,7 +23,7 @@ export default function LeaveComponent() {
     useEffect(() => {
         axioss.post("teachers/leaveStatus", { id: data.user._id })
             .then((res) => setDatalist(res.data))
-    }, [])
+    }, [leaveModalVisible])
     const handleFormChange1 = (e) => {
         setFormData1({ ...formData1, [e.target.name]: e.target.value })
     }
@@ -114,7 +113,7 @@ export default function LeaveComponent() {
                                         >
                                             <Typography sx={{ width: '100%', flexShrink: 0 }}>
                                                 {`${data.fromDate.slice(0, 10)}  TO  ${data.fromDate.slice(0, 10)} `}
-                                                <h5 style={{ color: data.isApproved ? "Green" : "red" }}> {`${data.isApproved ? "Approved" : "Rejected"}`}</h5  >
+                                                <h5 style={{ color: data.isApproved ? "Green" : "red" }}> {`${data.entered ? data.isApproved ? "Approved" : "Rejected" : "pending..."}`}</h5  >
                                             </Typography>
                                         </AccordionSummary>
                                         <AccordionDetails>

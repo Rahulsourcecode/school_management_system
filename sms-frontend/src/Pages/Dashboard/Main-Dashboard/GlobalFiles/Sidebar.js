@@ -82,7 +82,7 @@ const Sidebar = () => {
                 <div className="user_avatar">
                   {user?.image ? (
                     <Stack direction="row">
-                      <Avatar sx={{marginLeft:1}} alt="Remy Sharp" src={`http://localhost:3001/uploads/${user.image}`} />
+                      <Avatar sx={{ marginLeft: 1 }} alt="Remy Sharp" src={`http://localhost:3001/uploads/${user.image}`} />
                     </Stack>
                   ) : (
                     <FaUserCircle className="avatar_icon" />
@@ -137,16 +137,13 @@ const Sidebar = () => {
               </Link>
             )}
 
-            {user?.userType === "student" && (
+            {(user?.userType === "teacher" || user?.userType === "student") && (
               <Link className="link" activeclassname="active" to={"/adddoubt"}>
                 <div className="icon">
                   <BsPatchQuestionFill className="mainIcon" />
                 </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Ask Doubt
+                <div style={{ display: isOpen ? "block" : "none" }} className="link_text">
+                  {user?.userType === "teacher" ? "view Doubts" : "Ask Doubt"}
                 </div>
               </Link>
             )}
@@ -218,7 +215,7 @@ const Sidebar = () => {
                   style={{ display: isOpen ? "block" : "none" }}
                   className="link_text"
                 >
-                 leaves
+                  leaves
                 </div>
               </Link>
             )}

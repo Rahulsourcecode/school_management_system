@@ -188,10 +188,10 @@ router.get("/showDoubts", async (req, res) => {
 
 router.post("/addAnswers", async (req, res) => {
   try {
-    const { answer, userid, postid } = req.body
+    const { answer, userid, postid, img, userType, username } = req.body
     const updatedDoubt = await Doubts.findOneAndUpdate(
       { _id: postid },
-      { $addToSet: { answers: { userId: userid, answer: answer } } },
+      { $addToSet: { answers: { userId: userid, answer: answer, username: username, userType: userType, img: img } } },
       { new: true, upsert: true }
     );
 
@@ -204,5 +204,29 @@ router.post("/addAnswers", async (req, res) => {
     return res.status(400).json({ error: "failed to add" });
   }
 });
+
+
+router.post("/upvotes", async (req, res) => {
+  try {
+    const { ansid } = req.body;
+    const result = await Doubts.findOne({
+      "answers": { $elemMatch: { _id: ansid } }
+    });
+    if (!result) {
+      return res.status(404).json({ message: "Answer not found." });
+    }
+    const matchedAnswer = result.answers.find((answer) => answer._id.equals(ansid));
+    if (!matchedAnswer) {
+      return res.status(404).json({ message: "Answer not found." });
+    }
+    matchedAnswer.upvotes += 1;
+    await result.save();
+    res.json({ message: "Upvote added successfully.", data: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred." });
+  }
+});
+
 
 module.exports = router;

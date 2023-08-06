@@ -18,10 +18,23 @@ const doubtSchema = mongoose.Schema({
         userId: {
             type: String,
         },
+        username: {
+            type: String
+        },
+        userType: {
+            type: String
+        },  
+        img: {
+            type: String
+        },
         answer: {
             type: String,
+        },
+        upvotes:{
+            default:0,
+            type:Number
         }
-        }]
+    }]
 
 })
 
