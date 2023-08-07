@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const { uploads } = require("../middlewares/multer");
-const { adminRegister, adminLogin, editAdmin, getAllTeachers, createNotice, createClass, getClasses, registerStudent, allstudents, createSubjects, getSubjects, deleteAdmin, sendDetails, getNotices, LeaveList, LeaveStatus } = require("../controllers/adminController");
+const { adminRegister, adminLogin, editAdmin, getAllTeachers, createNotice, createClass, getClasses, registerStudent, allstudents, createSubjects, getSubjects, deleteAdmin, sendDetails, getNotices, LeaveList, LeaveStatus, feebackList } = require("../controllers/adminController");
 const { authenticate } = require("../middlewares/admin.middleware");
 
 
@@ -53,6 +53,8 @@ router.post("/password", sendDetails)
 router.get("/getleaves", LeaveList)
 //leave approval
 router.post("/leaveapprovel", LeaveStatus)
+
+router.get('/getfeedback',feebackList)
 
 module.exports = router;
 

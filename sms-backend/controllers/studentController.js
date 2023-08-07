@@ -2,6 +2,8 @@ const { StudentModel } = require("../models/student.model");
 require("dotenv").config();
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
+const { TeacherModel } = require("../models/teacher.model");
+const { FeedbackModel } = require("../models/feedbacks.model");
 
 
 const studentLogin = async (req, res) => {
@@ -75,9 +77,43 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+const getTeachers = async (req, res) => {
+  try {
+    const teachers = await TeacherModel.find({});
+    console.log(teachers)
+    if (!teachers) {
+      return res.status(400).json({ message: "error" })
+    }
+    return res.send(teachers).status(200)
+  } catch (error) {
+    return res.status(400).json({ message: "error" })
+  }
+}
+
+const submitFeedback = async (req, res) => {
+  try {
+    const { teacher, feedback, studentId } = req.body;
+    const feedbacks = new FeedbackModel({
+      studentId,
+      teacher,
+      feedback,
+    })
+    const data = await feedbacks.save()
+    if (!data) {
+      return res.status(400).json({ message: "error" })
+    }
+    return res.status(200).json({ message: "success" })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ message: "error" })
+  }
+}
+
 module.exports = {
   studentLogin,
   editStudent,
   fetchImage,
-  deleteStudent
+  deleteStudent,
+  getTeachers,
+  submitFeedback
 }

@@ -124,7 +124,14 @@ export const AddNotice = (data) => async () => {
 };
 //
 
-
+export const feedback = (data) => async () => {
+  try {
+    const res = await axioss.post("/students/submitFeedback", data);
+    return res  ;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 // logout user

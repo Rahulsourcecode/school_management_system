@@ -31,6 +31,8 @@ import Stack from '@mui/material/Stack';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import TryIcon from '@mui/icons-material/Try';
 import "./CommonCSS.scss";
 
 const Sidebar = () => {
@@ -133,6 +135,24 @@ const Sidebar = () => {
                   className="link_text"
                 >
                   Profile
+                </div>
+              </Link>
+            )}
+
+            {user?.userType === "student" && (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/addfeedback"}
+              >
+                <div className="icon">
+                  <FeedbackIcon fontSize="large" className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  feedback
                 </div>
               </Link>
             )}
@@ -315,6 +335,20 @@ const Sidebar = () => {
                   className="link_text"
                 >
                   Add Notice
+                </div>
+              </Link>
+            )}
+
+            {user?.userType === "admin" && (
+              <Link className="link" activeclassname="active" to={"/viewfeedbacks"}>
+                <div className="icon">
+                  <TryIcon className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  view feedbacks
                 </div>
               </Link>
             )}

@@ -27,10 +27,11 @@ import AddNotices from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddNoti
 import UploadMarks from "../Pages/Dashboard/Main-Dashboard/AllPages/Teacher/UploadMarks";
 import ManageLeave from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/ManageLeave";
 import MainDoubtPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/Doubts/MainDoubtPage";
+import AddFeedback from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/AddFeedback";
+import FeedbackList from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/FeedbackList";
 
 const RoleBasedRoutes = () => {
   const { data } = useSelector((store) => store.auth);
-
   // Helper function to check if the user's role matches any of the given roles
   const isUserRole = (roles) => roles.includes(data.user.userType);
 
@@ -41,8 +42,8 @@ const RoleBasedRoutes = () => {
         <Route path="/fogotpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<Verifyotp />} />
         <Route path="/resetpassword" element={<Resetpassword />} />
+
         {/* Public routes accessible to all */}
-        <Route path="/adddoubt" element={<MainDoubtPage />} />
 
         {/* Admin routes */}
         {data.isAuthenticated && isUserRole(["admin"]) && (
@@ -58,6 +59,7 @@ const RoleBasedRoutes = () => {
             <Route path="/addclass" element={<AddClass />} />
             <Route path="/addsubjects" element={<AddSubjects />} />
             <Route path="/manageleave" element={<ManageLeave />} />
+            <Route path="/viewfeedbacks" element={<FeedbackList />} />
           </>
         )}
 
@@ -72,15 +74,18 @@ const RoleBasedRoutes = () => {
             <Route path="/editattendance/:date" element={<EditAttendance />} />
             <Route path="/createreport" element={<CreateReport />} />
             <Route path="/uploadmark" element={<UploadMarks />} />
+            <Route path="/adddoubt" element={<MainDoubtPage />} />
           </>
         )}
 
         {data.isAuthenticated && isUserRole(["student"]) && (
           <>
+            <Route path="/addfeedback" element={<AddFeedback />} />
             <Route path="/dashboard" element={<FrontPage />} />
             <Route path="/doubts" element={<AllDoubts />} />
             <Route path="/checkreports" element={<CheckReports />} />
             <Route path="/studentprofile" element={<StudentProfile />} />
+            <Route path="/adddoubt" element={<MainDoubtPage />} />
           </>
         )}
 

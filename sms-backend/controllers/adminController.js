@@ -11,6 +11,7 @@ const { TeacherModel } = require("../models/teacher.model");
 const { uploads } = require("../middlewares/multer");
 const { SubjectModel } = require("../models/subjects.model");
 const { leaveModel } = require("../models/leave.model");
+const { FeedbackModel } = require("../models/feedbacks.model");
 
 
 
@@ -266,12 +267,12 @@ const LeaveStatus = async (req, res) => {
     try {
         const { option, remark, id } = req.body
         if (option === "approve") {
-            const status = await leaveModel.update({ _id: id }, { isApproved: true, remarks: remark ,entered:1})
+            const status = await leaveModel.update({ _id: id }, { isApproved: true, remarks: remark, entered: 1 })
             if (status) {
                 res.status(200).json({ message: "success" })
             }
         } else {
-            const status = await leaveModel.update({ _id: id }, { isApproved: false, remarks: remark ,entered:1})
+            const status = await leaveModel.update({ _id: id }, { isApproved: false, remarks: remark, entered: 1 })
             if (status) {
                 res.status(200).json({ message: "success" })
             }
@@ -279,6 +280,19 @@ const LeaveStatus = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(400).json({ message: "error" })
+    }
+}
+
+const feebackList = async (req, res) => {
+    try {
+        const list = await FeedbackModel.find({}).populate("studentId").populate('teacher')
+        if (!list) {
+            return res.status(400).json({ message: "error" })
+        }
+        console.log(list)
+        return res.send(list).status(200).json({ message: "success" })
+    } catch (error) {
+        return res.status(404).jsnon({ message: "error" })
     }
 }
 
@@ -299,6 +313,5 @@ module.exports = {
     getNotices,
     LeaveList,
     LeaveStatus,
-
-
+    feebackList
 }
