@@ -3,11 +3,12 @@ const { connection } = require("./Config/db")
 require("dotenv").config();
 const cors = require("cors");
 const morgan = require('morgan')
-
+const socket = require('socket.io')
 const adminRouter = require('./routes/admin.route')
 const teacherRouter = require('./routes/teacher.route')
 const studentRouter = require('./routes/student.route');
 const generalRouter = require('./routes/general.route');
+const messageRouter = require('./routes/messageRouter');
 
 const app = express()
 
@@ -22,9 +23,10 @@ app.get("/", (req, res) => {
 app.use("/admin", adminRouter);
 app.use('/teachers', teacherRouter);
 app.use('/students', studentRouter);
+app.use("/messages", messageRouter);
 app.use("/general", generalRouter);
 
-app.listen(process.env.PORT, async () => {
+const server = app.listen(process.env.PORT, async () => {
     try {
         await connection
         console.log("Connected to DB");
@@ -35,5 +37,25 @@ app.listen(process.env.PORT, async () => {
     console.log(`Listening at port ${process.env.PORT}`);
 })
 
+const io = socket(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        credentials: true,
+    },
+});
 
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+    global.chatSocket = socket;
+    socket.on("add-user", (userId) => {
+        onlineUsers.set(userId, socket.id);
+    });
+
+    socket.on("send-msg", (data) => {
+        const sendUserSocket = onlineUsers.get(data.to);
+        if (sendUserSocket) {
+            socket.to(sendUserSocket).emit("msg-recieve", data);
+        }
+    });
+});
 

@@ -208,18 +208,23 @@ router.post("/addAnswers", async (req, res) => {
 
 router.post("/upvotes", async (req, res) => {
   try {
-    const { ansid } = req.body;
+    const { ansid, userId } = req.body;
+    console.log(req.body);
     const result = await Doubts.findOne({
       "answers": { $elemMatch: { _id: ansid } }
-    });
+    })
     if (!result) {
-      return res.status(404).json({ message: "Answer not found." });
+      return res.status(404).json({ message: "Answer not found." })
     }
     const matchedAnswer = result.answers.find((answer) => answer._id.equals(ansid));
     if (!matchedAnswer) {
-      return res.status(404).json({ message: "Answer not found." });
+      return res.status(404).json({ message: "Answer not found." })
     }
-    matchedAnswer.upvotes += 1;
+    if (matchedAnswer.upvotes.includes(userId)) {
+      matchedAnswer.upvotes = matchedAnswer.upvotes.filter(x => x !== userId)
+    } else {
+      matchedAnswer.upvotes.push(userId)
+    }
     await result.save();
     res.json({ message: "Upvote added successfully.", data: result });
   } catch (error) {
@@ -228,5 +233,25 @@ router.post("/upvotes", async (req, res) => {
   }
 });
 
+router.post("/getall", async (req, res) => {
+  try {
+    console.log(req.body)
+    let user;
+    const { type } = req.body
+    console.log(type)
+    if (type === "student") {
+      user = await TeacherModel.find({})
+    }
+    else {
+      user = await StudentModel.find({})
+    }
+    if (!user) {
+      return res.status(400).json({ message: "no records found" })
+    }
+    return res.status(200).send(user)
+  } catch (error) {
+    return res.status(400)
+  }
+})
 
 module.exports = router;

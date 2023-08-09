@@ -9,10 +9,12 @@ import { RiAdminLine } from "react-icons/ri";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ForumIcon from '@mui/icons-material/Forum';
 import {
   GetNotices,
   GetAllData,
 } from "../../../../Redux/Datas/action";
+import { Link } from "react-router-dom";
 
 const FrontPage = () => {
   const columns = [
@@ -39,6 +41,7 @@ const FrontPage = () => {
     <div className="container">
       <Sidebar />
       <div className="AfterSideBar">
+        <Link to={"/chat"}> <ForumIcon sx={{ justifyContent: 'flex-end' }} /></Link>
         <h1 style={{ color: "black" }}>Overview</h1>
         <div className="maindiv">
           <div className="one commondiv">

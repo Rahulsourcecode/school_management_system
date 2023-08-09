@@ -32,7 +32,7 @@ const doubtSchema = mongoose.Schema({
         },
         upvotes:{
             default:0,
-            type:Number
+            type:Array,
         }
     }]
 

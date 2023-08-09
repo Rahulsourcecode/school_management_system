@@ -24,14 +24,15 @@ const Doubts = ({ onNotify, open }) => {
   const postedBy = data.user.userType === "student" ? data?.user?.studentName : data?.user?.teacherName;
   const imageData = data?.user?.image;
   const userType = data?.user?.userType;
-
+  const userId = data?.user?._id
+  console.log(userId);
   useEffect(() => {
     axioss.get("/general/showDoubts").then((res) => setAllDatas(res.data));
   }, [open, modalStates, upvotes]);
 
   function upvotesAction(ansid) {
     setUpvotes((upvotes) => !upvotes)
-    axioss.post("/general/upvotes", { ansid })
+    axioss.post("/general/upvotes", { ansid, userId })
   }
 
   // Function to handle opening the modal for a specific data item for CommentOutlinedIcon
@@ -153,7 +154,7 @@ const Doubts = ({ onNotify, open }) => {
                   </div>
                   <Box sx={{ flexGrow: 1 }} />
                   <Button variant="outlined" color="primary" onClick={() => upvotesAction(res._id)} startIcon={<ThumbUpIcon />}>
-                    {res.upvotes} Upvotes
+                    {res.upvotes.length} Upvotes
                   </Button>
                 </Box>
               ))

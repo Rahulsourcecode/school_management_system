@@ -29,6 +29,7 @@ import ManageLeave from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/Manage
 import MainDoubtPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/Doubts/MainDoubtPage";
 import AddFeedback from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/AddFeedback";
 import FeedbackList from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/FeedbackList";
+import Chat from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/chat/Chat";
 
 const RoleBasedRoutes = () => {
   const { data } = useSelector((store) => store.auth);
@@ -44,6 +45,11 @@ const RoleBasedRoutes = () => {
         <Route path="/resetpassword" element={<Resetpassword />} />
 
         {/* Public routes accessible to all */}
+        {data.isAuthenticated && isUserRole(["teacher", "student"]) && (
+          <>
+            <Route path="/chat" element={<Chat />} />
+          </>
+        )}
 
         {/* Admin routes */}
         {data.isAuthenticated && isUserRole(["admin"]) && (

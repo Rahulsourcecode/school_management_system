@@ -127,7 +127,7 @@ export const AddNotice = (data) => async () => {
 export const feedback = (data) => async () => {
   try {
     const res = await axioss.post("/students/submitFeedback", data);
-    return res  ;
+    return res;
   } catch (error) {
     console.log(error);
   }
@@ -248,6 +248,17 @@ export const askDoubt = (data) => async () => {
   try {
     const res = await axioss.post("/general/askdoubt", data)
     return res
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+export const getContacts = (type) => async () => {
+  try {
+    console.log(type)
+    const res = await axioss.post("/general/getall", { type })
+    return res.data
   } catch (error) {
     console.log(error)
   }
