@@ -30,6 +30,7 @@ import MainDoubtPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/Doubts/
 import AddFeedback from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/AddFeedback";
 import FeedbackList from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/FeedbackList";
 import Chat from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/chat/Chat";
+import ViewAttendance from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/ViewAttendance";
 
 const RoleBasedRoutes = () => {
   const { data } = useSelector((store) => store.auth);
@@ -92,6 +93,7 @@ const RoleBasedRoutes = () => {
             <Route path="/checkreports" element={<CheckReports />} />
             <Route path="/studentprofile" element={<StudentProfile />} />
             <Route path="/adddoubt" element={<MainDoubtPage />} />
+            <Route path="/viewattendance" element={<ViewAttendance />} />
           </>
         )}
 

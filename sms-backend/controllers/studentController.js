@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
 const { TeacherModel } = require("../models/teacher.model");
 const { FeedbackModel } = require("../models/feedbacks.model");
+const { studentAttendance } = require("../models/Student.attendance.model");
 
 
 const studentLogin = async (req, res) => {
@@ -109,11 +110,26 @@ const submitFeedback = async (req, res) => {
   }
 }
 
+const fetchAttendance = async (req, res) => {
+  try {
+    const { id } = req.body
+    const attendance = await studentAttendance.find({ student: id })
+    console.log(attendance)
+    if (!attendance) {
+      return res.status(400).json({ message: "no data found" })
+    }
+    return res.status(200).send(attendance)
+  } catch (error) {
+    return res.status(400).json({ message: "error" })
+  }
+}
+
 module.exports = {
   studentLogin,
   editStudent,
   fetchImage,
   deleteStudent,
   getTeachers,
-  submitFeedback
+  submitFeedback,
+  fetchAttendance
 }

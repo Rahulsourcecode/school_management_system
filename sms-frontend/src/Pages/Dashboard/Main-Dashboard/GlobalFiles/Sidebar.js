@@ -33,6 +33,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import TryIcon from '@mui/icons-material/Try';
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import "./CommonCSS.scss";
 
 const Sidebar = () => {
@@ -135,6 +136,24 @@ const Sidebar = () => {
                   className="link_text"
                 >
                   Profile
+                </div>
+              </Link>
+            )}
+
+            {user?.userType === "student" && (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/viewattendance"}
+              >
+                <div className="icon">
+                  <AssignmentLateIcon fontSize="large" className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  attendance
                 </div>
               </Link>
             )}

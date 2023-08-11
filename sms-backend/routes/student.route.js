@@ -1,5 +1,5 @@
 const express = require("express");
-const { studentLogin, editStudent, fetchImage, deleteStudent, getTeachers, submitFeedback } = require("../controllers/studentController");
+const { studentLogin, editStudent, fetchImage, deleteStudent, getTeachers, submitFeedback, fetchAttendance } = require("../controllers/studentController");
 const router = express.Router();
 
 
@@ -15,5 +15,7 @@ router.post("/fetchimage", fetchImage)
 router.get("/listteachers", getTeachers)
 
 router.post("/submitFeedback", submitFeedback)
+
+router.post("/attendance",fetchAttendance)
 
 module.exports = router;
