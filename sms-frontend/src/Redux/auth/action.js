@@ -4,8 +4,8 @@ import axios from "axios";
 // Set the base URL for the API requests
 export const baseURL = "http://localhost:3001";
 export const axioss = axios.create({
+  withCredentials: true,
   baseURL: baseURL,
-  headers: { "x-access-token": localStorage.getItem('token') },
 })
 
 
@@ -149,8 +149,7 @@ export const authLogout = () => async (dispatch) => {
 export const UpdateStudent = (data, id) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_STUDENT_REQUEST });
-    const res = await axioss.patch(`/students/${id}`, data);
-    dispatch({ type: types.EDIT_STUDENT_SUCCESS, payload: res.data.user });
+    await axioss.patch(`/students/${id}`, data).then((res) => dispatch({ type: types.EDIT_STUDENT_SUCCESS, payload: { user: res.data.user, token: res.data.token } }))
   } catch (error) {
     console.log(error);
   }
@@ -160,8 +159,8 @@ export const UpdateStudent = (data, id) => async (dispatch) => {
 export const UpdateTeacher = (data, id) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_TEACHER_REQUEST });
-    const res = await axioss.patch(`/teachers/${id}`, data);
-    dispatch({ type: types.EDIT_TEACHER_SUCCESS, payload: res.data.user });
+    await axioss.patch(`/teachers/${id}`, data).then((res) => dispatch({ type: types.EDIT_TEACHER_SUCCESS, payload: { user: res.data.user, token: res.data.token } }))
+
   } catch (error) {
     console.log(error);
   }
@@ -171,8 +170,8 @@ export const UpdateTeacher = (data, id) => async (dispatch) => {
 export const UpdateAdmin = (data, id) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_ADMIN_REQUEST });
-    const res = await axioss.patch(`/admin/${id}`, data);
-    dispatch({ type: types.EDIT_ADMIN_SUCCESS, payload: res.data.user })
+    await axioss.patch(`/admin/${id}`, data).then((res) => dispatch({ type: types.EDIT_ADMIN_SUCCESS, payload: {user:res.data.user,token:res.data.token} }))
+
   } catch (error) {
     console.log(error)
   }

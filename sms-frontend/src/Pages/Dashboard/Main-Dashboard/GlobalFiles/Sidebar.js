@@ -34,7 +34,9 @@ import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import TryIcon from '@mui/icons-material/Try';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import "./CommonCSS.scss";
+import { axioss } from "../../../../Redux/auth/action";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -154,6 +156,24 @@ const Sidebar = () => {
                   className="link_text"
                 >
                   attendance
+                </div>
+              </Link>
+            )}
+
+            {user?.userType === "student" && (
+              <Link
+                className="link"
+                activeclassname="active"
+                to={"/viewmarks"}
+              >
+                <div className="icon">
+                  <ViewListIcon fontSize="large" className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  marks
                 </div>
               </Link>
             )}
@@ -459,24 +479,7 @@ const Sidebar = () => {
               </Link>
             )}
 
-            {user?.userType === "student" && (
-              <a
-                href="https://sms-quiz.netlify.app/"
-                target="_blank"
-                className="link"
-                activeclassname="active"
-              >
-                <div className="icon">
-                  <MdQuiz fontSize="large" className="mainIcon" />
-                </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Quiz
-                </div>
-              </a>
-            )}
+
 
             {(user?.userType === "null" || user?.userType === "null") && (
               <a
@@ -518,6 +521,7 @@ const Sidebar = () => {
             <Link
               className="LogOutPath link"
               onClick={() => {
+                axioss.get("general/logout")
                 dispatch({ type: "AUTH_LOGOUT" });
               }}
               to={"/"}

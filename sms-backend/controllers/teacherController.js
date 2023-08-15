@@ -9,7 +9,7 @@ const { uploads } = require("../middlewares/multer");
 const { studentAttendance } = require("../models/Student.attendance.model");
 const { Myclass } = require('../models/class.model');
 const { leaveModel } = require("../models/leave.model");
-
+let token;
 
 
 const teacherLogin = async (req, res) => {
@@ -27,7 +27,13 @@ const teacherLogin = async (req, res) => {
         const token = jwt.sign({ foo: "bar" }, process.env.key, {
           expiresIn: "24h",
         });
-        return res.send({ message: "Successful", user: teacher, token: token });
+        return res.cookie('token', token, {
+          path: "/",
+          expires: new Date(Date.now() + 1000 * 60 * 60),
+          httpOnly: true,
+          SameSite: 'None',
+          secure: true,
+        }).send({ message: "Successful", user: teacher, token: token });
       }
     }
 
@@ -96,7 +102,7 @@ const editTeacher = async (req, res) => {
         .status(404)
         .send({ message: `Teacher with id ${id} not found` });
     }
-    res.status(200).send({ message: `Teacher Updated`, user: teacher });
+    res.status(200).send({ message: `Teacher Updated`, user: teacher, token: token });
   } catch (error) {
     console.log(error);
     res.status(400).send({ error: "Something went wrong, unable to Update." });
@@ -240,13 +246,13 @@ const leaveStatus = async (req, res) => {
   try {
     const { id } = req.body;
     const status = await leaveModel.find({ staffData: id })
-    if(status){
+    if (status) {
       res.status(200).send(status);
-    }else{
-      res.status(400).json({message:"no data"})
+    } else {
+      res.status(400).json({ message: "no data" })
     }
   } catch (error) {
-    res.status(400).json({error:true})
+    res.status(400).json({ error: true })
   }
 }
 

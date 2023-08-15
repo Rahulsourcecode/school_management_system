@@ -9,17 +9,22 @@ const teacherRouter = require('./routes/teacher.route')
 const studentRouter = require('./routes/student.route');
 const generalRouter = require('./routes/general.route');
 const messageRouter = require('./routes/messageRouter');
-
+const cookieParser = require("cookie-parser")
 const app = express()
 
 app.use(express.json())
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+}));
+
 app.use(express.static('public'));
 morgan('default')
 app.get("/", (req, res) => {
     res.send("Homepage")
 })
 
+app.use(cookieParser())
 app.use("/admin", adminRouter);
 app.use('/teachers', teacherRouter);
 app.use('/students', studentRouter);

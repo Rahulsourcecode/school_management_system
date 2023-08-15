@@ -4,134 +4,139 @@ import ChatInput from "./ChatInput";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import {
-    sendMessageRoute,
-    recieveMessageRoute,
+  sendMessageRoute,
+  recieveMessageRoute,
 } from "../../../../../utils/APIRoutes";
 import { useSelector } from "react-redux";
 import { Avatar, Typography } from "@mui/material";
+import Sidebar from "../Sidebar";
 
 export default function ChatContainer({ currentChat, socket }) {
-    const [messages, setMessages] = useState([]);
-    const scrollRef = useRef();
-    const currentChatRef = useRef(currentChat);
-    const [arrivalMessage, setArrivalMessage] = useState(null);
-    const data = useSelector((store) => store?.auth?.data?.user);
-    console.log(data);
-    useEffect(() => {
-        currentChatRef.current = currentChat;
-        async function getData() {
-            const response = await axios.post(recieveMessageRoute, {
-                from: data?._id,
-                to: currentChat._id,
-            });
-            setMessages(response.data);
+  const [messages, setMessages] = useState([]);
+  const scrollRef = useRef();
+  const currentChatRef = useRef(currentChat);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const data = useSelector((store) => store?.auth?.data?.user);
+  console.log(data);
+  useEffect(() => {
+    currentChatRef.current = currentChat;
+    async function getData() {
+      const response = await axios.post(recieveMessageRoute, {
+        from: data?._id,
+        to: currentChat._id,
+      });
+      setMessages(response.data);
+    }
+    getData();
+  }, [currentChat]);
+
+  const handleSendMsg = async (msg) => {
+    socket.current.emit("send-msg", {
+      to: currentChat?._id,
+      from: data?._id,
+      message: msg,
+      time: new Date(),
+    });
+
+    await axios.post(sendMessageRoute, {
+      from: data?._id,
+      to: currentChat?._id,
+      message: msg,
+    });
+
+    const msgs = [...messages];
+    msgs.push({ fromSelf: true, message: msg, time: Date.now() });
+    setMessages(msgs);
+  };
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msg-recieve", (msg) => {
+        console.log(msg);
+        if (msg.from === currentChatRef.current?._id) {
+          setArrivalMessage({
+            fromSelf: false,
+            message: msg.message,
+            time: msg.time,
+          });
         }
-        getData();
-    }, [currentChat]);
+      });
+    }
+  }, []);
 
-    const handleSendMsg = async (msg) => {
-        socket.current.emit("send-msg", {
-            to: currentChat?._id,
-            from: data?._id,
-            message: msg,
-            time: new Date(),
-        });
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
 
-        await axios.post(sendMessageRoute, {
-          from: data?._id,
-          to: currentChat?._id,
-          message: msg,
-        });
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-        const msgs = [...messages];
-        msgs.push({ fromSelf: true, message: msg, time: Date.now() });
-        setMessages(msgs);
-    };
-
-    useEffect(() => {
-        if (socket.current) {
-            socket.current.on("msg-recieve", (msg) => {
-                console.log(msg);
-                if (msg.from === currentChatRef.current?._id) {
-                    setArrivalMessage({
-                        fromSelf: false,
-                        message: msg.message,
-                        time: msg.time,
-                    });
-                }
-            });
-        }
-    }, []);
-
-    useEffect(() => {
-        arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-    }, [arrivalMessage]);
-
-    useEffect(() => {
-        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
-
-    return (
-        <Container>
+  return (
+    <>
+    
+          <Container>
             <div className="chat-header">
-                <div className="user-details">
-                    <div className="avatar">
-                        <Avatar src={currentChat?.profilePic} alt="" />
-                    </div>
-                    <div className="username">
-                        <H3>{currentChat.userType === 'student' ? currentChat?.studentName : currentChat?.teacherName}</H3>
-                        <H3>{currentChat?._id}</H3>
-                    </div>
+              <div className="user-details">
+                <div className="avatar">
+                  <Avatar src={currentChat?.profilePic} alt="" />
                 </div>
-                {/* <Logout /> */}
+                <div className="username">
+                  <H3>{currentChat.userType === 'student' ? currentChat?.studentName : currentChat?.teacherName}</H3>
+                  <H3>{currentChat?._id}</H3>
+                </div>
+              </div>
+              {/* <Logout /> */}
             </div>
             <div className="chat-messages">
-                {messages.map((message) => {
-                    return (
-                        <div ref={scrollRef} key={uuidv4()}>
-                            <div
-                                className={`message ${message.fromSelf ? "sended" : "recieved"
-                                    }`}
-                            >
-                                <div className="content ">
-                                    <H2>{message.message}</H2>
-                                    <H3
-                                        variant="body2"
-                                        fontSize={10.675}
-                                        align="right"
-                                        style={{ display: "", margin: "0px" }}
-                                    >{`${new Date(message.time).getHours()}:${new Date(
-                                        message.time
-                                    ).getMinutes()}`} </H3>
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
+              {messages.map((message) => {
+                return (
+                  <div ref={scrollRef} key={uuidv4()}>
+                    <div
+                      className={`message ${message.fromSelf ? "sended" : "recieved"
+                        }`}
+                    >
+                      <div className="content ">
+                        <H2>{message.message}</H2>
+                        <H3
+                          variant="body2"
+                          fontSize={10.675}
+                          align="right"
+                          style={{ display: "", margin: "0px" }}
+                        >{`${new Date(message.time).getHours()}:${new Date(
+                          message.time
+                        ).getMinutes()}`} </H3>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <ChatInput handleSendMsg={handleSendMsg} />
-        </Container>
-    );
+          </Container>
+
+    </>
+  );
 }
 const H2 = styled(Typography)({
-    variant: "h6",
-    color: "#000",
-    paddingLeft: "6px",
-    paddingRight: "9px",
-    marginBottom: "0px",
-    align: "right",
-    fontFamily: "",
-    fontSize: '0.675rem',
+  variant: "h6",
+  color: "#000",
+  paddingLeft: "6px",
+  paddingRight: "9px",
+  marginBottom: "0px",
+  align: "right",
+  fontFamily: "",
+  fontSize: '0.675rem',
 });
 
 const H3 = styled(Typography)({
-    fontSize: "800px",
-    color: "#000",
-    paddingLeft: "6px",
-    paddingBottom: "1px",
-    align: "right",
-    fontFamily: "inherit",
-    paddingRight: '1px',
+  fontSize: "800px",
+  color: "#000",
+  paddingLeft: "6px",
+  paddingBottom: "1px",
+  align: "right",
+  fontFamily: "inherit",
+  paddingRight: '1px',
 });
 
 const Container = styled.div`

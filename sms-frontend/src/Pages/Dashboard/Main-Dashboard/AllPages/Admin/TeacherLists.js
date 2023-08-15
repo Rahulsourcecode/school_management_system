@@ -23,8 +23,8 @@ export default function TeacherLists() {
 
   useEffect(() => {
     // fetch teachers data from API or database
-   axioss.get("/admin/teachers/all")
-   .then((res)=>setTeachers(res.data))
+  axioss.get("/admin/teachers/all")
+  .then((res)=>setTeachers(res.data)).then((res)=>console.log(res)).catch(error=>console.log(error))
   },[]);
   console.log(Teachers);
 

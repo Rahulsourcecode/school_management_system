@@ -229,16 +229,18 @@ const AddDoctor = () => {
                     required
                   >
                     <option value="">Select subject</option>
-                    <option value="math">Math</option>
+                    <option value="maths">Maths</option>
                     <option value="science">Science</option>
-                    <option value="sst">Social Science</option>
-                    <option value="english">English</option>
+                    <option value="social science">Social Science</option>
+                    <option value="biology">biology</option>
+                    <option value="physics">physics</option>
+                    <option value="english">chemistry</option>
                     <option value="general">General</option>
                   </select>
                 </div>
               </div>
               <div>
-                <label>Birth date</label>
+                <label>Birth date</label> 
                 <div className="inputdiv">
                   <input
                     type="date"
@@ -328,7 +330,7 @@ const AddDoctor = () => {
 
                     <Stack sx={{ flex: 'wrap' }} direction="row" spacing={3}>
                       <Chip label={x} onDelete={() => handleDelete(x)}>
-                      </Chip> 
+                      </Chip>
                     </Stack>
 
                   </>

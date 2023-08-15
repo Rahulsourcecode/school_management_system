@@ -81,26 +81,32 @@ export default function authReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         data: {
-          user: payload,
+          isAuthenticated: true,
+          user: payload.user,
+          token: payload.token,
         },
       };
     case types.EDIT_TEACHER_SUCCESS:
       return {
         ...state,
         data: {
-          user: payload,
+          isAuthenticated: true,
+          user: payload.user,
+          token: payload.token,
         },
       };
-      case types.EDIT_ADMIN_SUCCESS:
-        console.log("THIS IS");
-        console.log(payload);
+    case types.EDIT_ADMIN_SUCCESS:
+      console.log("THIS IS");
+      console.log(payload);
       return {
         ...state,
         data: {
-          user: payload,
+          isAuthenticated: true,
+          user: payload.user,
+          token: payload.token,
         },
       };
- 
+
     case "AUTH_LOGIN_RESET":
       return {
         ...state,

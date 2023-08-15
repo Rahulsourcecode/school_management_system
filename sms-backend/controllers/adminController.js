@@ -12,7 +12,7 @@ const { uploads } = require("../middlewares/multer");
 const { SubjectModel } = require("../models/subjects.model");
 const { leaveModel } = require("../models/leave.model");
 const { FeedbackModel } = require("../models/feedbacks.model");
-
+let token;
 
 
 const adminRegister = async (req, res) => {
@@ -37,7 +37,7 @@ const adminRegister = async (req, res) => {
 };
 
 const adminLogin = async (req, res) => {
-    console.log(req)
+    // console.log(req.cookies.token)
     const { adminID, password } = req.body;
     try {
         const admin = await AdminModel.findOne({ adminID });
@@ -47,10 +47,15 @@ const adminLogin = async (req, res) => {
             const match = await bcrypt.compare(password, admin.password);
 
             if (match) {
-                const token = jwt.sign({ adminID }, process.env.key, {
-                    expiresIn: "30s",
+                token = jwt.sign({ adminID }, process.env.key, {
+                    expiresIn: "1d",
                 });
-                return res.send({ message: "Successful", user: admin, token: token });
+                return res.cookie('token', token, {
+                    path: "/",
+                    expires: new Date(Date.now() + 1000 * 60 * 60),
+                    SameSite: 'None',
+                    secure: true,
+                }).send({ message: "Successful", user: admin, token: token });
             }
         }
         res.send({ message: "Wrong credentials" });
@@ -71,7 +76,7 @@ const editAdmin = async (req, res) => {
                 .status(404)
                 .send({ message: `admin with id ${id} not found` });
         }
-        res.status(200).send({ message: `Admin Updated`, user: admin });
+        res.status(200).send({ message: `Admin Updated`, user: admin, token: token });
     } catch (error) {
         console.log(error);
         res.status(400).send({ error: "Something went wrong, unable to Update." });
@@ -134,6 +139,7 @@ const createClass = async (req, res) => {
 
 const getClasses = async (req, res) => {
     try {
+        console.log("this is getclass")
         const classes = await Myclass.find();
         res.status(200).send(classes);
     } catch (error) {

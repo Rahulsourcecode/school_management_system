@@ -2,10 +2,12 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const authenticate = (req, res, next) => {
-  const token = req.headers["x-access-token"];
+  const token = req.cookies.token
+  console.log(token);
   if (token) {
     const decoded = jwt.verify(token, process.env.key);
     if (decoded) {
+      console.log(1)
       const adminID = decoded.adminID;
       req.body.adminID = adminID;
       next();
@@ -13,7 +15,7 @@ const authenticate = (req, res, next) => {
       res.send("You cannot edit this token.");
     }
   } else {
-    res.send("Inadequate permissions, Please login first.");
+    res.status(400).send("Inadequate permissions, Please login first.");
   }
 };
 

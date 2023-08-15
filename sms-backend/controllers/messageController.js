@@ -6,7 +6,7 @@ module.exports.getMessages = async (req, res, next) => {
         const { from, to } = req.body;
 
         const messages = await Messages.find({
-            sender:from , reciever : to
+            sender: [from, to], reciever: [to, from]
         }).sort({ updatedAt: 1 });
 
         const projectedMessages = messages.map((msg) => {
@@ -16,7 +16,7 @@ module.exports.getMessages = async (req, res, next) => {
                 time: msg.createdAt,
             };
         });
-        res.json(projectedMessages); 
+        res.json(projectedMessages);
     } catch (ex) {
         next(ex);
     }

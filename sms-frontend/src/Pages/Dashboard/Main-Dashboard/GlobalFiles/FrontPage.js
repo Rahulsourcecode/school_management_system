@@ -27,6 +27,7 @@ const FrontPage = () => {
   const {
     dashboard: { data },
   } = useSelector((store) => store.data);
+  const datas = useSelector((store) => store.auth);
 
   console.log(data);
 
@@ -41,8 +42,14 @@ const FrontPage = () => {
     <div className="container">
       <Sidebar />
       <div className="AfterSideBar">
-        <Link to={"/chat"}> <ForumIcon sx={{ justifyContent: 'flex-end' }} /></Link>
-        <h1 style={{ color: "black" }}>Overview</h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1 style={{ color: "black" }}>Overview</h1>
+          </div>
+          <div>
+            {datas.data.user.userType !== "admin" && <Link to={"/chat"}> <ForumIcon fontSize="large" sx={{ marginRight: 5 }} /></Link>}
+          </div>
+        </div>
         <div className="maindiv">
           <div className="one commondiv">
             <div>

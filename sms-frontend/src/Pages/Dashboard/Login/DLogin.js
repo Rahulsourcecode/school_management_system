@@ -111,9 +111,9 @@ const DLogin = () => {
 
 
 
-  if (data?.isAuthenticated === true) {
-    return <Navigate to={"/dashboard"} />;
-  }
+  // if (data?.isAuthenticated === true) {
+  //   return <Navigate to={"/dashboard"} />;
+  // }
 
   return (
     <>

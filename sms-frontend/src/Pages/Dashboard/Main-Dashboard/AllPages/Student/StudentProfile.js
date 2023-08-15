@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../SCSS/Profile.scss";
 import { BiTime } from "react-icons/bi";
 import { GiMeditation } from "react-icons/gi";
@@ -85,10 +85,6 @@ const Nurse_Profile = () => {
   };
   const { data } = useSelector((store) => store.auth);
 
-  if (data?.isAuthenticated === false) {
-    return <Navigate to={"/"} />;
-  }
-
   return (
     <>
       {contextHolder}
@@ -98,7 +94,7 @@ const Nurse_Profile = () => {
           <div className="maindoctorProfile">
             <div className="firstBox doctorfirstdiv">
               <div>
-                <img style={{height:240}} src={`http://localhost:3001/uploads/${imagePath}`} alt="img" />
+                <img style={{ height: 240 }} src={`http://localhost:3001/uploads/${imagePath}`} alt="img" />
               </div>
               <hr />
               <div className="singleitemdiv">
@@ -142,7 +138,7 @@ const Nurse_Profile = () => {
               >
                 <form className="inputForm">
                   <input
-                    name="nurseName"
+                    name="studentName"
                     value={formData.studentName}
                     onChange={handleFormChange}
                     type="text"

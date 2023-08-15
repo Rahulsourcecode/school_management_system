@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import DLogin from "../Pages/Dashboard/Login/DLogin";
 import Error from "../Pages/404/Error";
 import AddAdmin from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/AddAdmin";
@@ -31,7 +31,76 @@ import AddFeedback from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/AddF
 import FeedbackList from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/FeedbackList";
 import Chat from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/chat/Chat";
 import ViewAttendance from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/ViewAttendance";
-
+import { axioss } from "../Redux/auth/action";
+import PrivateRoute from "./PrivateRoute";
+import ViewMarks from "../Pages/Dashboard/Main-Dashboard/AllPages/Student/ViewMarks";
+let state
+axioss.interceptors.response.use(function (response) {
+  try {
+    console.log('calling');
+    console.log(document.cookie)
+    const cookies = {};
+    document?.cookie?.split(';').forEach(cookie => {
+      const [name, value] = cookie.trim().split('=');
+      cookies[name] = value;
+    })
+    console.log(cookies.token);
+    if (cookies?.token) {
+      console.log('get token');
+      const serializedStore = localStorage.getItem("token");
+      console.log(typeof (serializedStore));
+      state = true
+      console.log('state', state)
+      // if (serializedStore!==null) {
+      //   const st = serializedStore
+      //   console.log(st)
+      //   state = st === cookies.token ? true : false
+      // }
+    } else {
+      state = false
+      console.log('state', state)
+    }
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}, function (error) {
+  return Promise.reject(error);
+});
+axioss.interceptors.request.use(function (config) {
+  try {
+    console.log('comming');
+    console.log(config);
+    console.log(document.cookie)
+    const cookies = {};
+    document?.cookie?.split(';').forEach(cookie => {
+      const [name, value] = cookie.trim().split('=');
+      cookies[name] = value;
+    })
+    if (cookies?.token) {
+      console.log('get token');
+      const serializedStore = localStorage.getItem("token");
+      console.log(typeof (serializedStore));
+      state = true
+      console.log('state', state)
+      // if (serializedStore!==null) {
+      //   const st = serializedStore
+      //   console.log(st)
+      //   state = st === cookies.token ? true : false
+      //   console.log('state',state)
+      // }
+    } else {
+      state = false
+      console.log('state', state)
+    }
+    return config;
+  } catch (error) {
+    console.log(error)
+  }
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
 const RoleBasedRoutes = () => {
   const { data } = useSelector((store) => store.auth);
   // Helper function to check if the user's role matches any of the given roles
@@ -41,61 +110,66 @@ const RoleBasedRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={data.isAuthenticated ? <FrontPage /> : <DLogin />} />
-        <Route path="/fogotpassword" element={<ForgetPassword />} />
-        <Route path="/verifyotp" element={<Verifyotp />} />
-        <Route path="/resetpassword" element={<Resetpassword />} />
+        {/* <Route element={<PrivateRoute state={state}/>} > */}
+        <>
+          <Route path="/fogotpassword" element={<ForgetPassword />} />
+          <Route path="/verifyotp" element={<Verifyotp />} />
+          <Route path="/resetpassword" element={<Resetpassword />} />
 
-        {/* Public routes accessible to all */}
-        {data.isAuthenticated && isUserRole(["teacher", "student"]) && (
-          <>
-            <Route path="/chat" element={<Chat />} />
-          </>
-        )}
+          {/* Public routes accessible to all */}
+          {data.isAuthenticated && isUserRole(["teacher", "student"]) && (
+            <>
+              <Route path="/chat" element={<Chat />} />
+            </>
+          )}
 
-        {/* Admin routes */}
-        {data.isAuthenticated && isUserRole(["admin"]) && (
-          <>
-            <Route path="/dashboard" element={<FrontPage />} />
-            <Route path="/adminprofile" element={<AdminProfile />} />
-            <Route path="/addteacher" element={<AddTeacher />} />
-            <Route path="/viewteacher" element={<TeachersList />} />
-            <Route path="/addstudent" element={<AddStudent />} />
-            <Route path="/viewstudent" element={<StudentLists />} />
-            <Route path="/admin" element={<AddAdmin />} />
-            <Route path="/addnotice" element={<AddNotices />} />
-            <Route path="/addclass" element={<AddClass />} />
-            <Route path="/addsubjects" element={<AddSubjects />} />
-            <Route path="/manageleave" element={<ManageLeave />} />
-            <Route path="/viewfeedbacks" element={<FeedbackList />} />
-          </>
-        )}
+          {/* Admin routes */}
+          {data.isAuthenticated && isUserRole(["admin"]) && (
+            <>
+              <Route path="/dashboard" element={<FrontPage />} />
+              <Route path="/adminprofile" element={<AdminProfile />} />
+              <Route path="/addteacher" element={<AddTeacher />} />
+              <Route path="/viewteacher" element={<TeachersList />} />
+              <Route path="/addstudent" element={<AddStudent />} />
+              <Route path="/viewstudent" element={<StudentLists />} />
+              <Route path="/admin" element={<AddAdmin />} />
+              <Route path="/addnotice" element={<AddNotices />} />
+              <Route path="/addclass" element={<AddClass />} />
+              <Route path="/addsubjects" element={<AddSubjects />} />
+              <Route path="/manageleave" element={<ManageLeave />} />
+              <Route path="/viewfeedbacks" element={<FeedbackList />} />
+            </>
+          )}
 
-        {/* Teacher routes */}
-        {data.isAuthenticated && isUserRole(["teacher"]) && (
-          <>
-            <Route path="/dashboard" element={<FrontPage />} />
-            <Route path="/doubts" element={<AllDoubts />} />
-            <Route path="/teacherprofile" element={<TeacherProfile />} />
-            <Route path="/attendance" element={<ChooseAttendance />} />
-            <Route path="/markattendance" element={<MarkAttendance />} />
-            <Route path="/editattendance/:date" element={<EditAttendance />} />
-            <Route path="/createreport" element={<CreateReport />} />
-            <Route path="/uploadmark" element={<UploadMarks />} />
-            <Route path="/adddoubt" element={<MainDoubtPage />} />
-          </>
-        )}
+          {/* Teacher routes */}
+          {data.isAuthenticated && isUserRole(["teacher"]) && (
+            <>
+              <Route path="/dashboard" element={<FrontPage />} />
+              <Route path="/doubts" element={<AllDoubts />} />
+              <Route path="/teacherprofile" element={<TeacherProfile />} />
+              <Route path="/attendance" element={<ChooseAttendance />} />
+              <Route path="/markattendance" element={<MarkAttendance />} />
+              <Route path="/editattendance/:date" element={<EditAttendance />} />
+              <Route path="/createreport" element={<CreateReport />} />
+              <Route path="/uploadmark" element={<UploadMarks />} />
+              <Route path="/adddoubt" element={<MainDoubtPage />} />
+            </>
+          )}
 
-        {data.isAuthenticated && isUserRole(["student"]) && (
-          <>
-            <Route path="/addfeedback" element={<AddFeedback />} />
-            <Route path="/dashboard" element={<FrontPage />} />
-            <Route path="/doubts" element={<AllDoubts />} />
-            <Route path="/checkreports" element={<CheckReports />} />
-            <Route path="/studentprofile" element={<StudentProfile />} />
-            <Route path="/adddoubt" element={<MainDoubtPage />} />
-            <Route path="/viewattendance" element={<ViewAttendance />} />
-          </>
-        )}
+          {data.isAuthenticated && isUserRole(["student"]) && (
+            <>
+              <Route path="/addfeedback" element={<AddFeedback />} />
+              <Route path="/dashboard" element={<FrontPage />} />
+              <Route path="/doubts" element={<AllDoubts />} />
+              <Route path="/checkreports" element={<CheckReports />} />
+              <Route path="/studentprofile" element={<StudentProfile />} />
+              <Route path="/adddoubt" element={<MainDoubtPage />} />
+              <Route path="/viewattendance" element={<ViewAttendance />} />
+              <Route path="/viewmarks" element={<ViewMarks />} />
+            </>
+          )}
+        </>
+        {/* </Route> */}
 
         {/* Catch-all route for unknown routes */}
         <Route path="*" element={<Error />} />

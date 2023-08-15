@@ -7,6 +7,7 @@ import Contacts from "./Contacts";
 import Welcome from "./Welcome";
 import { useSelector } from "react-redux";
 import { getContacts } from "../../../../../Redux/auth/action";
+import Sidebar from "../Sidebar";
 
 export default function Chat() {
 
@@ -29,33 +30,33 @@ export default function Chat() {
     };
     return (
         <>
-            <Container>
-                <div className="container">
-                    {contacts && <Contacts contacts={contacts} changeChat={handleChatChange} />}
-                    {currentChat === undefined ? (
-                        <Welcome userName={currentUser?.name} />
-                    ) : (
-                        <ChatContainer currentChat={currentChat} socket={socket} />
-                    )}
+          <div className="container">
+                <Sidebar />
+                <div className="AfterSideBar">
+                    <Containers>
+                        <div className="contain">
+                            {contacts && <Contacts contacts={contacts} changeChat={handleChatChange} />}
+                            {currentChat === undefined ? (
+                                <Welcome userName={currentUser?.name} />
+                            ) : (
+                                <ChatContainer currentChat={currentChat} socket={socket} />
+                            )}
+                        </div>
+                    </Containers>
                 </div>
-            </Container>
+            </div >
         </>
     );
 }
 
-const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
+const Containers = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
-  align-items: center;
-  background-color: #F8F8F8;
-  
+  align-items: center; 
   border-width: 1px;
-    border-color:#ededed;
-  .container {
+  .contain {
     height: 85vh;
     width: 85vw;
     background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");

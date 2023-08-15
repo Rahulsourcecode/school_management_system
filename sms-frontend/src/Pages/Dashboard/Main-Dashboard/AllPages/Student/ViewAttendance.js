@@ -184,8 +184,8 @@ export default function ViewAttendance() {
                             </Typography>
                         </div>
                     ) : (
-                        <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <div style={{ flex: 1 }}>
+                        <div>
+                            <div style={{ width: '50vw' }}>
                                 <TableContainer component={Paper}>
                                     <Table aria-label="collapsible table">
                                         <TableHead>
@@ -204,12 +204,15 @@ export default function ViewAttendance() {
                                     </Table>
                                 </TableContainer>
                             </div>
-                            <div style={{ flex: 1, marginLeft: '14rem' }}>
+                            <h4 style={{ marginTop: "3rem", marginBottom: "2rem", marginLeft: '2rem' }}>
+                                graphical representation
+                            </h4>
+                            <div style={{ width: '50vw', marginTop: '2rem' }}>
                                 <ResponsiveContainer width="100%" height={300}>
                                     <BarChart data={attendance}>
                                         <CartesianGrid strokeDasharray="3 3" />
                                         <XAxis dataKey="month" />
-                                        <YAxis domain={[0, 100]} /> {/* Set Y-axis domain from 0 to 100 */}
+                                        <YAxis domain={[0, 100]} />
                                         <Tooltip />
                                         <Legend />
                                         <Bar dataKey="absenceRatio" fill="#8884d8" />

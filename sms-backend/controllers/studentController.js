@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { TeacherModel } = require("../models/teacher.model");
 const { FeedbackModel } = require("../models/feedbacks.model");
 const { studentAttendance } = require("../models/Student.attendance.model");
-
+let token;
 
 const studentLogin = async (req, res) => {
   const { studentID, password } = req.body;
@@ -14,10 +14,16 @@ const studentLogin = async (req, res) => {
     if (student) {
       const passwordSuccess = bcrypt.compare(password, student.password)
       if (passwordSuccess) {
-        const token = jwt.sign({ foo: "bar" }, process.env.key, {
+        token = jwt.sign({ foo: "bar" }, process.env.key, {
           expiresIn: "24h",
         });
-        res.send({ message: "Successful", user: student, token: token });
+        return res.cookie('token', token, {
+          path: "/",
+          expires: new Date(Date.now() + 1000 * 60 * 60),
+          httpOnly: true,
+          SameSite: 'None',
+          secure: true,
+        }).send({ message: "Successful", user: student, token: token });
       } else {
         res.send({ message: "Wrong credentials" });
       }
@@ -40,7 +46,7 @@ const editStudent = async (req, res) => {
     if (!student) {
       return res.status(404).send({ message: `Student with id ${id} not found` });
     }
-    res.status(200).send({ message: `Student Updated`, user: student });
+    res.status(200).send({ message: `Student Updated`, user: student ,token: token });
   } catch (error) {
     console.log(error);
     res.status(400).send({ error: "Something went wrong, unable to Update." });
@@ -123,6 +129,20 @@ const fetchAttendance = async (req, res) => {
     return res.status(400).json({ message: "error" })
   }
 }
+const fetchMarks = async (req, res) => {
+  try {
+    const { id } = req.body
+    console.log(id)
+    const student = await StudentModel.findOne({ studentID: id })
+    console.log(student)
+    if (!student) {
+      return res.status(400).json({ message: "no data found" })
+    }
+    return res.status(200).send(student)
+  } catch (error) {
+    return res.status(400).json({ message: "error" })
+  }
+}
 
 module.exports = {
   studentLogin,
@@ -131,5 +151,6 @@ module.exports = {
   deleteStudent,
   getTeachers,
   submitFeedback,
-  fetchAttendance
+  fetchAttendance,
+  fetchMarks
 }

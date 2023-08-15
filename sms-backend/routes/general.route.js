@@ -254,4 +254,16 @@ router.post("/getall", async (req, res) => {
   }
 })
 
+//logout for all
+router.get("/logout", async (req, res) => {
+  try {
+    res.clearCookie('token');
+    return res.status(200).send('Cookie Cleared');
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send('Error clearing cookie');
+  }
+
+})
+
 module.exports = router;
