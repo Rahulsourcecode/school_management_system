@@ -6,7 +6,7 @@ import Sidebar from "../../GlobalFiles/Sidebar";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import { axioss } from "../../../../../Redux/auth/action";
-import { Box, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from "@mui/material";
+import { Box, Paper, Skeleton, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from "@mui/material";
 const notify = (text) => toast(text);
 
 const UploadMarks = () => {
@@ -85,7 +85,7 @@ const UploadMarks = () => {
                 </Tabs>)}
               </Box>
               {/* {student} */}
-              {student.length && (
+              {student.length ? (
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -116,6 +116,17 @@ const UploadMarks = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
+              ) : (
+                // Display skeletons while data is loading
+                [1, 1, 1, 1, 1, 1, 1].map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    variant="rectangular"
+                    width={'80%'}
+                    height={20}
+                    sx={{ marginBottom: 5, marginLeft: 10 }}
+                  />
+                ))
               )}
             </form>
           </div>

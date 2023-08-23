@@ -9,6 +9,7 @@ const teacherRouter = require('./routes/teacher.route')
 const studentRouter = require('./routes/student.route');
 const generalRouter = require('./routes/general.route');
 const messageRouter = require('./routes/messageRouter');
+const schoolRouter = require("./routes/school.route");
 const cookieParser = require("cookie-parser")
 const app = express()
 
@@ -30,6 +31,7 @@ app.use('/teachers', teacherRouter);
 app.use('/students', studentRouter);
 app.use("/messages", messageRouter);
 app.use("/general", generalRouter);
+app.use("/school", schoolRouter);
 
 const server = app.listen(process.env.PORT, async () => {
     try {

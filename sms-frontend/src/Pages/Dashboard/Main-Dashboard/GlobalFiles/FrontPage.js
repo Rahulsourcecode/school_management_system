@@ -78,7 +78,7 @@ const FrontPage = () => {
           <div className="four commondiv">
             {" "}
             <div>
-              <h1>25</h1>
+              <h1>{data?.classes}</h1>
               <p>Class rooms</p>
             </div>
             <SiGoogleclassroom className="overviewIcon" />
@@ -95,16 +95,16 @@ const FrontPage = () => {
           <div className="six commondiv">
             {" "}
             <div>
-              <h1>{data?.report}</h1>
-              <p>Reports</p>
+              <h1>{data?.feedback}</h1>
+              <p>feedbacks</p>
             </div>
             <MdPayment className="overviewIcon" />
           </div>
           <div className="six commondiv">
             {" "}
             <div>
-              <h1>{data?.report}</h1>
-              <p>Reports</p>
+              <h1>{data?.leave}</h1>
+              <p>leave requests</p>
             </div>
             <MdPayment className="overviewIcon" />
           </div>

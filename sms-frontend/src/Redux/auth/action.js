@@ -2,7 +2,7 @@ import * as types from "./types";
 import axios from "axios";
 
 // Set the base URL for the API requests
-export const baseURL = "http://localhost:3001";
+export const baseURL = "http://app.menintown.shop/";
 export const axioss = axios.create({
   withCredentials: true,
   baseURL: baseURL,
@@ -170,7 +170,7 @@ export const UpdateTeacher = (data, id) => async (dispatch) => {
 export const UpdateAdmin = (data, id) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_ADMIN_REQUEST });
-    await axioss.patch(`/admin/${id}`, data).then((res) => dispatch({ type: types.EDIT_ADMIN_SUCCESS, payload: {user:res.data.user,token:res.data.token} }))
+    await axioss.patch(`/admin/${id}`, data).then((res) => dispatch({ type: types.EDIT_ADMIN_SUCCESS, payload: { user: res.data.user, token: res.data.token } }))
 
   } catch (error) {
     console.log(error)

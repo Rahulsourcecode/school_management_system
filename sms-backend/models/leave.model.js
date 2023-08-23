@@ -19,14 +19,14 @@ const leaveSchema = mongoose.Schema({
         type: Boolean
 
     },
-    remarks:{
-        type:String,
-        
+    remarks: {
+        type: String,
+
     },
-    entered:{
-        type:Number,
-        default:0,
-        required:true
+    entered: {
+        type: Number,
+        default: 0,
+        required: true
     },
     staffData: {
         type: mongoose.Schema.Types.ObjectId,

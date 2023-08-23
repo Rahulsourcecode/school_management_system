@@ -30,10 +30,10 @@ export default function Chat() {
     };
     return (
         <>
-          <div className="container">
+            <div className="container">
                 <Sidebar />
                 <div className="AfterSideBar">
-                    <Containers>
+                    <Containers >
                         <div className="contain">
                             {contacts && <Contacts contacts={contacts} changeChat={handleChatChange} />}
                             {currentChat === undefined ? (
@@ -51,6 +51,7 @@ export default function Chat() {
 
 const Containers = styled.div`
   display: flex;
+  box-shadow: 5px 5px 5px 8px lightblue;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;

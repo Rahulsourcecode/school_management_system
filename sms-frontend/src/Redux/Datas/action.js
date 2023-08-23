@@ -85,13 +85,10 @@ export const deleteDoubt = (id) => async (dispatch) => {
 export const GetAllData = () => async (dispatch) => {
   try {
     dispatch({ type: types.GET_ALLDATA_REQUEST });
-    const res = await axios.get(
-      `https://ill-blue-wildebeest-kilt.cyclic.app/schools`
-    );
-    dispatch({
+    await axioss.get("/school/dash").then((res) => dispatch({
       type: types.GET_ALLDATA_SUCCESS,
       payload: res.data,
-    });
+    }));
   } catch (error) {
     console.log(error);
   }
@@ -130,9 +127,9 @@ export const DeleteReports = (id) => async (dispatch) => {
 };
 
 //get dateData
-export const getDate =(payload)=>{
-  return{
-    type:types.GET_DATE,
+export const getDate = (payload) => {
+  return {
+    type: types.GET_DATE,
     payload,
   }
 }

@@ -10,7 +10,7 @@ import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import PreviewIcon from '@mui/icons-material/Preview';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { axioss } from '../../../../../Redux/auth/action';
-import { Grid, Modal, Box, TextareaAutosize } from '@mui/material'; // Import the Modal and Box components from Material-UI
+import { Grid, Modal, Box, TextareaAutosize, Skeleton } from '@mui/material'; // Import the Modal and Box components from Material-UI
 import { useSelector } from 'react-redux';
 
 const Doubts = ({ onNotify, open }) => {
@@ -78,35 +78,43 @@ const Doubts = ({ onNotify, open }) => {
 
   return (
     <Grid container spacing={2}>
-      {allDatas.map((data) => (
-        <React.Fragment key={data.id}>
-          <Grid item sm={12} md={6} lg={4} xl={3}>
-            <Card elevation={6} sx={{ minHeight: 250, maxHeight: 250, maxWidth: 500, marginBottom: 5 }}>
-              <CardContent>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
-                  <Avatar src={`http://localhost:3001/uploads/${data.userId.image}`} alt="User Avatar" sx={{ marginRight: 2 }} />
-                  <Typography variant="h6">{data.userId.studentName}</Typography>
-                </div>
-                <Typography variant="h5" gutterBottom>
-                  {data.title}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {data.description}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <div style={{ flexGrow: 1 }}></div>
-                <IconButton color="primary" onClick={() => handleOpenModal(data._id)}>
-                  <CommentOutlinedIcon />
-                </IconButton>
-                <IconButton color="primary" onClick={() => handleOpenPreviewModal(data._id)}>
-                  <PreviewIcon />
-                </IconButton>
-              </CardActions>
-            </Card>
-          </Grid>
+      {allDatas.length ? (
+        allDatas.map((data) => (
+          <React.Fragment key={data.id}>
+            <Grid item sm={12} md={6} lg={4} xl={3}>
+              <Card elevation={6} sx={{ minHeight: 250, maxHeight: 250, maxWidth: 500, marginBottom: 5 }}>
+                <CardContent>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+                    <Avatar src={`http://localhost:3001/uploads/${data.userId.image}`} alt="User Avatar" sx={{ marginRight: 2 }} />
+                    <Typography variant="h6">{data.userId.studentName}</Typography>
+                  </div>
+                  <Typography variant="h5" gutterBottom>
+                    {data.title}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {data.description}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <div style={{ flexGrow: 1 }}></div>
+                  <IconButton color="primary" onClick={() => handleOpenModal(data._id)}>
+                    <CommentOutlinedIcon />
+                  </IconButton>
+                  <IconButton color="primary" onClick={() => handleOpenPreviewModal(data._id)}>
+                    <PreviewIcon />
+                  </IconButton>
+                </CardActions>
+              </Card>
+            </Grid>
+          </React.Fragment>
+        ))
+      ) : (
+        <React.Fragment>
+          {[1, 1, 1, 1].map(() => <Skeleton variant="rectangular" width={210} height={200} sx={{ marginBottom: 5, marginLeft: 10 }} />)}
+          {[1, 1, 1, 1].map(() => <Skeleton variant="rectangular" width={210} height={200} sx={{ marginBottom: 5, marginLeft: 10 }} />)}
         </React.Fragment>
-      ))}
+      )}
+
       {/* Modal 1 */}
       {allDatas.map((data) => (
         <Modal key={data._id} open={modalStates[data._id]} onClose={handleCloseModal}>

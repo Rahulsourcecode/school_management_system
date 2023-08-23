@@ -9,7 +9,6 @@ import {
 } from "../../../../../utils/APIRoutes";
 import { useSelector } from "react-redux";
 import { Avatar, Typography } from "@mui/material";
-import Sidebar from "../Sidebar";
 
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);

@@ -14,7 +14,6 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
-import Box from '@mui/material/Box';
 
 const notify = (text) => toast(text);
 

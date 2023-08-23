@@ -10,51 +10,51 @@ const router = express.Router();
 router.post("/login", adminLogin)
 
 //register admin
-router.post("/register",authenticate, adminRegister)
+router.post("/register", authenticate, adminRegister)
 
 
 //edit admin
-router.patch("/:adminId",authenticate, editAdmin)
+router.patch("/:adminId", authenticate, editAdmin)
 
 //get all teachers  
-router.get("/teachers/all",authenticate, getAllTeachers)
+router.get("/teachers/all", authenticate, getAllTeachers)
 
 //create notices
-router.post("/createnotice",authenticate, createNotice)
+router.post("/createnotice", authenticate, createNotice)
 
 //get all notices
-router.get("/getnotices",authenticate, getNotices)
+router.get("/getnotices", authenticate, getNotices)
 
 //create class
 
 router.post("/createclass", authenticate, createClass)
 
 //show all classes
-router.get("/getclasses",authenticate, getClasses)
+router.get("/getclasses", authenticate, getClasses)
 
 //register student
 
-router.post("/studentregister",authenticate, uploads.single('image'), registerStudent)
+router.post("/studentregister", authenticate, uploads.single('image'), registerStudent)
 
 //get all students
-router.get("/allstudents",authenticate, allstudents)
+router.get("/allstudents", authenticate, allstudents)
 //create subjects
-router.post('/createSubjects',authenticate, createSubjects)
+router.post('/createSubjects', authenticate, createSubjects)
 
 //get subjects
-router.get('/getsubjects',authenticate, getSubjects)
+router.get('/getsubjects', authenticate, getSubjects)
 //edit admin
-router.patch("/:adminId",authenticate, editAdmin)
+router.patch("/:adminId", authenticate, editAdmin)
 //delete admin
-router.delete("/:adminId",authenticate, deleteAdmin)
+router.delete("/:adminId", authenticate, deleteAdmin)
 //send password and userid to mail
-router.post("/password",authenticate, sendDetails)
+router.post("/password", authenticate, sendDetails)
 //get all leave list
-router.get("/getleaves",authenticate, LeaveList)
+router.get("/getleaves", authenticate, LeaveList)
 //leave approval
-router.post("/leaveapprovel",authenticate, LeaveStatus)
+router.post("/leaveapprovel", authenticate, LeaveStatus)
 
-router.get('/getfeedback',authenticate, feebackList)
+router.get('/getfeedback', authenticate, feebackList)
 
 module.exports = router;
 

@@ -150,7 +150,6 @@ const RoleBasedRoutes = () => {
               <Route path="/attendance" element={<ChooseAttendance />} />
               <Route path="/markattendance" element={<MarkAttendance />} />
               <Route path="/editattendance/:date" element={<EditAttendance />} />
-              <Route path="/createreport" element={<CreateReport />} />
               <Route path="/uploadmark" element={<UploadMarks />} />
               <Route path="/adddoubt" element={<MainDoubtPage />} />
             </>
