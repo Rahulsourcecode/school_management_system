@@ -37,6 +37,7 @@ import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import "./CommonCSS.scss";
 import { axioss } from "../../../../Redux/auth/action";
+import { Typography } from "@mui/material";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,12 +74,12 @@ const Sidebar = () => {
               <div className="user_profile">
                 <div className="user_avatar">
                   {user?.image ? (
-                    <FaUserCircle className="avatar_icon" />
+                    <Avatar sx={{ ml: 2.5 }} className="avatar_icon" />
                   ) : (
-                    <FaUserCircle className="avatar_icon" />
+                    <Avatar className="avatar_icon" />
                   )}
                 </div>
-                <div className="user_name">{user?.adminName}</div>
+                <Typography  sx={{ ml: 2.5 }} className="user_name">{user?.adminName} </Typography>
               </div>
             )}
 

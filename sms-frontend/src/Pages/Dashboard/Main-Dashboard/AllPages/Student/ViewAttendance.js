@@ -172,11 +172,11 @@ export default function ViewAttendance() {
 
     return (
         <>
-            <Grid container>
-                <Grid item xs={2} sm={2} md={2} lg={1}>
+            <Grid container spacing={5}>
+                <Grid item xs={4} sm={2} md={2} lg={1}>
                 <Sidebar></Sidebar>
                 </Grid>
-                <Grid item xs={10} sm={10} md={10} lg={10}>
+                <Grid xs={8} sm={9} md={9} lg={10} sx={{ mt: 2 ,pr:3 }} >
                 <h1 style={{ marginTop: "3rem", marginBottom: "2rem" }}>
                     View Attendance History
                 </h1>

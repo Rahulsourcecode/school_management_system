@@ -5,6 +5,7 @@ import { AddNotice } from "../../../../../Redux/auth/action";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
+import { Grid } from "@mui/material";
 const notify = (text) => toast(text);
 
 const AddNotices = () => {
@@ -49,9 +50,12 @@ const AddNotices = () => {
   return (
     <>
       <ToastContainer />
-      <div className="container">
-        <Sidebar />
-        <div className="AfterSideBar">
+      <Grid container spacing={10}>
+        <Grid item xs={2} sm={2} md={2} lg={1}>
+          <Sidebar />
+        </Grid>
+        <Grid item xs={9} sm={9} md={9} lg={10} sx={{ mt: 2 }}>
+
           <div className="mainAmbupance">
             <h1>Add Notice</h1>
 
@@ -98,8 +102,9 @@ const AddNotices = () => {
               </button>
             </form>
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
+
     </>
   );
 };

@@ -8,6 +8,7 @@ import Welcome from "./Welcome";
 import { useSelector } from "react-redux";
 import { getContacts } from "../../../../../Redux/auth/action";
 import Sidebar from "../Sidebar";
+import { Grid } from "@mui/material";
 
 export default function Chat() {
 
@@ -30,21 +31,25 @@ export default function Chat() {
     };
     return (
         <>
-            <div className="container">
+            <Grid container spacing={11}>
+                <Grid item  xs={2} sm={2} md={2} lg={1}>
                 <Sidebar />
-                <div className="AfterSideBar">
-                    <Containers >
-                        <div className="contain">
-                            {contacts && <Contacts contacts={contacts} changeChat={handleChatChange} />}
-                            {currentChat === undefined ? (
-                                <Welcome userName={currentUser?.name} />
-                            ) : (
-                                <ChatContainer currentChat={currentChat} socket={socket} />
-                            )}
-                        </div>
-                    </Containers>
-                </div>
-            </div >
+                </Grid>
+                <Grid item xs={9} sm={9} md={9} lg={10} sx={{ mt: 2}}>
+
+                <Containers >
+                    <div className="contain">
+                        {contacts && <Contacts contacts={contacts} changeChat={handleChatChange} />}
+                        {currentChat === undefined ? (
+                            <Welcome userName={currentUser?.name} />
+                        ) : (
+                            <ChatContainer currentChat={currentChat} socket={socket} />
+                        )}
+                    </div>
+                </Containers>
+                </Grid>
+
+            </Grid>
         </>
     );
 }

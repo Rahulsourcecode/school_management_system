@@ -89,11 +89,11 @@ const Nurse_Profile = () => {
   return (
     <>
       {contextHolder}
-      <Grid container>
-        <Grid item lg={2} md={3} sm={2} xs={2} position={"sticky"}>
+      <Grid container spacing={10}>
+        <Grid item  xs={2} sm={2} md={2} lg={1}>
           <Sidebar />
         </Grid>
-        <Grid item lg={9} md={9} sm={8} xs={8} sx={{mt:5}}>
+        <Grid item xs={9} sm={9} md={9} lg={10} sx={{ mt: 2 }}>
           <Grid container spacing={4}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper sx={{ borderRadius: 10 }}>
@@ -189,7 +189,7 @@ const Nurse_Profile = () => {
             </Grid>
             {/* ***********  Second Div ******************** */}
             <Grid item lg={6} md={6} sm={12} xs={12}>
-              <div className="SecondBox">
+              <div style={{overflow:'hidden'}} className="SecondBox">
                 <div className="subfirstbox">
                   <h2 style={{ textAlign: "center", marginTop: "10px" }}>
                     Other Info

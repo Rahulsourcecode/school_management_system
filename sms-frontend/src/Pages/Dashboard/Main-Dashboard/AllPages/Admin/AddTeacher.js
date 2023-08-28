@@ -14,6 +14,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 const notify = (text) => toast(text);
 
@@ -144,9 +145,11 @@ const AddDoctor = () => {
   return (
     <>
       <ToastContainer />
-      <div className="container">
-        <Sidebar />
-        <div className="AfterSideBar">
+      <Grid container spacing={10}>
+        <Grid item xs={2}>
+          <Sidebar />
+        </Grid>
+        <Grid item  xs={9}>
           <div className="Main_Add_Doctor_div">
             <h1>Add Teacher</h1>
             <form encType="multipart/form-data" id="form" onSubmit={HandleDoctorSubmit}>
@@ -239,7 +242,7 @@ const AddDoctor = () => {
                 </div>
               </div>
               <div>
-                <label>Birth date</label> 
+                <label>Birth date</label>
                 <div className="inputdiv">
                   <input
                     type="date"
@@ -383,8 +386,8 @@ const AddDoctor = () => {
               </button>
             </form>
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </>
   );
 };

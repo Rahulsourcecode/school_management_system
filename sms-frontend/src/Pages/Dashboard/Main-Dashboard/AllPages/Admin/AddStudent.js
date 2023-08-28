@@ -10,14 +10,15 @@ import Sidebar from "../../GlobalFiles/Sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
+import { Grid } from "@mui/material";
 const notify = (text) => toast(text);
 
 const AddStudent = () => {
   const { data } = useSelector((store) => store.auth);
-  
+
   const dispatch = useDispatch();
 
-  const [classList,setclassList] =useState([])
+  const [classList, setclassList] = useState([])
   const [loading, setLoading] = useState(false);
 
   const InitData = {
@@ -32,29 +33,29 @@ const AddStudent = () => {
     studentID: Date.now(),
     password: "",
     details: "",
-    file:""
+    file: ""
   };
   const [StudentValue, setStudentValue] = useState(InitData);
-  
+
   const HandlestudentChange = (e) => {
     setStudentValue({ ...StudentValue, [e.target.name]: e.target.value });
   };
-  
-  const handleFileChange =(e)=>{
+
+  const handleFileChange = (e) => {
     console.log(e.target.files)
-    setStudentValue({...StudentValue,image:e.target.files[0]})
+    setStudentValue({ ...StudentValue, image: e.target.files[0] })
   }
   useEffect(() => {
     console.log("hello")
-     axioss.get("/admin/getclasses").then((res) => {
-       setclassList(res.data);
+    axioss.get("/admin/getclasses").then((res) => {
+      setclassList(res.data);
     })
-  },[]);
+  }, []);
   const HandlestudentSubmit = (e) => {
     e.preventDefault();
     const form = document.getElementById('form')
-    const doc =new FormData(form);
-    doc.append('file',StudentValue.file);
+    const doc = new FormData(form);
+    doc.append('file', StudentValue.file);
     setLoading(true);
     console.log(StudentValue);
     dispatch(StudentRegister(doc)).then((res) => {
@@ -74,27 +75,29 @@ const AddStudent = () => {
         userId: res.data.studentID,
       };
       dispatch(SendPassword(data)).then((res) =>
-      notify("Account Details Sent")
+        notify("Account Details Sent")
       );
       setLoading(false);
       setStudentValue(InitData);
     });
   };
-  
+
   if (data?.isAuthenticated === false) {
     return <Navigate to={"/"} />;
   }
-  
+
   if (data?.user.userType !== "admin") {
     return <Navigate to={"/dashboard"} />;
   }
-  
+
   return (
     <>
       <ToastContainer />
-      <div className="container">
-        <Sidebar />
-        <div className="AfterSideBar">
+      <Grid container spacing={10}>
+        <Grid item xs={2}>
+          <Sidebar />
+          </Grid>
+          <Grid item xs={9}>
           <div className="Main_Add_Doctor_div">
             <h1>Add student</h1>
             <form id="form" onSubmit={HandlestudentSubmit}>
@@ -202,8 +205,8 @@ const AddStudent = () => {
                     required
                   >
                     <option value="">select</option>
-                    {classList.map((data)=>{
-                    return( <option value={data._id} key={data._id}>{data.name}</option>)
+                    {classList.map((data) => {
+                      return (<option value={data._id} key={data._id}>{data.name}</option>)
                     })}
                   </select>
                 </div>
@@ -254,8 +257,9 @@ const AddStudent = () => {
               </button>
             </form>
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
+
     </>
   );
 };

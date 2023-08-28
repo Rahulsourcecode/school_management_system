@@ -12,20 +12,22 @@ const MainDoubtPage = () => {
 
 
     return (
-        <Grid container>
+        <>
             <ToastContainer />
-            <Grid item xs={3} lg={2} md={3} position={'sticky'}>
-                <Sidebar />
-            </Grid>
-            <Grid item xs={9} sm={9} lg={9} md={9}>
-                <Grid container>
+            <Grid container spacing={10}>
+                <Grid item xs={2} sm={2} md={2} lg={1}>
+                    <Sidebar />
+                </Grid>
+                <Grid item xs={9} sm={9} md={9} lg={10} sx={{ mt: 2 }}>
+                    <Grid container>
                         <Header onIsOpen={setIsOpen} setOpen={setOpen} open={open} />
-                    <Grid>
-                        <Doubts onNotify={notify} setOpen={setOpen} open={open} />
+                        <Grid>
+                            <Doubts onNotify={notify} setOpen={setOpen} open={open} />
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </>
 
     )
 }

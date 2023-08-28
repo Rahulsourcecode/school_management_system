@@ -5,7 +5,7 @@ import { axioss, feedback } from "../../../../../Redux/auth/action";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
-import { TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 const notify = (text) => toast(text);
 const AddFeedback = () => {
   const { data } = useSelector((store) => store.auth);
@@ -56,9 +56,11 @@ const AddFeedback = () => {
   return (
     <>
       <ToastContainer />
-      <div className="container">
-        <Sidebar />
-        <div className="AfterSideBar">
+      <Grid container spacing={10}>
+        <Grid item  xs={2} sm={2} md={2} lg={1}>
+          <Sidebar />
+        </Grid>
+        <Grid item xs={9} sm={9} md={9} lg={10} sx={{ mt: 2 }}>
           <div className="mainAmbupance">
             <h1>feedbacks</h1>
 
@@ -102,8 +104,8 @@ const AddFeedback = () => {
               </button>
             </form>
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </>
   );
 };

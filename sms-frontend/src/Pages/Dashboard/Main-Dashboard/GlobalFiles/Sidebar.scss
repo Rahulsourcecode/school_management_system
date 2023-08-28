@@ -1,32 +1,32 @@
-/* Sidebar styles */
+// /* Sidebar styles */
 
-.app-container {
-  position: relative; /* Create a stacking context for the overlay effect */
-}
+// // .app-container {
+// //   position: relative; /* Create a stacking context for the overlay effect */
+// // }
 
-// .sidebar {
-//   position: absolute;
-//   z-index: 1;
-//   top: 0;
-//   left: -200px; /* Offscreen by default */
-//   height: 100vh;
-//   transition: left 0.3s ease;
-//   /* Other sidebar styles */
+// // .sidebar {
+// //   position: absolute;
+// //   z-index: 1;
+// //   top: 0;
+// //   left: -200px; /* Offscreen by default */
+// //   height: 100vh;
+// //   transition: left 0.3s ease;
+// //   /* Other sidebar styles */
+// // }
+
+// // .sidebar.open {
+// //   left: 0; /* Move the sidebar onto the screen when open */
+// //   /* Additional styles to modify appearance */
 // }
 
-.sidebar.open {
-  left: 0; /* Move the sidebar onto the screen when open */
-  /* Additional styles to modify appearance */
-}
+// /* Rest of your styles */
 
-/* Rest of your styles */
-
-// .sidebar {
-//   background: rgba(0, 0, 0, 0.874);
-//   color: #fff;
-//   height: 100vh;
-//   transition: all 0.5s;
-//   position: sticky;
-//   z-index: 100;
-//   top: 0;
-// }
+// // .sidebar {
+// //   background: rgba(0, 0, 0, 0.874);
+// //   color: #fff;
+// //   height: 100vh;
+// //   transition: all 0.5s;
+// //   position: sticky;
+// //   z-index: 100;
+// //   top: 0;
+// // }

@@ -50,11 +50,11 @@ export default function FeedbackList() {
     return (
         <div>
             <ToastContainer />
-            <Grid container spacing={4} >
-                <Grid item xs={2} sm={2} md={2} lg={1}>
+            <Grid container spacing={10} >
+                <Grid item  xs={2} sm={2} md={2} lg={1}>
                     <Sidebar />
                 </Grid>
-                <Grid item xs={10} sm={10} md={10} lg={11} sx={{ mt: 5, pr: 5 }} >
+                <Grid item xs={9} sm={9} md={9} lg={10} sx={{ mt: 2 }} >
                     <h2>All feedbacks</h2>
 
                     <div style={{ height: 550, width: '100%' }}>
