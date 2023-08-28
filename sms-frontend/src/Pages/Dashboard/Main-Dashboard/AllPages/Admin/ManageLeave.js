@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, FormControl, FormControlLabel, FormLabel, Modal, Radio, RadioGroup } from '@mui/material';
+import { Button, FormControl, FormControlLabel, FormLabel, Grid, Modal, Radio, RadioGroup } from '@mui/material';
 import Sidebar from '../../GlobalFiles/Sidebar';
 import { toast, ToastContainer } from 'react-toastify';
 import { axioss } from '../../../../../Redux/auth/action';
@@ -83,9 +83,11 @@ export default function Manageleave() {
     return (
         <div>
             <ToastContainer />
-            <div className="container">
-                <Sidebar />
-                <div className="AfterSideBar">
+            <Grid container spacing={4} >
+        <Grid item xs={2} sm={2} md={2} lg={1}>
+          <Sidebar />
+        </Grid>
+        <Grid item xs={10} sm={10} md={10} lg={11} sx={{mt:5,pr:5}} >
                     <h2>leave request</h2>
                     <div style={{ height: 550, width: '100%' }}>
                         <DataGrid
@@ -100,8 +102,8 @@ export default function Manageleave() {
                             pageSizeOptions={[5, 10]}
                         />
                     </div>
-                </div>
-            </div>
+                    </Grid>
+                        </Grid>
             {/* Material-UI Modal */}
             <Modal open={open} onClose={handleCloseModal}>
                 <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '20px', borderRadius: '8px' }}>

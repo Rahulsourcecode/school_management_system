@@ -23,6 +23,7 @@ import { saveAs } from 'file-saver';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
+import { Grid } from '@mui/material';
 
 function Row(props) {
     const { row } = props;
@@ -171,58 +172,59 @@ export default function ViewAttendance() {
 
     return (
         <>
-            <div className='container'>
+            <Grid container>
+                <Grid item xs={2} sm={2} md={2} lg={1}>
                 <Sidebar></Sidebar>
-                <div className='AfterSidebar'>
-                    <h1 style={{ marginTop: "3rem", marginBottom: "2rem", marginLeft: '2rem' }}>
-                        View Attendance History
-                    </h1>
-                    {attendance.length === 0 ? (
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
-                            <Typography variant="body1">
-                                No records found.
-                            </Typography>
-                        </div>
-                    ) : (
-                        <div>
-                            <div style={{ width: '50vw' }}>
-                                <TableContainer component={Paper}>
-                                    <Table aria-label="collapsible table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell />
-                                                <TableCell>Month</TableCell>
-                                                <TableCell align="right">Number of Absences</TableCell>
-                                                <TableCell />
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {attendance.map((row) => (
-                                                <Row key={row.month} row={row} />
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </div>
-                            <h4 style={{ marginTop: "3rem", marginBottom: "2rem", marginLeft: '2rem' }}>
-                                graphical representation
-                            </h4>
-                            <div style={{ width: '50vw', marginTop: '2rem' }}>
-                                <ResponsiveContainer width="100%" height={300}>
-                                    <BarChart data={attendance}>
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="month" />
-                                        <YAxis domain={[0, 100]} />
-                                        <Tooltip />
-                                        <Legend />
-                                        <Bar dataKey="absenceRatio" fill="#8884d8" />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
+                </Grid>
+                <Grid item xs={10} sm={10} md={10} lg={10}>
+                <h1 style={{ marginTop: "3rem", marginBottom: "2rem" }}>
+                    View Attendance History
+                </h1>
+                {attendance.length === 0 ? (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
+                        <Typography variant="body1">
+                            No records found.
+                        </Typography>
+                    </div>
+                ) : (
+                    <div>
+                        <Grid container spacing={6}>
+                            <Grid item  xs={12} sm={12} md={6} lg={6}>
+                            <TableContainer component={Paper}>
+                                <Table aria-label="collapsible table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell />
+                                            <TableCell>Month</TableCell>
+                                            <TableCell align="right">Number of Absences</TableCell>
+                                            <TableCell />
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {attendance.map((row) => (
+                                            <Row key={row.month} row={row} />
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={6} lg={6}>
+                            <ResponsiveContainer height={300}>
+                                <BarChart data={attendance}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="month" />
+                                    <YAxis domain={[0, 100]} />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="absenceRatio" fill="#8884d8" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </Grid>
+                 </Grid>
+                    </div>
+                )}
+                </Grid>
+            </Grid>
         </>
     );
 }

@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { pdf, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Grid } from '@mui/material';
 
 function Row(props) {
     const { row } = props;
@@ -152,9 +153,11 @@ export default function ViewMarks() {
 
     return (
         <>
-            <div className='container'>
-                <Sidebar></Sidebar>
-                <div className='AfterSidebar'>
+            <Grid container>
+                <Grid item xs={2} sm={2} md={2} lg={1}>
+                    <Sidebar></Sidebar>
+                </Grid>
+                <Grid item xs={10} sm={10} md={10} lg={10}>
                     <h1 style={{ marginTop: "3rem", marginBottom: "2rem", marginLeft: '2rem' }}>
                         View Marks
                     </h1>
@@ -165,41 +168,42 @@ export default function ViewMarks() {
                             </Typography>
                         </div>
                     ) : (
-                        <div style={{ width: '50vw' }}>
-                            <TableContainer component={Paper}>
-                                <Table aria-label="collapsible table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell />
-                                            <TableCell>Term</TableCell>
-                                            <TableCell>Total Marks</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {marks.map((row) => (
-                                            <Row key={row.term} row={row} />
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
 
-                            <h4 style={{ marginTop: "3rem", marginBottom: "2rem", marginLeft: '2rem' }}>
-                                graphical representation    
-                            </h4>
-                            <ResponsiveContainer width="100%" height={300}>
-                                <BarChart data={marks} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="term" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Bar dataKey="totalMarks" fill="#8884d8" name="Total Marks" />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
+                        <Grid container spacing={4}>
+                            <Grid item xs={12} sm={12} md={6} lg={6} sx={{pr:4}}>
+                                <TableContainer component={Paper}>
+                                    <Table aria-label="collapsible table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell />
+                                                <TableCell>Term</TableCell>
+                                                <TableCell>Total Marks</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {marks.map((row) => (
+                                                <Row key={row.term} row={row} />
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Grid>
+                            <Grid item xs={12} sm={12} lg={6}>
+                                <ResponsiveContainer height={300}>
+                                    <BarChart data={marks} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis dataKey="term" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Legend />
+                                        <Bar dataKey="totalMarks" fill="#8884d8" name="Total Marks" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </Grid>
+                        </Grid>
                     )}
-                </div>
-            </div>
+                </Grid>
+            </Grid>
         </>
     );
 }

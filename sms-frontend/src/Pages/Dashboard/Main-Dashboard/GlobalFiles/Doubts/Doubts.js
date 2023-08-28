@@ -81,8 +81,8 @@ const Doubts = ({ onNotify, open }) => {
       {allDatas.length ? (
         allDatas.map((data) => (
           <React.Fragment key={data.id}>
-            <Grid item sm={12} md={6} lg={4} xl={3}>
-              <Card elevation={6} sx={{ minHeight: 250, maxHeight: 250, maxWidth: 500, marginBottom: 5 }}>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Card elevation={6} sx={{ minHeight: 250, maxHeight: 250, maxWidth:300, marginBottom: 5 }}>
                 <CardContent>
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
                     <Avatar src={`http://localhost:3001/uploads/${data.userId.image}`} alt="User Avatar" sx={{ marginRight: 2 }} />

@@ -52,8 +52,8 @@ const Sidebar = () => {
 
   return (
     <>
-      <div>
-        <div style={{ width: isOpen ? "200px" : "70px" }} className={`sidebar`}>
+      <div  className="app-container">
+        <div style={{ width: isOpen ? "200px" : "70px" }} className={`sidebar ${isOpen ? "open" : ""}`}>
           <div className="top_section">
             <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
               SCHOOL

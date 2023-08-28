@@ -11,17 +11,17 @@ import { FaRegHospital, FaMapMarkedAlt, FaBirthdayCake } from "react-icons/fa";
 import Sidebar from "../../GlobalFiles/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, message, Modal } from "antd";
-import { UpdateAdmin, axioss} from "../../../../../Redux/auth/action";
+import { UpdateAdmin, axioss } from "../../../../../Redux/auth/action";
 import "./CSS/AdminProfile.scss";
 import { Navigate } from "react-router-dom";
+import { Box, Grid, Paper } from "@mui/material";
 
 const AdminProfile = () => {
-  
   const {
     data: { user },
   } = useSelector((state) => state.auth);
-  
-  console.log(user)
+
+  console.log(user);
 
   const dispatch = useDispatch();
 
@@ -74,136 +74,137 @@ const AdminProfile = () => {
     return <Navigate to={"/"} />;
   }
 
-
   return (
     <>
       {contextHolder}
-      <div className="container">
-        <Sidebar />
-        <div className="AfterSideBar">
-          <div className="maindoctorProfile">
-            <div className="firstBox doctorfirstdiv">
-              <div>
-                <img src={user?.image} alt="img" />
-              </div>
-              <hr />
-              <div className="singleitemdiv">
-                <GiMeditation className="singledivicons" />
-                <p>{user?.adminName}</p>
-              </div>
-              <div className="singleitemdiv">
-                <MdMeetingRoom className="singledivicons" />
-                <p>{user?.userType}</p>
-              </div>
-              <div className="singleitemdiv">
-                <FaBirthdayCake className="singledivicons" />
-                <p>{user?.DOB}</p>
-              </div>
-              <div className="singleitemdiv">
-                <BsFillTelephoneFill className="singledivicons" />
-                <p>{user?.mobile}</p>
-              </div>
-              <div className="singleitemdiv">
-                <button onClick={showModal}>
-                  {" "}
-                  <AiFillEdit />
-                  Edit profile
-                </button>
-              </div>
+      <Grid container>
+        <Grid item lg={2} md={3} sm={2} xs={2} position={"sticky"}>
+          <Sidebar />
+        </Grid>
+        <Grid item lg={9} md={9} sm={8} xs={8} sx={{mt:5}}>
+          <Grid container spacing={4}>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <Paper sx={{ borderRadius: 10 }}>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+                <img style={{maxWidth:'100%'}} src={user?.image} alt="img" />
+                </div>
+                <hr />
+                <div className="singleitemdiv">
+                  <GiMeditation className="singledivicons" />
+                  <p>{user?.adminName}</p>
+                </div>
+                <div className="singleitemdiv">
+                  <MdMeetingRoom className="singledivicons" />
+                  <p>{user?.userType}</p>
+                </div>
+                <div className="singleitemdiv">
+                  <FaBirthdayCake className="singledivicons" />
+                  <p>{user?.DOB}</p>
+                </div>
+                <div className="singleitemdiv">
+                  <BsFillTelephoneFill className="singledivicons" />
+                  <p>{user?.mobile}</p>
+                </div>
+                <div className="singleitemdiv">
+                  <button onClick={showModal}>
+                    {" "}
+                    <AiFillEdit />
+                    Edit profile
+                  </button>
+                </div>
 
-              <Modal
-                title="Edit details"
-                open={open}
-                onOk={handleOk}
-                confirmLoading={confirmLoading}
-                onCancel={handleCancel}
-                footer={[
-                  <Button key="back" onClick={handleCancel}>
-                    Cancel
-                  </Button>,
-                  <Button key="submit" onClick={handleFormSubmit}>
-                    Edit
-                  </Button>,
-                ]}
-              >
-                <form className="inputForm">
-                  <input
-                    name="adminName"
-                    value={formData.adminName}
-                    onChange={handleFormChange}
-                    type="text"
-                    placeholder="Full name"
-                  />
-                  <input
-                    name="age"
-                    value={formData.age}
-                    onChange={handleFormChange}
-                    type="number"
-                    placeholder="Age"
-                  />
-                  <select name="gender" onChange={handleFormChange}>
-                    <option value="">Select gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Others</option>
-                  </select>
-                  <input
-                    name="address"
-                    value={formData.address}
-                    onChange={handleFormChange}
-                    type="text"
-                    placeholder="Address"
-                  />
+                <Modal
+                  title="Edit details"
+                  open={open}
+                  onOk={handleOk}
+                  confirmLoading={confirmLoading}
+                  onCancel={handleCancel}
+                  footer={[
+                    <Button key="back" onClick={handleCancel}>
+                      Cancel
+                    </Button>,
+                    <Button key="submit" onClick={handleFormSubmit}>
+                      Edit
+                    </Button>,
+                  ]}
+                >
+                  <form className="inputForm">
+                    <input
+                      name="adminName"
+                      value={formData.adminName}
+                      onChange={handleFormChange}
+                      type="text"
+                      placeholder="Full name"
+                    />
+                    <input
+                      name="age"
+                      value={formData.age}
+                      onChange={handleFormChange}
+                     type="number"
+                      placeholder="Age"
+                    />
+                    <select name="gender" onChange={handleFormChange}>
+                      <option value="">Select gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Others</option>
+                    </select>
+                    <input
+                      name="address"
+                      value={formData.address}
+                      onChange={handleFormChange}
+                      type="text"
+                      placeholder="Address"
+                    />
 
-                  <input
-                    name="mobile"
-                    value={formData.mobile}
-                    onChange={handleFormChange}
-                    type="number"
-                    placeholder="mobile"
-                  />
-                  <input
-                    name="DOB"
-                    value={formData.DOB}
-                    onChange={handleFormChange}
-                    type="date"
-                    placeholder="Date of birth"
-                  />
-                </form>
-              </Modal>
-            </div>
+                    <input
+                      name="mobile"
+                      value={formData.mobile}
+                      onChange={handleFormChange}
+                      type="number"
+                      placeholder="mobile"
+                    />
+                    <input
+                      name="DOB"
+                      value={formData.DOB}
+                      onChange={handleFormChange}
+                      type="date"
+                      placeholder="Date of birth"
+                    />
+                  </form>
+                </Modal>
+              </Paper>
+            </Grid>
             {/* ***********  Second Div ******************** */}
-            <div className="SecondBox">
-              <div className="subfirstbox">
-                <h2 style={{ textAlign: "center", marginTop: "10px" }}>
-                  Other Info
-                </h2>
-                <div className="singleitemdiv">
-                  <BsGenderAmbiguous className="singledivicons" />
-                  <p>{user?.gender}</p>
-                </div>
-                <div className="singleitemdiv">
-                  <AiFillCalendar className="singledivicons" />
-                  <p>{user?.age}</p>
-                </div>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <div className="SecondBox">
+                <div className="subfirstbox">
+                  <h2 style={{ textAlign: "center", marginTop: "10px" }}>
+                    Other Info
+                  </h2>
+                  <div className="singleitemdiv">
+                    <BsGenderAmbiguous className="singledivicons" />
+                    <p>{user?.gender}</p>
+                  </div>
+                  <div className="singleitemdiv">
+                    <AiFillCalendar className="singledivicons" />
+                    <p>{user?.age}</p>
+                  </div>
 
-                <div className="singleitemdiv">
-                  <MdOutlineCastForEducation className="singledivicons" />
-                  <p>{user?.email}</p>
-                </div>
-                <div className="singleitemdiv">
-                  <BsHouseFill className="singledivicons" />
-                  <p>{user?.address}</p>
+                  <div className="singleitemdiv">
+                    <MdOutlineCastForEducation className="singledivicons" />
+                    <p>{user?.email}</p>
+                  </div>
+                  <div className="singleitemdiv">
+                    <BsHouseFill className="singledivicons" />
+                    <p>{user?.address}</p>
+                  </div>
                 </div>
               </div>
-              {/* ***********  Third Div ******************** */}
-                <div>
-                   
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </>
   );
 };

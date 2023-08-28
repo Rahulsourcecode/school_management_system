@@ -5,44 +5,47 @@ import { DataGrid } from '@mui/x-data-grid';
 
 
 
-import {useEffect,useState} from 'react';
+import { useEffect, useState } from 'react';
+import { Grid } from "@mui/material";
 
 const columns = [
-  {field: 'firstName', headerName: 'First name', width:100},
-  {field: 'className', headerName: 'Class',width:100},
-  {field: 'divisionName', headerName:'Division' ,width:100},
-  {field: 'email', headerName:'email ID' ,width:100}
+  { field: 'firstName', headerName: 'First name', width: 100 },
+  { field: 'className', headerName: 'Class', width: 100 },
+  { field: 'divisionName', headerName: 'Division', width: 100 },
+  { field: 'email', headerName: 'email ID', width: 100 }
 ];
 
 export default function StudentLists() {
 
-    const [Students, setStudents] = useState([]);
+  const [Students, setStudents] = useState([]);
 
   useEffect(() => {
     // fetch teachers data from API or database
-   axioss.get("/admin/allstudents")
-   .then((res)=>setStudents(res.data))
-  },[]);
+    axioss.get("/admin/allstudents")
+      .then((res) => setStudents(res.data))
+  }, []);
   console.log(Students);
 
   const rows = Students.map((student, index) => ({
     id: index + 1,
     firstName: student.studentName,
-    className:student.classname,
+    className: student.classname,
     divisionName: student.division,
-    email:student.email
+    email: student.email
   }));
   return (
     <div>
       <ToastContainer />
-      <div className="container">
-        <Sidebar />
-        <div className="AfterSideBar">
+      <Grid container spacing={4} >
+        <Grid item xs={2} sm={2} md={2} lg={1}>
+          <Sidebar />
+        </Grid>
+        <Grid item xs={10} sm={10} md={10} lg={11} sx={{ mt: 5, pr: 5 }} >
           <h2>Student List</h2>
 
           <div style={{ height: 550, width: '100%' }}>
             <DataGrid
-            style={{backgroundColor:"white",borderRadius:20}}
+              style={{ backgroundColor: "white", borderRadius: 20 }}
               rows={rows}
               columns={columns}
               initialState={{
@@ -54,8 +57,8 @@ export default function StudentLists() {
               checkboxSelection
             />
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 }

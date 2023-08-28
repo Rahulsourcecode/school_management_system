@@ -6,7 +6,7 @@ import Sidebar from "../../GlobalFiles/Sidebar";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import { axioss } from "../../../../../Redux/auth/action";
-import { Box, Paper, Skeleton, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from "@mui/material";
+import { Box, Grid, Paper, Skeleton, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from "@mui/material";
 const notify = (text) => toast(text);
 
 const UploadMarks = () => {
@@ -53,9 +53,11 @@ const UploadMarks = () => {
   return (
     <>
       <ToastContainer />
-      <div className="container">
-        <Sidebar />
-        <div className="AfterSideBar">
+      <Grid container >
+        <Grid item xs={2} sm={2} md={2} lg={1}>
+          <Sidebar />
+        </Grid>
+        <Grid item xs={10} sm={10} md={10} lg={11} sx={{mt:5,pr:5}} >
           <div className="Main_Add_Doctor_div">
             <h1>Upload Mark</h1>
             <form>
@@ -130,8 +132,8 @@ const UploadMarks = () => {
               )}
             </form>
           </div>
-        </div>
-      </div>
+          </Grid>
+          </Grid>
     </>
   );
 };

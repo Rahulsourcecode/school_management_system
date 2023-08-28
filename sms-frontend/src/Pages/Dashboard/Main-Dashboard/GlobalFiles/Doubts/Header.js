@@ -34,7 +34,7 @@ const Header = ({ setOpen, open }) => {
         setOpen(false)
     }
     return (
-        <Box elevation={10} sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+        <Box elevation={10} sx={{ display: 'flex', justifyContent: 'space-between',mt:5, mb: 5,width:'100%' }}>
             <ToastContainer />
             <Typography sx={{ fontWeight: 600}} variant='h4'>{data.user.userType === "teacher" ? 'view doubts' : "Clear your Doubts"}</Typography>
             <Button

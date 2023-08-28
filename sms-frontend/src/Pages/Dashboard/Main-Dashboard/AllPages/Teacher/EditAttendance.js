@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { toast, ToastContainer } from "react-toastify";
 import { useParams } from 'react-router-dom';
+import { Grid } from "@mui/material";
 const notify = (text) => toast(text);
 
 export default function EditAttendance() {
@@ -81,9 +82,11 @@ export default function EditAttendance() {
     return (
         <div>
             <ToastContainer />
-            <div className="container">
-                <Sidebar />
-                <div className="AfterSideBar">
+            <Grid container >
+                <Grid item xs={2} sm={2} md={2} lg={1}>
+                    <Sidebar />
+                </Grid>
+                <Grid item xs={10} sm={10} md={10} lg={11} sx={{ mt: 5, pr: 5 }} >
                     <h2>Edit Attendance Date: {currentdate}</h2>
                     <h3>Student List</h3>
                     <div style={{ height: 550, width: '100%' }}>
@@ -94,8 +97,8 @@ export default function EditAttendance() {
                             pageSize={10}
                         />
                     </div>
-                </div>
-            </div>
+                </Grid>
+            </Grid>
         </div>
     );
 }

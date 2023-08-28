@@ -99,12 +99,16 @@ export default function Teacher_Profile() {
 
 
     return (
-        <div style={{ display: "flex" }}>
+        <div>
             {contextHolder}
+            <Grid container>
+            <Grid item position={'fixed'} >
             <Sidebar />
-            <Grid spacing={3} container style={{ backgroundColor: '#DBF5FF', padding: 100 }}>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                    <Card sx={{ Width: 50, height: 450, borderRadius: 10 }}>
+            </Grid>
+            <Grid item  xs={12}  sm={12} md={10} lg={10}>
+                <Grid container spacing={4} sx={{padding:10}}>
+                <Grid item xs={12} sm={12} md={6} lg={6} >
+                    <Card sx={{   height: 450, borderRadius: 10 }}>
                         <CardContent >
                             <Avatar  size={100} alt="Remy Sharp" src={`http://localhost:3001/uploads/${imagePath}`} />
                             <div className="singleitemdiv">
@@ -202,8 +206,8 @@ export default function Teacher_Profile() {
                         </CardActions>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                    <Card sx={{ Width: 100, height: 450, borderRadius: 10 }}>
+                <Grid item  xs={12} sm={12} md={6} lg={6} >
+                    <Card sx={{  height: 450, borderRadius: 10 }}>
                         <CardContent>
                             <div className="singleitemdiv">
                                 <BsGenderAmbiguous className="singledivicons" />
@@ -235,13 +239,15 @@ export default function Teacher_Profile() {
                         </CardActions>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                    <Card sx={{ Width: 100, height: 450, borderRadius: 10 }}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
+                    <Card sx={{  height: 450, borderRadius: 10 }}>
                         <CardContent>
                            <LeaveComponent/> 
                         </CardContent>
                     </Card>
                 </Grid>
+            </Grid>
+            </Grid>
             </Grid>
         </div>
     )

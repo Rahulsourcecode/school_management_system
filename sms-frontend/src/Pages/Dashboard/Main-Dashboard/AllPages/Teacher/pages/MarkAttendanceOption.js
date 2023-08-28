@@ -12,7 +12,7 @@ import Calander from './Calander';
 
 export default function MarkAttendanceOption() {
   return (
-    <Card sx={{ maxWidth: 500 ,borderRadius:3}}>
+    <Card sx={{ maxWidth: 400,maxHeight:600 ,borderRadius:3}}>
       <CardContent>
         <Typography variant="h5" component="div">
             <div>

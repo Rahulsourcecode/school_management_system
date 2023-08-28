@@ -14,6 +14,7 @@ import { Button, message, Modal } from "antd";
 import { UpdateStudent, axioss } from "../../../../../Redux/auth/action";
 import "./CSS/Profiles.scss";
 import { Navigate } from "react-router-dom";
+import { Grid, Paper } from "@mui/material";
 
 const Nurse_Profile = () => {
   const {
@@ -88,155 +89,134 @@ const Nurse_Profile = () => {
   return (
     <>
       {contextHolder}
-      <div className="container">
-        <Sidebar />
-        <div className="AfterSideBar">
-          <div className="maindoctorProfile">
-            <div className="firstBox doctorfirstdiv">
-              <div>
-                <img style={{ height: 240 }} src={`http://localhost:3001/uploads/${imagePath}`} alt="img" />
-              </div>
-              <hr />
-              <div className="singleitemdiv">
-                <GiMeditation className="singledivicons" />
-                <p>{user?.studentName}</p>
-              </div>
-              <div className="singleitemdiv">
-                <MdMeetingRoom className="singledivicons" />
-                <p>{user?.userType}</p>
-              </div>
-              <div className="singleitemdiv">
-                <FaBirthdayCake className="singledivicons" />
-                <p>{user?.DOB}</p>
-              </div>
-              <div className="singleitemdiv">
-                <BsFillTelephoneFill className="singledivicons" />
-                <p>{user?.mobile}</p>
-              </div>
-              <div className="singleitemdiv">
-                <button onClick={showModal}>
-                  {" "}
-                  <AiFillEdit />
-                  Edit profile
-                </button>
-              </div>
+      <Grid container>
+        <Grid item lg={2} md={3} sm={2} xs={2} position={"sticky"}>
+          <Sidebar />
+        </Grid>
+        <Grid item lg={9} md={9} sm={8} xs={8} sx={{mt:5}}>
+          <Grid container spacing={4}>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <Paper sx={{ borderRadius: 10 }}>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+                <img style={{maxWidth:'100%',maxHeight:350}} src={`http://localhost:3001/uploads/${imagePath}`} alt="img" />
+                </div>
+                <hr />
+                <div className="singleitemdiv">
+                  <GiMeditation className="singledivicons" />
+                  <p>{user?.studentName}</p>
+                </div>
+                <div className="singleitemdiv">
+                  <MdMeetingRoom className="singledivicons" />
+                  <p>{user?.userType}</p>
+                </div>
+                <div className="singleitemdiv">
+                  <FaBirthdayCake className="singledivicons" />
+                  <p>{user?.DOB}</p>
+                </div>
+                <div className="singleitemdiv">
+                  <BsFillTelephoneFill className="singledivicons" />
+                  <p>{user?.mobile}</p>
+                </div>
+                <div className="singleitemdiv">
+                  <button onClick={showModal}>
+                    {" "}
+                    <AiFillEdit />
+                    Edit profile
+                  </button>
+                </div>
 
-              <Modal
-                title="Edit details"
-                open={open}
-                onOk={handleOk}
-                confirmLoading={confirmLoading}
-                onCancel={handleCancel}
-                footer={[
-                  <Button key="back" onClick={handleCancel}>
-                    Cancel
-                  </Button>,
-                  <Button key="submit" onClick={handleFormSubmit}>
-                    Edit
-                  </Button>,
-                ]}
-              >
-                <form className="inputForm">
-                  <input
-                    name="studentName"
-                    value={formData.studentName}
-                    onChange={handleFormChange}
-                    type="text"
-                    placeholder="Full name"
-                  />
-                  <input
-                    name="age"
-                    value={formData.age}
-                    onChange={handleFormChange}
-                    type="number"
-                    placeholder="Age"
-                  />
-                  <select name="gender" onChange={handleFormChange}>
-                    <option value="">Select gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Others</option>
-                  </select>
-                  <input
-                    name="address"
-                    value={formData.address}
-                    onChange={handleFormChange}
-                    type="text"
-                    placeholder="Address"
-                  />
-                  <input
-                    name="class"
-                    value={formData.class}
-                    onChange={handleFormChange}
-                    type="text"
-                    placeholder="Class"
-                  />
-                  <input
-                    name="mobile"
-                    value={formData.mobile}
-                    onChange={handleFormChange}
-                    type="number"
-                    placeholder="mobile"
-                  />
-                  <input
-                    name="DOB"
-                    value={formData.DOB}
-                    onChange={handleFormChange}
-                    type="date"
-                    placeholder="Date of birth"
-                  />
-                </form>
-              </Modal>
-            </div>
+                <Modal
+                  title="Edit details"
+                  open={open}
+                  onOk={handleOk}
+                  confirmLoading={confirmLoading}
+                  onCancel={handleCancel}
+                  footer={[
+                    <Button key="back" onClick={handleCancel}>
+                      Cancel
+                    </Button>,
+                    <Button key="submit" onClick={handleFormSubmit}>
+                      Edit
+                    </Button>,
+                  ]}
+                >
+                  <form className="inputForm">
+                    <input
+                      name="adminName"
+                      value={formData.studentName}
+                      onChange={handleFormChange}
+                      type="text"
+                      placeholder="Full name"
+                    />
+                    <input
+                      name="age"
+                      value={formData.age}
+                      onChange={handleFormChange}
+                     type="number"
+                      placeholder="Age"
+                    />
+                    <select name="gender" onChange={handleFormChange}>
+                      <option value="">Select gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Others</option>
+                    </select>
+                    <input
+                      name="address"
+                      value={formData.address}
+                      onChange={handleFormChange}
+                      type="text"
+                      placeholder="Address"
+                    />
+
+                    <input
+                      name="mobile"
+                      value={formData.mobile}
+                      onChange={handleFormChange}
+                      type="number"
+                      placeholder="mobile"
+                    />
+                    <input
+                      name="DOB"
+                      value={formData.DOB}
+                      onChange={handleFormChange}
+                      type="date"
+                      placeholder="Date of birth"
+                    />
+                  </form>
+                </Modal>
+              </Paper>
+            </Grid>
             {/* ***********  Second Div ******************** */}
-            <div className="SecondBox">
-              <div className="subfirstbox">
-                <h2 style={{ textAlign: "center", marginTop: "10px" }}>
-                  Other Info
-                </h2>
-                <div className="singleitemdiv">
-                  <BsGenderAmbiguous className="singledivicons" />
-                  <p>{user?.gender}</p>
-                </div>
-                <div className="singleitemdiv">
-                  <AiFillCalendar className="singledivicons" />
-                  <p>{user?.age}</p>
-                </div>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <div className="SecondBox">
+                <div className="subfirstbox">
+                  <h2 style={{ textAlign: "center", marginTop: "10px" }}>
+                    Other Info
+                  </h2>
+                  <div className="singleitemdiv">
+                    <BsGenderAmbiguous className="singledivicons" />
+                    <p>{user?.gender}</p>
+                  </div>
+                  <div className="singleitemdiv">
+                    <AiFillCalendar className="singledivicons" />
+                    <p>{user?.age}</p>
+                  </div>
 
-                <div className="singleitemdiv">
-                  <MdOutlineCastForEducation className="singledivicons" />
-                  <p>{user?.email}</p>
-                </div>
-                <div className="singleitemdiv">
-                  <BsHouseFill className="singledivicons" />
-                  <p>{user?.address}</p>
+                  <div className="singleitemdiv">
+                    <MdOutlineCastForEducation className="singledivicons" />
+                    <p>{user?.email}</p>
+                  </div>
+                  <div className="singleitemdiv">
+                    <BsHouseFill className="singledivicons" />
+                    <p>{user?.address}</p>
+                  </div>
                 </div>
               </div>
-              {/* ***********  Third Div ******************** */}
-              {/* <div className="subSecondBox">
-                <h2 style={{ textAlign: "center", marginTop: "10px" }}>
-                  School Details
-                </h2>
-                <div className="singleitemdiv">
-                  <BiTime className="singledivicons" />
-                  <p>09:00 AM - 20:00 PM (TIMING)</p>
-                </div>
-                <div className="singleitemdiv">
-                  <FaRegHospital className="singledivicons" />
-                  <p>Delhi Public School, CBSE</p>
-                </div>
-                <div className="singleitemdiv">
-                  <FaMapMarkedAlt className="singledivicons" />
-                  <p>
-                    Sri Aurobindo Marg, Ansari Nagar, Ansari Nagar East, New
-                    Delhi.
-                  </p>
-                </div>
-              </div> */}
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </>
   );
 };

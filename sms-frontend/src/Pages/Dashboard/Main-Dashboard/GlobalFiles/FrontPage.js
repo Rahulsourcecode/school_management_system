@@ -1,12 +1,10 @@
 import { Table } from "antd";
 import React from "react";
-import { RiEmpathizeLine } from "react-icons/ri";
-import { BiNotepad, BiBus } from "react-icons/bi";
+import { BiNotepad, } from "react-icons/bi";
 import { FaChalkboardTeacher, FaUserAlt } from "react-icons/fa";
 import { SiGoogleclassroom } from "react-icons/si";
 import { MdPayment } from "react-icons/md";
 import { RiAdminLine } from "react-icons/ri";
-import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ForumIcon from '@mui/icons-material/Forum';
@@ -15,6 +13,8 @@ import {
   GetAllData,
 } from "../../../../Redux/Datas/action";
 import { Link } from "react-router-dom";
+import { Grid } from "@mui/material";
+import Sidebar from "./Sidebar";
 
 const FrontPage = () => {
   const columns = [
@@ -39,9 +39,11 @@ const FrontPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="container">
-      <Sidebar />
-      <div className="AfterSideBar">
+    <Grid container>
+      <Grid item xs={3} sm={3} md={3} lg={1} position={'sticky'}>
+        <Sidebar />
+      </Grid>
+      <Grid item xs={9} sm={9} md={9} lg={11} paddingRight={3} paddingTop={3}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h1 style={{ color: "black" }}>Overview</h1>
@@ -50,82 +52,100 @@ const FrontPage = () => {
             {datas.data.user.userType !== "admin" && <Link to={"/chat"}> <ForumIcon fontSize="large" sx={{ marginRight: 5 }} /></Link>}
           </div>
         </div>
-        <div className="maindiv">
-          <div className="one commondiv">
-            <div>
-              <h1>{data?.teacher}</h1>
-              <p>Teachers</p>
+        <Grid container spacing={3}>
+          {/* <div className="maindiv"> */}
+          <Grid item xs={12} sm={12} md={6} lg={3}>
+            <div className="one commondiv">
+              <div>
+                <h1>{data?.teacher}</h1>
+                <p>Teachers</p>
+              </div>
+              <FaChalkboardTeacher className="overviewIcon" />
             </div>
-            <FaChalkboardTeacher className="overviewIcon" />
-          </div>
-          <div className="two commondiv">
-            {" "}
-            <div>
-              <h1>{data?.student}</h1>
-              <p>Students</p>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={3}>
+            <div className="two commondiv">
+              {" "}
+              <div>
+                <h1>{data?.student}</h1>
+                <p>Students</p>
+              </div>
+              <FaUserAlt className="overviewIcon" />
             </div>
-            <FaUserAlt className="overviewIcon" />
-          </div>
-
-          <div className="six commondiv">
-            {" "}
-            <div>
-              <h1>{data?.admin}</h1>
-              <p>Admins</p>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={3}>
+            <div className="six commondiv">
+              {" "}
+              <div>
+                <h1>{data?.admin}</h1>
+                <p>Admins</p>
+              </div>
+              <RiAdminLine className="overviewIcon" />
             </div>
-            <RiAdminLine className="overviewIcon" />
-          </div>
-          <div className="four commondiv">
-            {" "}
-            <div>
-              <h1>{data?.classes}</h1>
-              <p>Class rooms</p>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={3}>
+            <div className="four commondiv">
+              {" "}
+              <div>
+                <h1>{data?.classes}</h1>
+                <p>Class rooms</p>
+              </div>
+              <SiGoogleclassroom className="overviewIcon" />
             </div>
-            <SiGoogleclassroom className="overviewIcon" />
-          </div>
-
-          <div className="six commondiv">
-            {" "}
-            <div>
-              <h1>{data?.notice}</h1>
-              <p>Notices</p>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={3}>
+            <div className="six commondiv">
+              {" "}
+              <div>
+                <h1>{data?.notice}</h1>
+                <p>Notices</p>
+              </div>
+              <BiNotepad className="overviewIcon" />
             </div>
-            <BiNotepad className="overviewIcon" />
-          </div>
-          <div className="six commondiv">
-            {" "}
-            <div>
-              <h1>{data?.feedback}</h1>
-              <p>feedbacks</p>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={3}>
+            <div className="six commondiv">
+              {" "}
+              <div>
+                <h1>{data?.feedback}</h1>
+                <p>feedbacks</p>
+              </div>
+              <MdPayment className="overviewIcon" />
             </div>
-            <MdPayment className="overviewIcon" />
-          </div>
-          <div className="six commondiv">
-            {" "}
-            <div>
-              <h1>{data?.leave}</h1>
-              <p>leave requests</p>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={3}>
+            <div className="six commondiv">
+              {" "}
+              <div>
+                <h1>{data?.leave}</h1>
+                <p>leave requests</p>
+              </div>
+              <MdPayment className="overviewIcon" />
             </div>
-            <MdPayment className="overviewIcon" />
-          </div>
-          <div className="six commondiv">
-            {" "}
-            <div>
-              <h1>{data?.report}</h1>
-              <p>Reports</p>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={3}>
+            <div className="six commondiv">
+              {" "}
+              <div>
+                <h1>{data?.report}</h1>
+                <p>Reports</p>
+              </div>
+              <MdPayment className="overviewIcon" />
             </div>
-            <MdPayment className="overviewIcon" />
-          </div>
-        </div>
+          </Grid>
+          {/* </div> */}
+        </Grid>
         {/* ************************************* */}
-        <div className="patientDetails">
-          <h1 style={{ color: 'black' }}>School notices</h1>
-          <div className="patientBox">
-            {notices ? <Table columns={columns} dataSource={notices} /> : null}
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <div style={{ position: 'relative', zIndex: 50 }}>
+            <h1 style={{ color: 'black' }}>School notices</h1>
+            <div>
+              {notices ? <Table columns={columns} dataSource={notices} /> : null}
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

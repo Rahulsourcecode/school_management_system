@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Grid } from '@mui/material';
 import Sidebar from '../../GlobalFiles/Sidebar';
 import { ToastContainer } from 'react-toastify';
 import { axioss } from '../../../../../Redux/auth/action';
@@ -12,7 +12,7 @@ export default function FeedbackList() {
 
     useEffect(() => {
         // fetch feedback data from API or database
-        axioss.get('/admin/getfeedback').then((res) => setFeedback(res.data));
+        axioss.get('/admin/getfeedback').then((res) =>setFeedback(res.data.data));
     }, []);
 
     const handleView = (feedback) => {
@@ -50,9 +50,11 @@ export default function FeedbackList() {
     return (
         <div>
             <ToastContainer />
-            <div className="container">
-                <Sidebar />
-                <div className="AfterSideBar">
+            <Grid container spacing={4} >
+                <Grid item xs={2} sm={2} md={2} lg={1}>
+                    <Sidebar />
+                </Grid>
+                <Grid item xs={10} sm={10} md={10} lg={11} sx={{ mt: 5, pr: 5 }} >
                     <h2>All feedbacks</h2>
 
                     <div style={{ height: 550, width: '100%' }}>
@@ -63,8 +65,8 @@ export default function FeedbackList() {
                             pageSize={10}
                         />
                     </div>
-                </div>
-            </div>
+                </Grid>
+            </Grid>
             <Dialog open={showModal} onClose={handleCloseModal}>
                 <DialogTitle>Feedback Details</DialogTitle>
                 <DialogContent>
