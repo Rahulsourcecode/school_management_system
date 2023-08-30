@@ -85,7 +85,7 @@ const Doubts = ({ onNotify, open }) => {
               <Card elevation={6} sx={{ minHeight: 250, maxHeight: 250, maxWidth:280, marginBottom: 5 }}>
                 <CardContent>
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
-                    <Avatar src={`https://www.app.menintown.shop/${data.userId.image}`} alt="User Avatar" sx={{ marginRight: 2 }} />
+                    <Avatar src={`https://www.app.menintown.shop/uploads/${data.userId.image}`} alt="User Avatar" sx={{ marginRight: 2 }} />
                     <Typography variant="h6">{data.userId.studentName}</Typography>
                   </div>
                   <Typography variant="h5" gutterBottom>
@@ -155,7 +155,7 @@ const Doubts = ({ onNotify, open }) => {
             ) : (
               data.answers.map((res) => (
                 <Box key={res._id} sx={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
-                  <Avatar src={`https://www.app.menintown.shop/${res.img}`} alt="User Avatar" sx={{ marginRight: 8 }} />
+                  <Avatar src={`https://www.app.menintown.shop/uploads/${res.img}`} alt="User Avatar" sx={{ marginRight: 8 }} />
                   <div style={{ width: 500 }}>
                     <Typography variant="subtitle1">{`${res.username} (${res.userType})`}</Typography>
                     <Typography sx={{ width: '100%', wordWrap: 'break-word' }} variant="body1">{res.answer}</Typography>
