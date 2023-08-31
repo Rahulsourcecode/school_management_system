@@ -1,14 +1,13 @@
+import { toast } from "react-toastify";
 import * as types from "./types";
 import axios from "axios";
-
+const notify = (text) => toast(text);
 // Set the base URL for the API requests
-export const baseURL = "https://www.app.menintown.shop/";
+export const baseURL = "https://www.app.meintown.shop/";
 export const axioss = axios.create({
   withCredentials: true,
   baseURL: baseURL,
 })
-
-
 
 // login student
 export const StudentLogin = (data) => async (dispatch) => {

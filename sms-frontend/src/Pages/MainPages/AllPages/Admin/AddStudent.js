@@ -71,7 +71,7 @@ const AddStudent = () => {
       notify("Student Added");
       let data = {
         email: res.data.email,
-        password: res.data.password,
+        password: StudentValue.password,
         userId: res.data.studentID,
       };
       dispatch(SendPassword(data)).then((res) =>
@@ -96,8 +96,8 @@ const AddStudent = () => {
       <Grid container spacing={10}>
         <Grid item xs={2}>
           <Sidebar />
-          </Grid>
-          <Grid item xs={9}>
+        </Grid>
+        <Grid item xs={9}>
           <div className="Main_Add_Doctor_div">
             <h1>Add student</h1>
             <form id="form" onSubmit={HandlestudentSubmit}>

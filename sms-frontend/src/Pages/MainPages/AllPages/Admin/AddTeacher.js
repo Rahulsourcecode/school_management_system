@@ -51,7 +51,7 @@ const AddDoctor = () => {
   const [divisionList, setdivisionList] = useState([]);
   const [subjectData, setSubjectData] = useState([]);
   // console.log(subjectData)
-  console.log(classes)
+  console.log(initData)
   const HandleDoctorChange = (e) => {
     setTeacherValue({ ...TeacherValue, [e.target.name]: e.target.value });
     console.log(TeacherValue);
@@ -65,6 +65,7 @@ const AddDoctor = () => {
     console.log("hello")
     axioss.get("/admin/getclasses").then((res) => {
       setclassList(res.data);
+      divisionCombos(res.data)
     })
 
     axioss.get("/admin/allstudents").then((res) => {
@@ -73,24 +74,24 @@ const AddDoctor = () => {
 
     axioss.get("/admin/getsubjects").then((res) => {
       setSubjectData(res.data)
-      divisionCombos()
     })
   }, []);
 
-  function divisionCombos() {
+  function divisionCombos(classdata) {
     let array = []
-    classList.map((data) => {
+    classdata.map((data) => {
       const division = []
       for (let i = 65; i <= data.division.charCodeAt(0); i++) {
         division.push(String.fromCharCode(i));
       }
-      division.map((x, i) => division[i] = data.name + x)
+      console.log(data.name)
+      const div = division.map((x, i) => data.name + x)
 
-      array = [...array, ...division]
+      array = [...array, ...div]
       return true
     })
+    console.log(array);
     setClasses(array)
-
   }
 
   const uniqueDivisions = new Set();
@@ -116,12 +117,14 @@ const AddDoctor = () => {
       }
       let data = {
         email: res.data.email,
-        password: res.data.password,
+        password: TeacherValue.password,
         userId: res.data.user,
       };
       console.log(data);
       dispatch(SendPassword(data)).then(() => notify("Account Details Sent"));
       setLoading(false);
+      notify("registered")
+      setTeacherValue(initData)
     });
   };
   const addClasses = (e) => {
@@ -149,7 +152,7 @@ const AddDoctor = () => {
         <Grid item xs={2}>
           <Sidebar />
         </Grid>
-        <Grid item  xs={9}>
+        <Grid item xs={9}>
           <div className="Main_Add_Doctor_div">
             <h1>Add Teacher</h1>
             <form encType="multipart/form-data" id="form" onSubmit={HandleDoctorSubmit}>
@@ -316,13 +319,15 @@ const AddDoctor = () => {
                     value={TeacherValue.assignClass}
                     onChange={addClasses}
                     multiple
-
                   >
-
-                    {classes.map((data) => {
-
-                      return (<option value={data} key={data}>{data}</option>)
-                    })}
+                    {classes ? (
+                      classes.map((data) => (
+                        <option value={data} key={data}>
+                          {data}
+                        </option>
+                      ))) : (
+                      <option value="">Loading...</option>
+                    )}
                   </select>
                 </div>
               </div>
