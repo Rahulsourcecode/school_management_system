@@ -9,10 +9,13 @@ import { useEffect, useState } from 'react';
 import { Grid } from "@mui/material";
 
 const columns = [
-  { field: 'firstName', headerName: 'First name', width: 100 },
+  { field: 'firstName', headerName: 'name', width: 200 },
+  { field: 'studentid', headerName: 'id', width: 200 },
   { field: 'className', headerName: 'Class', width: 100 },
   { field: 'divisionName', headerName: 'Division', width: 100 },
-  { field: 'email', headerName: 'email ID', width: 100 }
+  { field: 'email', headerName: 'email ID', width: 300 },
+  { field: 'gender', headerName: 'Gender', width: 100 },
+  { field: 'phone', headerName: 'phone', width: 100 }
 ];
 
 export default function StudentLists() {
@@ -29,9 +32,12 @@ export default function StudentLists() {
   const rows = Students.map((student, index) => ({
     id: index + 1,
     firstName: student.studentName,
-    className: student.classname,
+    studentid:student.studentID,
+    className: student.classname.name,
     divisionName: student.division,
-    email: student.email
+    email: student.email,
+    gender:student.gender,
+    phone:student.mobile
   }));
   return (
     <div>
@@ -54,7 +60,7 @@ export default function StudentLists() {
                 },
               }}
               pageSizeOptions={[5, 10]}
-              checkboxSelection
+              
             />
           </div>
         </Grid>

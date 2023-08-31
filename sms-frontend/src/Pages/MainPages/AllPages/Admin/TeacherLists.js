@@ -12,8 +12,9 @@ const columns = [
   { field: 'id', headerName: 'Teacher ID', width: 180 },
   { field: 'TeacherName', headerName: 'First name', width: 180 },
   { field: 'className', headerName: 'Class', width: 180 },
-  { field: 'divisionName', headerName: 'Division Handled', width: 180 },
-  { field: 'email', headerName: 'email ID', width: 500 }
+  { field: 'divisionName', headerName: 'Division Handled', width: 100 },
+  { field: 'email', headerName: 'email ID', width: 250 },
+  { field: 'phone', headerName: 'phone', width: 200 },
 ];
 
 
@@ -34,7 +35,9 @@ export default function TeacherLists() {
     TeacherName: Teacher.teacherName,
     className: Teacher.classname,
     divisionName: Teacher.division,
-    email: Teacher.email
+    email: Teacher.email,
+    phone:Teacher.mobile,
+    
   }));
   return (
     <div>
@@ -59,7 +62,6 @@ export default function TeacherLists() {
                 },
               }}
               pageSizeOptions={[5, 10]}
-              checkboxSelection
             />
           </div>
         </Grid>

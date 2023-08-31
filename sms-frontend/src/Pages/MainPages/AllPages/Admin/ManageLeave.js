@@ -20,11 +20,11 @@ export default function Manageleave() {
     });
     console.log(status);
     const columns = [
-        { field: 'show', headerName: 'id', width: 1 },
+        { field: 'id', headerName: 'id', width: 200 },
         { field: 'firstName', headerName: 'name', width: 220 },
         { field: 'email', headerName: 'email ID', width: 300 },
-        { field: 'from', headerName: 'from', width: 200 },
-        { field: 'to', headerName: 'to', width: 300 },
+        { field: 'from', headerName: 'from', width: 150 },
+        { field: 'to', headerName: 'to', width: 150 },
         {
             field: 'view',
             headerName: 'view details',
@@ -71,13 +71,12 @@ export default function Manageleave() {
         setOpen(false)
     };
     const rows = teachers.map((teacher, index) => ({
-        id: index + 1,
+        id: teacher._id,
         firstName: teacher.staffData.teacherName,
         email: teacher.staffData.email,
         from: teacher.fromDate.slice(0, 10),
         to: teacher.toDate.slice(0, 10),
         reason: teacher.reason,
-        show: teacher._id
     }));
 
     return (
