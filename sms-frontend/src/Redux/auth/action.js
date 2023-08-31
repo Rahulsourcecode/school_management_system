@@ -3,7 +3,7 @@ import * as types from "./types";
 import axios from "axios";
 const notify = (text) => toast(text);
 // Set the base URL for the API requests
-export const baseURL = "https://www.app.meintown.shop/";
+export const baseURL = "https://www.app.menintown.shop/";
 export const axioss = axios.create({
   withCredentials: true,
   baseURL: baseURL,
