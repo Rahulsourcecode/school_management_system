@@ -3,7 +3,7 @@ import * as types from "./types";
 import axios from "axios";
 const notify = (text) => toast(text);
 // Set the base URL for the API requests
-export const baseURL = "http://localhost:3001/";
+export const baseURL = process.env.REACT_APP_baseURL;
 export const axioss = axios.create({
   withCredentials: true,
   baseURL: baseURL,
