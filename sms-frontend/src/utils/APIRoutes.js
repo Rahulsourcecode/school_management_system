@@ -1,4 +1,4 @@
-export const host = "http://localhost:3001";
+export const host = process.env.baseURL
 export const loginRoute = `${host}/login`;
 export const registerRoute = `${host}/register`;
 export const logoutRoute = `${host}/logout`;
