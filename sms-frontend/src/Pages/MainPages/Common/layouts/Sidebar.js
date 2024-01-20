@@ -74,7 +74,7 @@ const Sidebar = () => {
               <div className="user_profile">
                 <div className="user_avatar">
                   {user?.image ? (
-                    <Avatar sx={{ ml: 2.5 }}  src={`https://www.app.menintown.shop/uploads/${user.image}`} className="avatar_icon" />
+                    <Avatar sx={{ ml: 2.5 }}  src={`${process.env.REACT_APP_IMG_URL}${user.image}`} className="avatar_icon" />
                   ) : (
                     <Avatar className="avatar_icon" />
                   )}
@@ -88,7 +88,7 @@ const Sidebar = () => {
                 <div className="user_avatar">
                   {user?.image ? (
                     <Stack direction="row">
-                      <Avatar sx={{ marginLeft: 1 }} alt="Remy Sharp" src={`https://www.app.menintown.shop/uploads/${user.image}`} />
+                      <Avatar sx={{ marginLeft: 1 }} alt="Remy Sharp" src={`${process.env.REACT_APP_IMG_URL}${user.image}`} />
                     </Stack>
                   ) : (
                     <FaUserCircle className="avatar_icon" />
@@ -103,7 +103,7 @@ const Sidebar = () => {
                 <div style={{ marginLeft: 10 }} className="user_avatar">
                   {user?.image ? (
                     <Stack direction="row">
-                      <Avatar alt="Remy Sharp" src={`https://www.app.menintown.shop/uploads/${user.image}`} />
+                      <Avatar alt="Remy Sharp" src={`${process.env.REACT_APP_IMG_URL}${user.image}`} />
                     </Stack>
                   ) : (
                     <FaUserCircle className="avatar_icon" />

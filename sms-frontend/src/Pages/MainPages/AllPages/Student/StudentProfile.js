@@ -96,7 +96,7 @@ const Nurse_Profile = () => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper sx={{ borderRadius: 10 }}>
                 <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-                <img style={{maxWidth:'100%',maxHeight:350}}  src={`https://www.app.menintown.shop/uploads/${imagePath}`} alt="img" />
+                <img style={{maxWidth:'100%',maxHeight:350}}  src={`${process.env.REACT_APP_IMG_URL}${imagePath}`} alt="img" />
                 </div>
                 <hr />
                 <div className="singleitemdiv">

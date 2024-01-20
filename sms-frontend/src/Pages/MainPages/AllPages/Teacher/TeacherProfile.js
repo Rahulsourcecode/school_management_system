@@ -43,7 +43,6 @@ export default function Teacher_Profile() {
         };
         fetchImage();
     }, []);
-
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -110,7 +109,7 @@ export default function Teacher_Profile() {
                         <Grid item xs={12} sm={12} md={6} lg={6} >
                             <Card sx={{ height: 450, borderRadius: 10 }}>
                                 <CardContent >
-                                    <Avatar size={100} alt="Remy Sharp" src={`https://www.app.menintown.shop/uploads/${imagePath}`} />
+                                    <Avatar size={100} alt="Remy Sharp" src={`${process.env.REACT_APP_IMG_URL}${imagePath}`} />
                                     <div className="singleitemdiv">
                                         <GiMeditation className="singledivicons" />
                                         <p>name:{data?.user?.teacherName}</p>
