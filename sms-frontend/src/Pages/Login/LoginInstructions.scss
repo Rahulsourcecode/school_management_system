@@ -1,0 +1,27 @@
+.maininstruction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10rem;
+    height: 100vh;
+    background-image: url("https://wallpaperaccess.com/full/7137675.jpg");
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(236, 236, 236, 0.874);
+  }
+  .box {
+    padding: 2rem;
+    width: 90%;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.549);
+  }
+  .button{
+    width: 30%;
+    height: 2.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-weight: bolder;
+    background-color: rgba(187, 226, 255, 0.874);
+    border: none;
+    margin-top: 1.5rem;
+  }

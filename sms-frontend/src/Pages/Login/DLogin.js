@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Radio } from "antd";
+import { Button, Radio, Typography } from "antd";
 import admin from "../../img/admin.jpg";
 import "./DLogin.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import {
   AdminLogin,
   StudentLogin,
@@ -146,6 +148,7 @@ const DLogin = () => {
                 required
               />
               <button type="submit">{Loading ? "Loading..." : "Submit"}</button>
+              <Button onClick={() => navigate("instuction")}><Typography>click here to see login details</Typography></Button>
               <p style={{ marginTop: "10px" }}>
                 Forget Password?
                 <span

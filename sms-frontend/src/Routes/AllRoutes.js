@@ -33,6 +33,7 @@ import ViewAttendance from "../Pages/MainPages/AllPages/Student/ViewAttendance";
 import { axioss } from "../Redux/auth/action";
 import PrivateRoute from "./PrivateRoute";
 import ViewMarks from "../Pages/MainPages/AllPages/Student/ViewMarks";
+import LoginInstructions from "../Pages/Login/LoginInstructions";
 let state
 axioss.interceptors.response.use(function (response) {
   try {
@@ -111,6 +112,7 @@ const RoleBasedRoutes = () => {
         <Route path="/" element={data.isAuthenticated ? <FrontPage /> : <DLogin />} />
         {/* <Route element={<PrivateRoute state={state}/>} > */}
         <>
+          <Route path="/instuction" element={<LoginInstructions />} />
           <Route path="/fogotpassword" element={<ForgetPassword />} />
           <Route path="/verifyotp" element={<Verifyotp />} />
           <Route path="/resetpassword" element={<Resetpassword />} />
